@@ -1,8 +1,8 @@
 package com.pekict.test;
-public class testGUI {
+public class testGabagou {
     private String ass;
 
-    public testGUI() {
+    public testGabagou() {
         this.ass = "broken";
         System.out.println(ass);
     }
