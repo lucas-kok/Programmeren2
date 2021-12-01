@@ -15,6 +15,10 @@ public class TestMain {
             System.out.print("Word:");
             String word = scanner.nextLine();
             System.out.println("Gaba" + word);
+
+            if (word.isEmpty()) {
+                break;
+            }
         }
 
     }
