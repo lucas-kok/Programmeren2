@@ -1,17 +1,6 @@
+-- ERD --
+Certificate moet richten naar Register
+Register moet 
+
+
 -- DataBase --
-
-Register: 	-RegisterDate PK maken
-
-Certificate:	-FK naar Register
-
-Webcast:	-ContentID PK maken
-
-Module:		-ContentID PK maken
-
-Course:		-Tabel aanmaken met RelatedCourses
-
-Student:	-Tabel aanmaken met progress (Connected met Content-Item)
-
-
-
-
