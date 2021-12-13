@@ -51,7 +51,7 @@ public class GUI extends Application {
         Scene mainScene = new Scene(mainPane, 400, 500);
 
         // Styling
-//        mainScene.getStylesheets().add(GUI.class.getResource("resources/nl/pekict/project/style.css").toExternalForm());
+//        mainScene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         // Nodes
         Label pageTitle = new Label("CodeCademy");
