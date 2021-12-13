@@ -1,6 +1,7 @@
 -- ERD --
-Certificate moet richten naar Register
-Register moet 
 
 
 -- DataBase --
+- Certificate moet richten naar Register
+- Register moet 
+
