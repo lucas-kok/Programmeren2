@@ -13,8 +13,10 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class GUI extends Application {
 
@@ -37,7 +39,7 @@ public class GUI extends Application {
 
         //Get Student from database
         StudentList studentList = new dbCon().getAllStudents();
-        ArrayList<HBox> users = setUsers(studentList);
+        AtomicReference<ArrayList<HBox>> users = new AtomicReference<>(setUsers(studentList));
 
         VBox newUserPane = new VBox(10);
 
@@ -101,11 +103,35 @@ public class GUI extends Application {
             navigation.getChildren().addAll(usersButton);
         });
 
-        usersButton.setOnAction((event) ->  {
+        usersButton.setOnAction((event) -> {
             pageTitle.setText("Users");
             mainPane.setCenter(usersListScroll);
             navigation.getChildren().clear();
             navigation.getChildren().addAll(homeButton, newUserButton);
+
+            users.set(setUsers(studentList));
+            usersList.getChildren().clear();
+            for (HBox user : users.get()) {
+                usersList.getChildren().add(user);
+                user.getStyleClass().add("userRow");
+
+                user.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent mouseEvent) {
+                        String[] data = user.getId().split(",");
+                        pageTitle.setText(data[1]);
+                        mainPane.setCenter(selectedUserPane);
+                        navigation.getChildren().clear();
+                        navigation.getChildren().addAll(homeButton, usersButton, editUserButton);
+
+                        selectedUserId.setText("ID: " + data[0]);
+                        selectedUserName.setText("Name: " + data[1]);
+                        selectedUserEmail.setText("Email: " + data[2]);
+                        selectedUserGender.setText("Gender: " + data[3]);
+                        selectedUserBDay.setText("Birthday: " + data[4]);
+                    }
+                });
+            }
         });
 
         newUserButton.setOnAction((event) -> {
@@ -121,8 +147,8 @@ public class GUI extends Application {
 
         createNewUserButton.setOnAction((event) -> {
             if (!newUserNameInput.getText().isEmpty() && !newUserEmailInput.getText().isEmpty() && newUserGenderBox.getValue() != null && newUserBDayPicker.getValue() != null) {
-                createUser(newUserNameInput.getText(), newUserEmailInput.getText(), newUserGenderBox.getValue().toString(),
-                        newUserBDayPicker.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+                Date date = Date.from(newUserBDayPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                createUser(newUserNameInput.getText(), newUserEmailInput.getText(), newUserGenderBox.getValue().toString(), date, studentList);
                 errorMessage.setText("User " + newUserNameInput.getText() + " successfully created!");
                 newUserNameInput.setText("");
                 newUserEmailInput.setText("");
@@ -140,7 +166,7 @@ public class GUI extends Application {
 
             newUserPane.getChildren().removeAll(createNewUserButton, updateUserButton);
             newUserPane.getChildren().add(updateUserButton);
-            String[] data = users.get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
+            String[] data = users.get().get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
             newUserNameInput.clear(); newUserEmailInput.clear(); newUserGenderBox.setValue(null); newUserBDayPicker.setValue(null); errorMessage.setText(null);
             newUserNameInput.setText(data[1]);
             newUserEmailInput.setText(data[2]);
@@ -160,16 +186,16 @@ public class GUI extends Application {
 
         deleteUserButton.setOnAction((event) -> {
             confirmationPopup.show(window);
-            String[] data = users.get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
+            String[] data = users.get().get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
             confirmDeleteQuestion.setText("Are you sure you want to delete " + data[1] + "?");
         });
 
         confirmDeleteButton.setOnAction((event) -> {
             confirmationPopup.hide();
-            for (int i = 0; i < users.size(); i++) {
-                String[] data = users.get(i).getId().split(",");
+            for (int i = 0; i < users.get().size(); i++) {
+                String[] data = users.get().get(i).getId().split(",");
                 if (Integer.valueOf(data[0]) == Integer.valueOf(selectedUserId.getText().split("ID: ")[1])) {
-                    usersList.getChildren().remove(users.get(i));
+                    usersList.getChildren().remove(users.get().get(i));
                     break;
                 }
             }
@@ -188,7 +214,7 @@ public class GUI extends Application {
         navigation.getChildren().addAll(usersButton);
         mainPane.setTop(header);
 
-        for (HBox user : users) {
+        for (HBox user : users.get()) {
             usersList.getChildren().add(user);
             user.getStyleClass().add("userRow");
 
@@ -250,8 +276,8 @@ public class GUI extends Application {
         return users;
     }
 
-    public static void createUser(String name, String email, String gender, String bday) {
-        System.out.println(name + ", " + email + ", " + gender + ", " + bday);
+    public static void createUser(String name, String email, String gender, Date bday, StudentList studentList) {
+        studentList.addStudent(new Student(name, gender, email, "Perenmeet 48", "Gek zeelands dorp", "Zeeland", bday));
     }
 
     public static void updateUser(String[] data) {

@@ -30,10 +30,8 @@ public class dbCon {
                 String address = rs.getString("Adress");
                 String city = rs.getString("City");
                 String country = rs.getString("Country");
-                String goodBirthday = birthday.toString().replaceAll("-","");
-                int goodBirthday2 = Integer.parseInt(goodBirthday);
 
-                list.addStudent(new Student(name, gender, email, address, city, country, goodBirthday2));
+                list.addStudent(new Student(name, gender, email, address, city, country, birthday));
 
                 //System.out.println(email + ", " + name + ", " + birthday + ", " + gender + ", " + address + ", " + city + ", " + country);
             }
