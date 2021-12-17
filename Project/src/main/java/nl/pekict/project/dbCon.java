@@ -64,7 +64,7 @@ public class dbCon {
             con = DriverManager.getConnection(connectionUrl);
             String SQL = "DELETE FROM Student WHERE Email = '" + student.getEmail() + "'";
             stmt = con.createStatement();
-            stmt.executeQuery(SQL);
+            stmt.execute(SQL);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -83,6 +83,29 @@ public class dbCon {
         }
     }
 
-
+    public void addStudent(Student student) {
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            con = DriverManager.getConnection(connectionUrl);
+            String SQL = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', " + student.getBirthday() + ", '" + student.getGender() + "', '" + student.getAdress() + "', '" + student.getCity() + "', '" + student.getCountry() + "')";
+            stmt = con.createStatement();
+            stmt.execute(SQL);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) try {
+                rs.close();
+            } catch (Exception e) {
+            }
+            if (stmt != null) try {
+                stmt.close();
+            } catch (Exception e) {
+            }
+            if (con != null) try {
+                con.close();
+            } catch (Exception e) {
+            }
+        }
+    }
 
 }

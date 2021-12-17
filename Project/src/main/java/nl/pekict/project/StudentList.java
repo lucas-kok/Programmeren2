@@ -14,7 +14,7 @@ public class StudentList {
             studentList.add(student);
         }
         //new dbCOn
-        new dcCon().addStudent(adsfasdfdsaf)
+        new dbCon().addStudent(student);
     }
 
     public void deleteStudent(Student student) {
