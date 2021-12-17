@@ -34,7 +34,10 @@ public class GUI extends Application {
         VBox usersListPane = new VBox(10);
         ScrollPane usersListScroll = new ScrollPane();
         VBox usersList = new VBox();
-        ArrayList<HBox> users = setUsers();
+
+        //Get STudent from database
+        StudentList studentList = new dbCon().getAllStudents();
+        ArrayList<HBox> users = setUsers(studentList);
 
         VBox newUserPane = new VBox(10);
 
@@ -137,7 +140,7 @@ public class GUI extends Application {
 
             newUserPane.getChildren().removeAll(createNewUserButton, updateUserButton);
             newUserPane.getChildren().add(updateUserButton);
-            String[] data = users.get(Integer.valueOf(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
+            String[] data = users.get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
             newUserNameInput.clear(); newUserEmailInput.clear(); newUserGenderBox.setValue(null); newUserBDayPicker.setValue(null); errorMessage.setText(null);
             newUserNameInput.setText(data[1]);
             newUserEmailInput.setText(data[2]);
@@ -157,7 +160,7 @@ public class GUI extends Application {
 
         deleteUserButton.setOnAction((event) -> {
             confirmationPopup.show(window);
-            String[] data = users.get(Integer.valueOf(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
+            String[] data = users.get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
             confirmDeleteQuestion.setText("Are you sure you want to delete " + data[1] + "?");
         });
 
@@ -224,22 +227,24 @@ public class GUI extends Application {
     }
 
     // Function that will return a list of users
-    private static ArrayList<HBox> setUsers() {
+    private static ArrayList<HBox> setUsers(StudentList studentlist) {
         ArrayList<HBox> users = new ArrayList<>();
-
+        ArrayList<Student> studentList = studentlist.getAllStudents();
         // Gets changed to a for-loop with the users table
-        for (int i = 0; i < 100; i++) {
+        int i = 0;
+        for (Student student : studentList) {
             HBox newUser = new HBox(10);
             Label userIndex = new Label(String.valueOf(i + 1) + ".");
-            Label name = new Label("Evert Jansen");
-            Label email = new Label("evert.jansen@gmail.com");
-            String gender = "Male";
-            String bDay = "2005-09-01";
+            Label name = new Label(student.getName());
+            Label email = new Label(student.getEmail());
+            String gender = student.getGender();
+            String bDay = String.valueOf(student.getBirthday());
 
             newUser.setId(String.valueOf(i + 1) + "," + name.getText() + "," + email.getText() + "," + gender + "," + bDay);
 
             newUser.getChildren().addAll(userIndex, name, email);
             users.add(newUser);
+            i++;
         }
 
         return users;

@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package student;
+package nl.pekict.project;
 
-/**
- *
- * @author renzo
- */
 public class Student {
 
     private String name;
@@ -17,23 +8,9 @@ public class Student {
     private String adress;
     private String city;
     private String country;
-
     private int birthday;
 
-    //CLASS CONSTRUCTOR
     public Student(String name, String gender, String email, String adress, String city, String country, int birthday) {
-
-    }
-
-    
-    //CREATE
-    public void createStudent(String name, String gender, String email, String adress, String city, String country, int birthday) {
-
-    }
-
-    //UPDATE
-    public void updateStudent(String name, String gender, String email, String adress, String city, String country, int birthday) {
-
         this.name = name;
         this.gender = gender;
         this.email = email;
@@ -43,9 +20,14 @@ public class Student {
         this.birthday = birthday;
     }
 
-    // DELETE
-    public void deleteStudent() {
-
+    public void updateStudent(String name, String gender, String email, String adress, String city, String country, int birthday) {
+        this.name = name;
+        this.gender = gender;
+        this.email = email;
+        this.adress = adress;
+        this.city = city;
+        this.country = country;
+        this.birthday = birthday;
     }
 
     // GETTERS
@@ -75,6 +57,11 @@ public class Student {
 
     public int getBirthday() {
         return birthday;
+    }
+
+    @Override
+    public String toString() {
+        return email + ", " + name + ", " + birthday + ", " + gender + ", " + adress + ", " + city + ", " + country;
     }
 
 }
