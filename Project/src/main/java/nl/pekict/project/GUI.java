@@ -35,7 +35,7 @@ public class GUI extends Application {
         ScrollPane usersListScroll = new ScrollPane();
         VBox usersList = new VBox();
 
-        //Get STudent from database
+        //Get Student from database
         StudentList studentList = new dbCon().getAllStudents();
         ArrayList<HBox> users = setUsers(studentList);
 
