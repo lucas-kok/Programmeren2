@@ -13,8 +13,13 @@ public class StudentList {
         if (!studentList.contains(student)) {
             studentList.add(student);
         }
-        //new dbCOn
-        new dbCon().addStudent(student);
+
+    }
+    public void addStudent (Student student, boolean toDatbase) {
+        if (!studentList.contains(student)) {
+            studentList.add(student);
+        }
+        if (toDatbase) new dbCon().addStudent(student);
     }
 
     public void deleteStudent(Student student) {
@@ -31,8 +36,13 @@ public class StudentList {
         new dbCon().deleteStudent(tempStudent);
     }
 
-    public void updateStudent() {
-
+    public void updateUser(Student oldStudent, Student newStudent) {
+        for (Student student : studentList) {
+            if (student.getEmail().equals(oldStudent)) {
+                studentList.set(studentList.indexOf(student), newStudent);
+                new dbCon().updateStudent(oldStudent, newStudent);
+            }
+        }
     }
 
     public ArrayList<Student> getAllStudents() {

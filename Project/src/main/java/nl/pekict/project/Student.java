@@ -1,7 +1,5 @@
 package nl.pekict.project;
 
-import java.util.Date;
-
 public class Student {
 
     private String name;
@@ -10,9 +8,9 @@ public class Student {
     private String adress;
     private String city;
     private String country;
-    private Date birthday;
+    private String birthday;
 
-    public Student(String name, String gender, String email, String adress, String city, String country, Date birthday) {
+    public Student(String name, String gender, String email, String adress, String city, String country, String birthday) {
         this.name = name;
         this.gender = gender;
         this.email = email;
@@ -43,11 +41,39 @@ public class Student {
         return city;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
     public String getCountry() {
         return country;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 

@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -71,7 +72,7 @@ public class GUI extends Application {
         Label newUserEmail = new Label("Email:");
         TextField newUserEmailInput = new TextField();
         Label newUserGender = new Label("Gender");
-        ComboBox newUserGenderBox = new ComboBox();
+        ComboBox<String> newUserGenderBox = new ComboBox<>();
         newUserGenderBox.getItems().add("Male");
         newUserGenderBox.getItems().add("Female");
         newUserGenderBox.getItems().add("Other");
@@ -147,7 +148,7 @@ public class GUI extends Application {
 
         createNewUserButton.setOnAction((event) -> {
             if (!newUserNameInput.getText().isEmpty() && !newUserEmailInput.getText().isEmpty() && newUserGenderBox.getValue() != null && newUserBDayPicker.getValue() != null) {
-                Date date = Date.from(newUserBDayPicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+                String date = newUserBDayPicker.getValue().toString();
                 createUser(newUserNameInput.getText(), newUserEmailInput.getText(), newUserGenderBox.getValue().toString(), date, studentList);
                 errorMessage.setText("User " + newUserNameInput.getText() + " successfully created!");
                 newUserNameInput.setText("");
@@ -166,7 +167,7 @@ public class GUI extends Application {
 
             newUserPane.getChildren().removeAll(createNewUserButton, updateUserButton);
             newUserPane.getChildren().add(updateUserButton);
-            String[] data = users.get().get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
+            String[] data = users.get().get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1]) - 1).getId().split(",");
             newUserNameInput.clear(); newUserEmailInput.clear(); newUserGenderBox.setValue(null); newUserBDayPicker.setValue(null); errorMessage.setText(null);
             newUserNameInput.setText(data[1]);
             newUserEmailInput.setText(data[2]);
@@ -186,7 +187,8 @@ public class GUI extends Application {
 
         deleteUserButton.setOnAction((event) -> {
             confirmationPopup.show(window);
-            String[] data = users.get().get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1])).getId().split(",");
+            String[] data = users.get().get(Integer.parseInt(selectedUserId.getText().split("ID: ")[1]) - 1).getId().split(",");
+            System.out.println(Arrays.toString(data));
             confirmDeleteQuestion.setText("Are you sure you want to delete " + data[1] + "?");
         });
 
@@ -264,7 +266,7 @@ public class GUI extends Application {
             Label name = new Label(student.getName());
             Label email = new Label(student.getEmail());
             String gender = student.getGender();
-            String bDay = String.valueOf(student.getBirthday());
+            String bDay = student.getBirthday();
 
             newUser.setId(String.valueOf(i + 1) + "," + name.getText() + "," + email.getText() + "," + gender + "," + bDay);
 
@@ -276,11 +278,19 @@ public class GUI extends Application {
         return users;
     }
 
-    public static void createUser(String name, String email, String gender, Date bday, StudentList studentList) {
-        studentList.addStudent(new Student(name, gender, email, "Perenmeet 48", "Gek zeelands dorp", "Zeeland", bday));
+    public static void createUser(String name, String email, String gender, String bday, StudentList studentList) {
+        String newGender = "";
+        if (gender.equals("Male")) newGender = "m";
+        if (gender.equals("Female")) newGender = "f";
+        if (gender.equals("Other")) newGender = "x";
+        studentList.addStudent(new Student(name, newGender, email, "Perenmeet 48", "Gek zeelands dorp", "Zeeland", bday), true);
     }
 
-    public static void updateUser(String[] data) {
+    public static void updateUser(Student oldStudent, Student newStudent, StudentList studentList) {
+        studentList.updateUser(oldStudent, newStudent);
+    }
 
+    public static void deleteUser(Student student, StudentList studentList) {
+        studentList.deleteStudent(student);
     }
 }
