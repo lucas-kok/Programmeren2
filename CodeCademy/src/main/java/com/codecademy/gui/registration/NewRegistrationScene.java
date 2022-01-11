@@ -43,6 +43,7 @@ public class NewRegistrationScene extends GUIScene {
         VBox header = new VBox(15);
         HBox navigation = new HBox(15);
         VBox newRegistrationPane = new VBox(15);
+        HBox registrationDatePane = new HBox(5);
 
         newRegistrationScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
@@ -53,8 +54,10 @@ public class NewRegistrationScene extends GUIScene {
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
 
-        Label registrationDateLabel = new Label("Registration Date:");
-        DatePicker registrationDateInput = new DatePicker();
+        Label registrationDateLabel = new Label("Birthday:");
+        TextField registrationDateDayInput = new TextField();
+        TextField registrationDateMonthInput = new TextField();
+        TextField registrationDateYearInput = new TextField();
 
         Label registrationStudentEmailLabel = new Label("Student Email:");
         TextField registrationStudentEmailInput = new TextField();
@@ -75,14 +78,20 @@ public class NewRegistrationScene extends GUIScene {
 
         createRegistrationButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
-            if (registrationDateInput.getValue() != null && !registrationStudentEmailInput.getText().isBlank() && !registrationCourseNameInput.getText().isBlank()) {
-                LocalDate registrationDate = registrationDateInput.getValue();
+            if (!registrationDateDayInput.getText().isBlank() && !registrationDateMonthInput.getText().isBlank() && !registrationDateYearInput.getText().isBlank() &&
+                    !registrationStudentEmailInput.getText().isBlank() && !registrationCourseNameInput.getText().isBlank()) {
+
+                String registrationDateDay = registrationDateDayInput.getText();
+                String registrationDateMonth = registrationDateMonthInput.getText();
+                String registrationDateYear = registrationDateYearInput.getText();
+                String[] registrationDatePieces = new String[] { registrationDateDay, registrationDateMonth, registrationDateYear };
+
                 String studentEmail = registrationStudentEmailInput.getText();
                 String courseName = registrationCourseNameInput.getText();
 
                 String response = null;
                 try {
-                    response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName, gui.getStudents(), gui.getCourses());
+                    response = registrationInformationValidator.validateNewRegistration(registrationDatePieces, studentEmail, courseName, gui.getStudents(), gui.getCourses());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -92,7 +101,7 @@ public class NewRegistrationScene extends GUIScene {
                     // Create new Registration
 
                     // Clearing all fields
-                    registrationDateInput.setValue(null);
+                    registrationDateDayInput.clear(); registrationDateMonthInput.clear(); registrationDateYearInput.clear();
                     registrationStudentEmailInput.clear();
                     registrationCourseNameInput.clear();
 
@@ -111,8 +120,10 @@ public class NewRegistrationScene extends GUIScene {
         header.getChildren().addAll(title, navigation);
         navigation.getChildren().addAll(homeButton, backButton);
 
-        newRegistrationPane.getChildren().addAll(registrationDateLabel, registrationDateInput, registrationStudentEmailLabel,
+        newRegistrationPane.getChildren().addAll(registrationDateLabel, registrationDatePane, registrationStudentEmailLabel,
                 registrationStudentEmailInput, registrationCourseNameLabel, registrationCourseNameInput, createRegistrationButton, messageLabel);
+
+        registrationDatePane.getChildren().addAll(registrationDateDayInput, registrationDateMonthInput, registrationDateYearInput);
     }
 
     public void resetScene() {
