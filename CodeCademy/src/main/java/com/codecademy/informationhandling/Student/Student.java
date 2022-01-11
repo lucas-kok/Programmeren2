@@ -90,6 +90,10 @@ public class Student {
     }
 
     public String[] getBirthdayPieces() {
-        return new String[3];
+        String[] pieces  = new String[3];
+        pieces[0] = this.Birthday.toString().split("-")[2];
+        pieces[1] = this.Birthday.toString().split("-")[1];
+        pieces[2] = this.Birthday.toString().split("-")[0];
+        return pieces;
     }
 }

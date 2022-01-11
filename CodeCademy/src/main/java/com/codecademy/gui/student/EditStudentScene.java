@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class EditStudentScene extends GUIScene {
     private Scene editStudentScene;
@@ -148,6 +149,8 @@ public class EditStudentScene extends GUIScene {
 
                 if (response.isBlank()) { // No errors, all inputs are valid
                     // Update Student
+                    LocalDate BirthDay = LocalDate.parse(birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0]);
+                    studentRepository.updateStudent(selectedStudent, name, email, address, postalCode, city, country, gender, BirthDay);
 
                     messageLabel.setText("The Student '" + name + "' has successfully been updated!");
                 }

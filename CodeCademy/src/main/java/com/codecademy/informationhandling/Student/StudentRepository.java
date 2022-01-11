@@ -25,7 +25,7 @@ public class StudentRepository {
         }
 
         String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday().toString().replaceAll("-", "/") + "', 103)" +
-                ", '" + gender + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "')";
+                ", '" + gender + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "', '" + student.getPostalCode() + "')";
         dbCon.setQuery(query);
     }
 
@@ -57,6 +57,13 @@ public class StudentRepository {
     }
 
     public void updateStudent(Student selectedStudent, String name, String email, String address, String postalCode, String city, String country, String gender, LocalDate birthday) {
+        if (gender.equals("Male")) {
+            gender = "m";
+        } else if (gender.equals("Female")) {
+            gender = "f";
+        } else if (gender.equals("Other")) {
+            gender = "x";
+        }
         String query = "UPDATE Student" +
                 "SET Email = '" + email + "'" +
                 ", Name = '" + name + "' " +
@@ -64,9 +71,10 @@ public class StudentRepository {
                 ", PostalCode = '" + postalCode + "'" +
                 ", City = '" + city + "'" +
                 ", Country = '" + country + "'" +
-                ", Gender = ";
-
-
+                ", Gender = '" + gender + "'" +
+                ", Birthday = convert(datetime, '" + birthday.toString().replaceAll("-", "/") + "'" +
+                "WHERE Email = '" + selectedStudent.getEmail() + "'";
+        dbCon.setQuery(query);
     }
 
     public void deleteStudent(Student selectedStudent) {
