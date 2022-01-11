@@ -55,4 +55,8 @@ public class Course {
     public void setRelatedCourses(String relatedCourses) {
         this.relatedCourses = relatedCourses;
     }
+
+    public String getRelatedCoursesAsString() {
+        return "";
+    }
 }

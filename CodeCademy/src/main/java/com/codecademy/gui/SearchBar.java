@@ -1,11 +1,10 @@
 package com.codecademy.gui;
 
-import com.codecademy.Course;
-import com.codecademy.Registration;
-import com.codecademy.Student;
+import com.codecademy.informationhandling.Course.Course;
+import com.codecademy.informationhandling.Student.Student;
+import com.codecademy.informationhandling.Registration.Registration;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Map;
 
 public class SearchBar {

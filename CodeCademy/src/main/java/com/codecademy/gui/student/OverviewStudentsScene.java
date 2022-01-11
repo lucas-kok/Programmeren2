@@ -1,9 +1,9 @@
 package com.codecademy.gui.student;
 
-import com.codecademy.Student;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.SearchBar;
+import com.codecademy.informationhandling.Student.Student;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -73,7 +74,12 @@ public class OverviewStudentsScene extends GUIScene {
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Student> searchResult = searchBar.searchStudents(searchInput, gui.getStudents());
+            ArrayList<Student> searchResult = null;
+            try {
+                searchResult = searchBar.searchStudents(searchInput, gui.getStudents());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             studentListPane.get().getChildren().clear();
             studentListScroll.setContent(createStudentListPane(searchResult));
@@ -88,7 +94,11 @@ public class OverviewStudentsScene extends GUIScene {
 
         studentOverviewWrapper.getChildren().addAll(searchBarPane, studentListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
-        studentListScroll.setContent(createStudentListPane(new ArrayList<>(gui.getStudents().values())));
+        try {
+            studentListScroll.setContent(createStudentListPane(new ArrayList<>(gui.getStudents().values())));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Function that will convert a list of Students to a vertical Pane containing a row for each Student

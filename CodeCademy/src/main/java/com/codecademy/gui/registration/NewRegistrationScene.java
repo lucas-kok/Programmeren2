@@ -2,10 +2,8 @@ package com.codecademy.gui.registration;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
-import com.codecademy.gui.student.OverviewStudentsScene;
-import com.codecademy.informationhandling.InformationHandler;
+import com.codecademy.informationhandling.Registration.RegistrationRepository;
 import com.codecademy.informationhandling.validators.RegistrationInformationValidator;
-import com.codecademy.informationhandling.validators.StudentInformationValidator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class NewRegistrationScene extends GUIScene {
@@ -22,7 +21,7 @@ public class NewRegistrationScene extends GUIScene {
 
     private final GUI gui;
     private final RegistrationInformationValidator registrationInformationValidator;
-    private final InformationHandler informationHandler;
+    private final RegistrationRepository registrationRepository;
 
     public NewRegistrationScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
@@ -32,7 +31,7 @@ public class NewRegistrationScene extends GUIScene {
 
         this.gui = gui;
         registrationInformationValidator = new RegistrationInformationValidator();
-        informationHandler = new InformationHandler();
+        registrationRepository = new RegistrationRepository();
 
         createScene();
         setScene(newRegistrationScene);
@@ -81,7 +80,12 @@ public class NewRegistrationScene extends GUIScene {
                 String studentEmail = registrationStudentEmailInput.getText();
                 String courseName = registrationCourseNameInput.getText();
 
-                String response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName, gui.getStudents(), gui.getCourses());
+                String response = null;
+                try {
+                    response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName, gui.getStudents(), gui.getCourses());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid

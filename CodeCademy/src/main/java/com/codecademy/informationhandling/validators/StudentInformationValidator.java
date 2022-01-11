@@ -1,6 +1,6 @@
 package com.codecademy.informationhandling.validators;
 
-import com.codecademy.Student;
+import com.codecademy.informationhandling.Student.Student;
 
 import java.time.LocalDate;
 import java.time.Period;
