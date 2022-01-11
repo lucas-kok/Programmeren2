@@ -96,4 +96,18 @@ public class Student {
         pieces[2] = this.Birthday.toString().split("-")[0];
         return pieces;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "Email='" + Email + '\'' +
+                ", Name='" + Name + '\'' +
+                ", Birthday=" + Birthday +
+                ", gender='" + gender + '\'' +
+                ", Address='" + Address + '\'' +
+                ", City='" + City + '\'' +
+                ", Country='" + Country + '\'' +
+                ", PostalCode='" + PostalCode + '\'' +
+                '}';
+    }
 }

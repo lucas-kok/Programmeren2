@@ -1,6 +1,7 @@
 package com.codecademy.informationhandling.Student;
 
 import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
+import com.codecademy.informationhandling.InformationFormatter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +11,15 @@ import java.util.HashMap;
 public class StudentRepository {
 
     private DatabaseConnection dbCon = new DatabaseConnection();
+    private final InformationFormatter informationFormatter;
 
     public StudentRepository() {
+        informationFormatter = new InformationFormatter();
     }
 
     public void createStudent(Student student) {
+        informationFormatter.formatStudent(student);
+
         String gender = "";
         if (student.getGender().equals("Male")) {
             gender = "m";
@@ -64,21 +69,30 @@ public class StudentRepository {
         } else if (gender.equals("Other")) {
             gender = "x";
         }
-        String query = "UPDATE Student" +
-                "SET Email = '" + email + "'" +
-                ", Name = '" + name + "' " +
-                ", Address = '" + address + "'" +
-                ", PostalCode = '" + postalCode + "'" +
-                ", City = '" + city + "'" +
-                ", Country = '" + country + "'" +
-                ", Gender = '" + gender + "'" +
-                ", Birthday = convert(datetime, '" + birthday.toString().replaceAll("-", "/") + "'" +
-                "WHERE Email = '" + selectedStudent.getEmail() + "'";
+
+        Student newStudent = new Student(email, name, birthday, gender, address, city, country, postalCode);
+        informationFormatter.formatStudent(newStudent);
+
+        System.out.println(newStudent);
+        System.out.println(selectedStudent);
+
+        String query = "UPDATE Student " +
+                "       SET Email = '" + newStudent.getEmail() + "'" +
+                "       , Name = '" + newStudent.getName() + "'" +
+                "       , Address = '" + newStudent.getAddress() + "'" +
+                "       , PostalCode = '" + newStudent.getPostalCode() + "'" +
+                "       , City = '" + newStudent.getCity() + "'" +
+                "       , Country = '" + newStudent.getCountry() + "'" +
+                "       , Gender = '" + gender + "'" +
+                "       , Birthday = (convert(datetime, '" + newStudent.getBirthday().toString().replaceAll("-", "/") + "', 103)) " +
+                "       WHERE Email = 'daanvdm@hotmail.com'";
         dbCon.setQuery(query);
     }
 
     public void deleteStudent(Student selectedStudent) {
-
+        String query = "DELETE FROM Student" +
+                "       WHERE Email = '" + selectedStudent.getEmail() + "'";
+        dbCon.setQuery(query);
     }
 
 }

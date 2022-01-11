@@ -76,7 +76,7 @@ public class InformationFormatter {
             inputPieces = input.split(" ");
             for (int i = 0; i < inputPieces.length; i++) {
                 String inputPiece = inputPieces[i];
-                System.out.println(inputPiece);
+                //System.out.println(inputPiece);
                 capitalizedString.append(inputPiece.substring(0,1).toUpperCase()).append(inputPiece.substring(1));
 
                 if (i != inputPieces.length - 1) {
