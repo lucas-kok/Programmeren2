@@ -1,6 +1,7 @@
 package com.codecademy.gui.student;
 
-import com.codecademy.Student;
+import com.codecademy.informationhandling.Student.StudentRepository;
+import com.codecademy.informationhandling.Student.Student;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.informationhandling.InformationHandler;
