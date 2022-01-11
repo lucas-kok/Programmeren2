@@ -1,7 +1,6 @@
 package com.codecademy.gui;
 
-import com.codecademy.Course;
-import com.codecademy.Registration;
+import com.codecademy.informationhandling.Course.Course;
 import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
@@ -10,25 +9,33 @@ import com.codecademy.gui.registration.NewRegistrationScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
 import com.codecademy.gui.student.EditStudentScene;
-import com.codecademy.informationhandling.InformationHandler;
-import com.codecademy.Student;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
 import com.codecademy.gui.student.ViewStudentScene;
+import com.codecademy.informationhandling.Course.CourseRepository;
+import com.codecademy.informationhandling.Registration.Registration;
+import com.codecademy.informationhandling.Registration.RegistrationRepository;
+import com.codecademy.informationhandling.Student.Student;
+import com.codecademy.informationhandling.Student.StudentRepository;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GUI extends Application {
-    private final InformationHandler informationHandler;
+    private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
+    private final RegistrationRepository registrationRepository;
     private Map<String, GUIScene> scenes = new HashMap<>();
     private Stage mainStage;
 
     public GUI() {
-        informationHandler = new InformationHandler();
+        studentRepository = new StudentRepository();
+        courseRepository = new CourseRepository();
+        registrationRepository = new RegistrationRepository();
     }
 
     @Override
@@ -89,12 +96,12 @@ public class GUI extends Application {
         return null;
     }
 
-    public Map<String, Student> getStudents() {
-        return informationHandler.getStudents();
+    public Map<String, Student> getStudents() throws SQLException {
+        return studentRepository.getAllStudents();
     }
 
-    public Map<String, Course> getCourses() { return informationHandler.getCourses(); }
+    public Map<String, Course> getCourses() { return courseRepository.getAllCourses(); }
 
-    public ArrayList<Registration> getRegistrations() { return informationHandler.getRegistrations(); }
+    public ArrayList<Registration> getRegistrations() { return registrationRepository.getAllRegistrations(); }
 
 }

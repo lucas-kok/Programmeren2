@@ -1,4 +1,4 @@
-package DatabaseConnection;
+package com.codecademy.informationhandling.Databaseconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

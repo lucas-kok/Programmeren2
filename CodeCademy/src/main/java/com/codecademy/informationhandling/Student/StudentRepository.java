@@ -1,6 +1,6 @@
 package com.codecademy.informationhandling.Student;
 
-import DatabaseConnection.DatabaseConnection;
+import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,7 +46,7 @@ public class StudentRepository {
 
     }
 
-    public void deleteStudent() {
+    public void deleteStudent(Student selectedStudent) {
 
     }
 

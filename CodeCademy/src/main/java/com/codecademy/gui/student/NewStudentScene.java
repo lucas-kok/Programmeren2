@@ -2,7 +2,7 @@ package com.codecademy.gui.student;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
-import com.codecademy.informationhandling.InformationHandler;
+import com.codecademy.informationhandling.Student.StudentRepository;
 import com.codecademy.informationhandling.validators.StudentInformationValidator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.time.LocalDate;
+import java.sql.SQLException;
 
 public class NewStudentScene extends GUIScene {
     private Scene newStudentScene;
@@ -20,7 +20,7 @@ public class NewStudentScene extends GUIScene {
 
     private final GUI gui;
     private final StudentInformationValidator studentInformationValidator;
-    private final InformationHandler informationHandler;
+    private final StudentRepository studentRepository;
 
     public NewStudentScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
@@ -30,7 +30,7 @@ public class NewStudentScene extends GUIScene {
 
         this.gui = gui;
         studentInformationValidator = new StudentInformationValidator();
-        informationHandler = new InformationHandler();
+        studentRepository = new StudentRepository();
 
         createScene();
         setScene(newStudentScene);
@@ -113,7 +113,12 @@ public class NewStudentScene extends GUIScene {
                 String birthdayYear = studentBirthdayYearInput.getText();
                 String[] birthdayPieces = new String[] { birthdayDay, birthdayMonth, birthdayYear };
 
-                String response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthdayPieces, gui.getStudents());
+                String response = null;
+                try {
+                    response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthdayPieces, gui.getStudents());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid

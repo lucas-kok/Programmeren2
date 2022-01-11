@@ -1,7 +1,7 @@
 package com.codecademy.informationhandling;
 
-import com.codecademy.Course;
-import com.codecademy.Student;
+import com.codecademy.informationhandling.Course.Course;
+import com.codecademy.informationhandling.Student.Student;
 
 public class InformationFormatter {
 

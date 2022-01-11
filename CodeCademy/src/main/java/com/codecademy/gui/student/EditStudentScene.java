@@ -1,10 +1,9 @@
 package com.codecademy.gui.student;
 
-import com.codecademy.informationhandling.Student.StudentRepository;
-import com.codecademy.informationhandling.Student.Student;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
-import com.codecademy.informationhandling.InformationHandler;
+import com.codecademy.informationhandling.Student.StudentRepository;
+import com.codecademy.informationhandling.Student.Student;
 import com.codecademy.informationhandling.validators.StudentInformationValidator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,7 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.time.LocalDate;
+import java.sql.SQLException;
 
 public class EditStudentScene extends GUIScene {
     private Scene editStudentScene;
@@ -22,7 +21,7 @@ public class EditStudentScene extends GUIScene {
 
     private final GUI gui;
     private final StudentInformationValidator informationValidationTools;
-    private final InformationHandler informationHandler;
+    private final StudentRepository studentRepository;
     private Student selectedStudent;
 
     public EditStudentScene(GUI gui, int sceneWidth, int sceneHeight, Student selectedStudent) {
@@ -33,7 +32,7 @@ public class EditStudentScene extends GUIScene {
 
         this.gui = gui;
         informationValidationTools = new StudentInformationValidator();
-        informationHandler = new InformationHandler();
+        studentRepository = new StudentRepository();
         this.selectedStudent = selectedStudent;
 
         if (selectedStudent != null) {
@@ -115,7 +114,7 @@ public class EditStudentScene extends GUIScene {
         });
 
         deleteStudentButton.setOnAction((event) -> {
-            informationHandler.deleteStudent(selectedStudent);
+            studentRepository.deleteStudent(selectedStudent);
 
             ((OverviewStudentsScene) getSceneObject("overviewStudentsScene")).resetScene();
             showScene("overviewStudentsScene");
@@ -139,7 +138,12 @@ public class EditStudentScene extends GUIScene {
                 String birthdayYear = studentBirthdayYearInput.getText();
                 String[] birthdayPieces = new String[] { birthdayDay, birthdayMonth, birthdayYear };
 
-                String response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthdayPieces, gui.getStudents(), selectedStudent);
+                String response = null;
+                try {
+                    response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthdayPieces, gui.getStudents(), selectedStudent);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid

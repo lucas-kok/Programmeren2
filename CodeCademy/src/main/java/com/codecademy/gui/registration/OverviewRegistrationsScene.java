@@ -1,9 +1,9 @@
 package com.codecademy.gui.registration;
 
-import com.codecademy.Registration;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.SearchBar;
+import com.codecademy.informationhandling.Registration.Registration;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

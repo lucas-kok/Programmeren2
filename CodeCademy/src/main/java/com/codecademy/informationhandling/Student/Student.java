@@ -11,19 +11,26 @@ public class Student {
     private String Address;
     private String City;
     private String Country;
+    private String PostalCode;
 
-    //Constructor
-    public Student(String email, String name, LocalDate birthday, String gender, String address, String city, String country) {
-        this.Email = email;
-        this.Name = name;
-        this.Birthday = birthday;
-        this.gender = gender;
-        this.Address = address;
-        this.City = city;
-        this.Country = country;
+    public String getPostalCode() {
+        return PostalCode;
     }
 
-    //
+    public void setPostalCode(String postalCode) {
+        PostalCode = postalCode;
+    }
+
+    public Student(String email, String name, LocalDate birthday, String gender, String address, String city, String country, String postalCode) {
+        Email = email;
+        Name = name;
+        Birthday = birthday;
+        this.gender = gender;
+        Address = address;
+        City = city;
+        Country = country;
+        PostalCode = postalCode;
+    }
 
     //Getters and Setters
     public String getEmail() {
@@ -80,5 +87,9 @@ public class Student {
 
     public void setCountry(String country) {
         Country = country;
+    }
+
+    public String[] getBirthdayPieces() {
+        return new String[3];
     }
 }

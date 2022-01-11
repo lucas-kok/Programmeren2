@@ -1,10 +1,10 @@
 package com.codecademy.gui.course;
 
-import com.codecademy.Course;
+import com.codecademy.informationhandling.Course.CourseRepository;
+import com.codecademy.informationhandling.Course.Course;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
-import com.codecademy.informationhandling.InformationHandler;
 import com.codecademy.informationhandling.validators.CourseInformationValidator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,7 +21,7 @@ public class EditCourseScene extends GUIScene {
 
     private final GUI gui;
     private final CourseInformationValidator courseInformationValidationTools;
-    private final InformationHandler informationHandler;
+    private final CourseRepository courseRepository;
     private Course selectedCourse;
 
     public EditCourseScene(GUI gui, int sceneWidth, int sceneHeight, Course selectedCourse) {
@@ -32,7 +32,7 @@ public class EditCourseScene extends GUIScene {
 
         this.gui = gui;
         courseInformationValidationTools = new CourseInformationValidator();
-        informationHandler = new InformationHandler();
+        courseRepository = new CourseRepository();
         this.selectedCourse = selectedCourse;
 
         if (selectedCourse != null) {
@@ -93,7 +93,7 @@ public class EditCourseScene extends GUIScene {
         });
 
         deleteCourseButton.setOnAction((event) -> {
-            informationHandler.deleteCourse(selectedCourse);
+            courseRepository.deleteCourse(selectedCourse);
 
             ((OverviewCoursesScene) getSceneObject("overviewCoursesScene")).resetScene();
             showScene("overviewCoursesScene");
@@ -113,7 +113,7 @@ public class EditCourseScene extends GUIScene {
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
-                    informationHandler.updateCourse(selectedCourse, name, subject, introductionText, level, relatedCourses);
+                    courseRepository.updateCourse(selectedCourse, name, subject, introductionText, level, relatedCourses);
                     messageLabel.setText("The Student '" + name + "' has successfully been updated!");
                 }
 
