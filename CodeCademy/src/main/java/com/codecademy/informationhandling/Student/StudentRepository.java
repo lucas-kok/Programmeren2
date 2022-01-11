@@ -73,9 +73,6 @@ public class StudentRepository {
         Student newStudent = new Student(email, name, birthday, gender, address, city, country, postalCode);
         informationFormatter.formatStudent(newStudent);
 
-        System.out.println(newStudent);
-        System.out.println(selectedStudent);
-
         String query = "UPDATE Student " +
                 "       SET Email = '" + newStudent.getEmail() + "'" +
                 "       , Name = '" + newStudent.getName() + "'" +
@@ -85,7 +82,7 @@ public class StudentRepository {
                 "       , Country = '" + newStudent.getCountry() + "'" +
                 "       , Gender = '" + gender + "'" +
                 "       , Birthday = (convert(datetime, '" + newStudent.getBirthday().toString().replaceAll("-", "/") + "', 103)) " +
-                "       WHERE Email = 'daanvdm@hotmail.com'";
+                "       WHERE Email = '" + selectedStudent.getEmail() + "'";
         dbCon.setQuery(query);
     }
 
