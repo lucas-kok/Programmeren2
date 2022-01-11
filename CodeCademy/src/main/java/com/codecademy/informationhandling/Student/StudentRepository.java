@@ -15,7 +15,7 @@ public class StudentRepository {
     }
 
     public void createStudent(Student student) {
-        // Maak 1 letter van gender
+        //maak 1 letter van gender
         String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday().toString().replaceAll("-", "/") + "', 103)" +
                 ", '" + student.getGender() + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "')";
         dbCon.setQuery(query);
@@ -34,7 +34,6 @@ public class StudentRepository {
     }
 
     public void updateStudent(Student selectedStudent, String name, String email, String address, String postalCode, String city, String country, String gender, LocalDate birthday) {
-        if (gender.equals)
         String query = "UPDATE Student" +
                 "SET Email = '" + email + "'" +
                 ", Name = '" + name + "' " +
