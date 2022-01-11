@@ -42,6 +42,7 @@ public class NewStudentScene extends GUIScene {
         VBox header = new VBox(15);
         HBox navigation = new HBox(15);
         VBox newStudentPane = new VBox(15);
+        HBox studentBirthdayPane = new HBox(5);
 
         newStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
@@ -75,7 +76,13 @@ public class NewStudentScene extends GUIScene {
         studentGenderInput.getItems().addAll("Male", "Female", "Other");
 
         Label studentBirthdayLabel = new Label("Birthday:");
-        DatePicker studentBirthdayInput = new DatePicker();
+        TextField studentBirthdayDayInput = new TextField();
+        TextField studentBirthdayMonthInput = new TextField();
+        TextField studentBirthdayYearInput = new TextField();
+
+        studentBirthdayDayInput.setPromptText("Day");
+        studentBirthdayMonthInput.setPromptText("Month");
+        studentBirthdayYearInput.setPromptText("Year");
 
         Button createStudentButton = new Button("Create new Student");
         Label messageLabel = new Label();
@@ -90,9 +97,9 @@ public class NewStudentScene extends GUIScene {
 
         createStudentButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
-            if (!studentNameInput.getText().isBlank() && !studentEmailInput.getText().isEmpty() && !studentAddressInput.getText().isEmpty() &&
-                    !studentCityInput.getText().isEmpty() && !studentPostalCodeInput.getText().isEmpty() && !studentCountryInput.getText().isEmpty() &&
-                    studentGenderInput.getValue() != null && studentBirthdayInput.getValue() != null) {
+            if (!studentNameInput.getText().isBlank() && !studentEmailInput.getText().isEmpty() && !studentAddressInput.getText().isEmpty() && !studentCityInput.getText().isEmpty() &&
+                    !studentPostalCodeInput.getText().isEmpty() && !studentCountryInput.getText().isEmpty() &&studentGenderInput.getValue() != null &&
+                    !studentBirthdayDayInput.getText().isBlank() && !studentBirthdayMonthInput.getText().isBlank() && !studentBirthdayYearInput.getText().isBlank()) {
                 String name = studentNameInput.getText();
                 String email = studentEmailInput.getText();
                 String address = studentAddressInput.getText();
@@ -100,13 +107,17 @@ public class NewStudentScene extends GUIScene {
                 String city = studentCityInput.getText();
                 String country = studentCountryInput.getText();
                 String gender = studentGenderInput.getValue();
-                LocalDate birthday = studentBirthdayInput.getValue();
 
-                String response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthday, gui.getStudents());
+                String birthdayDay = studentBirthdayDayInput.getText();
+                String birthdayMonth = studentBirthdayMonthInput.getText();
+                String birthdayYear = studentBirthdayYearInput.getText();
+                String[] birthdayPieces = new String[] { birthdayDay, birthdayMonth, birthdayYear };
+
+                String response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthdayPieces, gui.getStudents());
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
-                    informationHandler.createNewStudent(name, email, address, postalCode, city, country, gender, birthday);
+                    // Create new Student
 
                     // Clearing all fields
                     studentNameInput.clear();
@@ -116,7 +127,9 @@ public class NewStudentScene extends GUIScene {
                     studentCityInput.clear();
                     studentCountryInput.clear();
                     studentGenderInput.setValue(null);
-                    studentBirthdayInput.setValue(null);
+                    studentBirthdayDayInput.clear();
+                    studentBirthdayMonthInput.clear();
+                    studentBirthdayYearInput.clear();
 
                     messageLabel.setText("The Student '" + name + "' has successfully been created!");
                 }
@@ -136,7 +149,9 @@ public class NewStudentScene extends GUIScene {
         newStudentPane.getChildren().addAll(studentNameLabel, studentNameInput, studentEmailLabel, studentEmailInput,
                 studentAddressLabel, studentAddressInput, studentPostalCodeLabel, studentPostalCodeInput, studentCityLabel,
                 studentCityInput, studentCountryLabel, studentCountryInput, studentGenderLabel, studentGenderInput,
-                studentBirthdayLabel, studentBirthdayInput, createStudentButton, messageLabel);
+                studentBirthdayLabel, studentBirthdayPane, createStudentButton, messageLabel);
+
+        studentBirthdayPane.getChildren().addAll(studentBirthdayDayInput, studentBirthdayMonthInput, studentBirthdayYearInput);
     }
 
     public void resetScene() {

@@ -1,6 +1,7 @@
 package com.codecademy.gui;
 
 import com.codecademy.gui.course.OverviewCoursesScene;
+import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -61,9 +62,8 @@ public class MainScene extends GUIScene{
         });
 
         registrationsButton.setOnAction((event) -> {
-            System.out.println("Registrations Clicked");
-            // Reset Scene Registrations
-            // Show Scene Registrations
+            ((OverviewRegistrationsScene)getSceneObject("overviewRegistrationsScene")).resetScene();
+            showScene("overviewRegistrationsScene");
         });
 
         // Appending

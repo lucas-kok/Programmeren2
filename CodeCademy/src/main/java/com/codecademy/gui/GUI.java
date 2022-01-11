@@ -1,10 +1,14 @@
 package com.codecademy.gui;
 
 import com.codecademy.Course;
+import com.codecademy.Registration;
 import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.course.ViewCourseScene;
+import com.codecademy.gui.registration.NewRegistrationScene;
+import com.codecademy.gui.registration.OverviewRegistrationsScene;
+import com.codecademy.gui.registration.ViewRegistrationScene;
 import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.informationhandling.InformationHandler;
 import com.codecademy.Student;
@@ -14,6 +18,7 @@ import com.codecademy.gui.student.ViewStudentScene;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +49,10 @@ public class GUI extends Application {
         NewCourseScene newCourseScene = new NewCourseScene(this, 500, 750);
         EditCourseScene editCourseScene = new EditCourseScene(this, 500, 750, null);
 
+        OverviewRegistrationsScene overviewRegistrationsScene = new OverviewRegistrationsScene(this, 500, 750);
+        NewRegistrationScene newRegistrationScene = new NewRegistrationScene(this, 500, 750);
+        ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, 500, 750, null);
+
         // Adding the GUIScene's to a map that will be used to show the scene's
         scenes.put("mainScene", mainScene);
         scenes.put("overviewStudentsScene", overviewStudentScene);
@@ -54,6 +63,9 @@ public class GUI extends Application {
         scenes.put("viewCourseScene", viewCourseScene);
         scenes.put("newCourseScene", newCourseScene);
         scenes.put("editCourseScene", editCourseScene);
+        scenes.put("overviewRegistrationsScene", overviewRegistrationsScene);
+        scenes.put("newRegistrationScene", newRegistrationScene);
+        scenes.put("viewRegistrationScene", viewRegistrationScene);
 
         showScene("mainScene");
 
@@ -82,5 +94,7 @@ public class GUI extends Application {
     }
 
     public Map<String, Course> getCourses() { return informationHandler.getCourses(); }
+
+    public ArrayList<Registration> getRegistrations() { return informationHandler.getRegistrations(); }
 
 }

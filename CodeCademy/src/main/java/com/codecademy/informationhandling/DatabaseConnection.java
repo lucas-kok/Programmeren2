@@ -1,6 +1,7 @@
 package com.codecademy.informationhandling;
 
 import com.codecademy.Course;
+import com.codecademy.Registration;
 import com.codecademy.Student;
 
 import java.sql.Connection;
@@ -74,4 +75,25 @@ public class DatabaseConnection {
 
     }
 
+    public ArrayList<Registration> getRegistrations() {
+        System.out.println("Creating a list of Registrations");
+
+        ArrayList<Registration> registrations = new ArrayList<>();
+        Registration registration = new Registration("09-01-2005", "lucas.kok@hotmail.nl", "Test Course");
+        registrations.add(registration);
+
+        return registrations;
+    }
+
+    public void addRegistration(Registration registration) {
+
+    }
+
+    public void updateRegistration(Registration selectedRegistration, String registrationDate, String studentEmail, String courseName) {
+
+    }
+
+    public void deleteRegistration(Registration registration) {
+
+    }
 }

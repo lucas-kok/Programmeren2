@@ -43,11 +43,11 @@ public class ViewStudentScene extends GUIScene {
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Viewing: " + selectedStudent.getName());
+        Label title = new Label("Viewing Student: " + selectedStudent.getName());
 
         Button homeButton = new Button("Home");
-        Button usersButton = new Button("Users");
-        Button editSelectedUserButton = new Button("Edit User");
+        Button usersButton = new Button("Students");
+        Button editSelectedUserButton = new Button("Edit Student");
 
         Label selectedStudentNameLabel = new Label("Name: " + selectedStudent.getName());
         Label selectedStudentEmailLabel = new Label("Email: " + selectedStudent.getEmail());

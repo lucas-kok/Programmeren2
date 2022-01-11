@@ -87,6 +87,10 @@ public class Student {
         this.birthday = birthday;
     }
 
+    public String[] getBirthdayPieces() {
+        return birthday.split("-");
+    }
+
     public LocalDate getBirthdayAsLocalDate() {
         String[] birthdayPieces = getBirthday().split("-");
         String birthdayString = birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0];

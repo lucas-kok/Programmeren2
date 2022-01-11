@@ -44,7 +44,7 @@ public class ViewCourseScene extends GUIScene {
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Viewing: " + selectedCourse.getName());
+        Label title = new Label("Viewing Course: " + selectedCourse.getName());
 
         Button homeButton = new Button("Home");
         Button coursesButton = new Button("Courses");

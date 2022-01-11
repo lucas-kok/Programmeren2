@@ -47,6 +47,7 @@ public class EditStudentScene extends GUIScene {
         VBox header = new VBox(15);
         HBox navigation = new HBox(15);
         VBox editStudentPane = new VBox(15);
+        HBox editStudentBirthdayPane = new HBox(5);
 
         editStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
@@ -83,7 +84,9 @@ public class EditStudentScene extends GUIScene {
         studentGenderInput.getItems().add("Other");
 
         Label studentBirthdayLabel = new Label("Birthday:");
-        DatePicker studentBirthdayInput = new DatePicker();
+        TextField studentBirthdayDayInput = new TextField();
+        TextField studentBirthdayMonthInput = new TextField();
+        TextField studentBirthdayYearInput = new TextField();
 
         Button updateSelectedStudentButton = new Button("Update Student");
         Label messageLabel = new Label();
@@ -96,7 +99,11 @@ public class EditStudentScene extends GUIScene {
         studentCityInput.setText(selectedStudent.getCity());
         studentCountryInput.setText(selectedStudent.getCountry());
         studentGenderInput.setValue(selectedStudent.getGender());
-        studentBirthdayInput.setValue(selectedStudent.getBirthdayAsLocalDate());
+
+        String[] selectedUserBirthdayPieces = selectedStudent.getBirthdayPieces();
+        studentBirthdayDayInput.setText(selectedUserBirthdayPieces[0]);
+        studentBirthdayMonthInput.setText(selectedUserBirthdayPieces[1]);
+        studentBirthdayYearInput.setText(selectedUserBirthdayPieces[2]);
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
@@ -115,9 +122,9 @@ public class EditStudentScene extends GUIScene {
 
         updateSelectedStudentButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
-            if (!studentNameInput.getText().isBlank() && !studentEmailInput.getText().isEmpty() && !studentAddressInput.getText().isEmpty() &&
-                    !studentCityInput.getText().isEmpty() && !studentPostalCodeInput.getText().isEmpty() && !studentCountryInput.getText().isEmpty() &&
-                    studentGenderInput.getValue() != null && studentBirthdayInput.getValue() != null) {
+            if (!studentNameInput.getText().isBlank() && !studentEmailInput.getText().isEmpty() && !studentAddressInput.getText().isEmpty() && !studentCityInput.getText().isEmpty() &&
+                    !studentPostalCodeInput.getText().isEmpty() && !studentCountryInput.getText().isEmpty() &&studentGenderInput.getValue() != null &&
+                    !studentBirthdayDayInput.getText().isBlank() && !studentBirthdayMonthInput.getText().isBlank() && !studentBirthdayYearInput.getText().isBlank()) {
                 String name = studentNameInput.getText();
                 String email = studentEmailInput.getText();
                 String address = studentAddressInput.getText();
@@ -125,13 +132,17 @@ public class EditStudentScene extends GUIScene {
                 String city = studentCityInput.getText();
                 String country = studentCountryInput.getText();
                 String gender = studentGenderInput.getValue();
-                LocalDate birthday = studentBirthdayInput.getValue();
 
-                String response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthday, gui.getStudents(), selectedStudent);
+                String birthdayDay = studentBirthdayDayInput.getText();
+                String birthdayMonth = studentBirthdayMonthInput.getText();
+                String birthdayYear = studentBirthdayYearInput.getText();
+                String[] birthdayPieces = new String[] { birthdayDay, birthdayMonth, birthdayYear };
+
+                String response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthdayPieces, gui.getStudents(), selectedStudent);
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
-                    informationHandler.updateStudent(selectedStudent, name, email, address, postalCode, city, country, gender, birthday);
+                    // Update Student
 
                     messageLabel.setText("The Student '" + name + "' has successfully been updated!");
                 }
@@ -151,7 +162,9 @@ public class EditStudentScene extends GUIScene {
         editStudentPane.getChildren().addAll(studentNameLabel, studentNameInput, studentEmailLabel, studentEmailInput,
                 studentAddressLabel, studentAddressInput, studentPostalCodeLabel, studentPostalCodeInput, studentCityLabel,
                 studentCityInput, studentCountryLabel, studentCountryInput, studentGenderLabel, studentGenderInput,
-                studentBirthdayLabel, studentBirthdayInput, updateSelectedStudentButton, messageLabel);
+                studentBirthdayLabel, editStudentBirthdayPane, updateSelectedStudentButton, messageLabel);
+
+        editStudentBirthdayPane.getChildren().addAll(studentBirthdayDayInput, studentBirthdayMonthInput, studentBirthdayYearInput);
     }
 
     public void resetScene(Student selectedStudent) {

@@ -58,7 +58,7 @@ public class OverviewStudentsScene extends GUIScene {
         // Nodes
         Label title = new Label("Students Overview");
         Button homeButton = new Button("Home");
-        Button newUserButton = new Button("New User");
+        Button newStudentButton = new Button("New Student");
 
         TextField searchBarInput = new TextField();
         Button searchButton = new Button("Search");
@@ -66,7 +66,7 @@ public class OverviewStudentsScene extends GUIScene {
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
-        newUserButton.setOnAction((event) -> {
+        newStudentButton.setOnAction((event) -> {
             ((NewStudentScene) getSceneObject("newStudentScene")).resetScene();
             showScene("newStudentScene");
         });
@@ -84,7 +84,7 @@ public class OverviewStudentsScene extends GUIScene {
         mainPane.setCenter(studentOverviewWrapper);
 
         headerPane.getChildren().addAll(title, navigationPane);
-        navigationPane.getChildren().addAll(homeButton, newUserButton);
+        navigationPane.getChildren().addAll(homeButton, newStudentButton);
 
         studentOverviewWrapper.getChildren().addAll(searchBarPane, studentListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);

@@ -13,7 +13,7 @@ public class StudentInformationValidator {
     }
 
     // Function to validate all inputs for a new Student and returns an error/empty message
-    public String validateNewStudent(String name, String email, String postalCode, LocalDate birthday, Map<String, Student> students) {
+    public String validateNewStudent(String name, String email, String postalCode, String[] birthday, Map<String, Student> students) {
         StringBuilder message = new StringBuilder();
 
         if (!validateName(name)) message.append("\nPlease fill in the First and Last name!");
@@ -28,7 +28,7 @@ public class StudentInformationValidator {
     }
 
     // Function to validate all inputs for an existing Student and returns an error/empty message
-    public String validateEditedStudent(String name, String email, String postalCode, LocalDate birthday, Map<String, Student> students, Student selectedStudent) {
+    public String validateEditedStudent(String name, String email, String postalCode, String[] birthday, Map<String, Student> students, Student selectedStudent) {
         StringBuilder message = new StringBuilder();
 
         if (!validateName(name)) message.append("\nPlease fill in both First- and Last name!");
@@ -39,7 +39,11 @@ public class StudentInformationValidator {
         }
         if (!validatePostalCode(postalCode))
             message.append("\nThe postal-code: '").append(postalCode).append("' is not valid!");
-        if (!validateAge(birthday)) message.append("\nThe person is not old enough!");
+        if (validateBirthday(birthday)) {
+            if (!validateAge(birthday)) message.append("\nThe person is not old enough!");
+        } else {
+            message.append("The given date is not valid!");
+        }
 
         return message.toString();
     }
@@ -79,9 +83,36 @@ public class StudentInformationValidator {
     }
 
     // Age
-    public boolean validateAge(LocalDate birthday) {
+    public boolean validateBirthday(String[] birthday) {
+        int day = Integer.parseInt(birthday[0]);
+        int month = Integer.parseInt(birthday[1]);
+        int year = Integer.parseInt(birthday[2]);
+
+        if ((day < 1 || day > 31) || (month < 1 || month >= 12)) return false;
+
+        if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+            if (day >= 1 && day <= 31) return true;
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+            if (day <= 30) return true;
+        } else if (month == 2) {
+            if (year % 4 == 0) {
+                if (!(year % 100 == 0 && year % 400 != 0)) {
+                    if (day <= 29) return true;
+                }
+            }
+            if (day <= 28) return true;
+        }
+        return false;
+    }
+
+    public boolean validateAge(String[] birthdayPieces) {
+        String day = String.format("%02d", birthdayPieces[0]);
+        String month = String.format("%02d", birthdayPieces[1]);
+        String year = birthdayPieces[2];
+
+        LocalDate studentBirthday = LocalDate.parse(year + "-" + month + "-" + day);
         LocalDate today = LocalDate.now();
-        Period period = Period.between(birthday, today);
+        Period period = Period.between(studentBirthday, today);
         int minimumAge = 10; // Minimum age of codecademy is 10 years
 
         return period.getYears() >= minimumAge;

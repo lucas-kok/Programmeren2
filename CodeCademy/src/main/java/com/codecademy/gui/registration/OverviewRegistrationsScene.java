@@ -1,11 +1,9 @@
 package com.codecademy.gui.registration;
 
-import com.codecademy.Student;
+import com.codecademy.Registration;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.SearchBar;
-import com.codecademy.gui.student.NewStudentScene;
-import com.codecademy.gui.student.ViewStudentScene;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -60,7 +58,7 @@ public class OverviewRegistrationsScene extends GUIScene {
         // Nodes
         Label title = new Label("Students Overview");
         Button homeButton = new Button("Home");
-        Button newUserButton = new Button("New User");
+        Button newRegistrationButton = new Button("New Registration");
 
         TextField searchBarInput = new TextField();
         Button searchButton = new Button("Search");
@@ -68,17 +66,17 @@ public class OverviewRegistrationsScene extends GUIScene {
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
-        newUserButton.setOnAction((event) -> {
-            ((NewStudentScene) getSceneObject("newStudentScene")).resetScene();
-            showScene("newStudentScene");
+        newRegistrationButton.setOnAction((event) -> {
+            ((NewRegistrationScene) getSceneObject("newRegistrationScene")).resetScene();
+            showScene("newRegistrationScene");
         });
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Student> searchResult = searchBar.searchStudents(searchInput, gui.getStudents());
+            ArrayList<Registration> searchResult = searchBar.searchRegistrations(searchInput, gui.getRegistrations());
 
             registrationListPane.get().getChildren().clear();
-            registrationListScroll.setContent(createStudentListPane(searchResult));
+            registrationListScroll.setContent(createRegistrationListPane(searchResult));
         });
 
         // Appending
@@ -86,36 +84,38 @@ public class OverviewRegistrationsScene extends GUIScene {
         mainPane.setCenter(registrationOverviewWrapper);
 
         headerPane.getChildren().addAll(title, navigationPane);
-        navigationPane.getChildren().addAll(homeButton, newUserButton);
+        navigationPane.getChildren().addAll(homeButton, newRegistrationButton);
 
         registrationOverviewWrapper.getChildren().addAll(searchBarPane, registrationListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
-        registrationListScroll.setContent(createStudentListPane(new ArrayList<>(gui.getStudents().values())));
+        registrationListScroll.setContent(createRegistrationListPane(new ArrayList<>(gui.getRegistrations())));
     }
 
     // Function that will convert a list of Students to a vertical Pane containing a row for each Student
-    private VBox createStudentListPane(ArrayList<Student> students) {
+    private VBox createRegistrationListPane(ArrayList<Registration> registrations) {
         VBox studentListPane = new VBox(5);
 
         int index = 0;
-        for (Student student : students) {
+        for (Registration registration : registrations) {
             // Panes
             HBox studentInfoRow = new HBox(10);
 
             // Nodes
-            Label indexLabel = new Label(index + 1 + ". ");
-            Label studentName = new Label(student.getName());
+            Label indexLabel = new Label(index + 1 + ".");
+            Label registrationDateLabel = new Label(registration.getRegistrationDate() + ":");
+            Label registrationStudentEmailLabel = new Label(registration.getStudentEmail());
             Label informationDivider = new Label("-");
-            Label studentEmail = new Label(student.getEmail());
+            Label registrationCourseNameLabel = new Label(registration.getCourseName());
 
             // Event Handlers
             studentInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
-                ((ViewStudentScene) getSceneObject("viewStudentScene")).resetScene(student);
-                showScene("viewStudentScene");
+                ((ViewRegistrationScene) getSceneObject("viewRegistrationScene")).resetScene(registration);
+                showScene("viewRegistrationScene");
             });
 
             // Appending
-            studentInfoRow.getChildren().addAll(indexLabel, studentName, informationDivider, studentEmail);
+            studentInfoRow.getChildren().addAll(indexLabel, registrationDateLabel,
+                    registrationStudentEmailLabel, informationDivider, registrationCourseNameLabel);
             studentListPane.getChildren().add(studentInfoRow);
         }
 

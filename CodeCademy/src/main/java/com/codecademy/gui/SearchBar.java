@@ -1,6 +1,7 @@
 package com.codecademy.gui;
 
 import com.codecademy.Course;
+import com.codecademy.Registration;
 import com.codecademy.Student;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class SearchBar {
     }
 
     public ArrayList<Student> searchStudents(String searchInput, Map<String, Student> students) {
-        if (searchInput.isBlank()) return new ArrayList<>(students.values()); // Empty search will result in all students
+        if (searchInput.isBlank()) return new ArrayList<>(students.values()); // Empty search will result in all Students
 
         ArrayList<Student> studentsWithinInput = new ArrayList<>();
         searchInput = searchInput.toLowerCase();
@@ -28,7 +29,7 @@ public class SearchBar {
     }
 
     public ArrayList<Course> searchCourses(String searchInput, Map<String, Course> courses) {
-        if (searchInput.isBlank()) return new ArrayList<>(courses.values()); // Empty search will result in all courses
+        if (searchInput.isBlank()) return new ArrayList<>(courses.values()); // Empty search will result in all Courses
 
         ArrayList<Course> coursesWithinInput = new ArrayList<>();
         searchInput = searchInput.toLowerCase();
@@ -39,6 +40,21 @@ public class SearchBar {
         }
 
         return coursesWithinInput;
+    }
+
+    public ArrayList<Registration> searchRegistrations(String searchInput, ArrayList<Registration> registrations) {
+        if (searchInput.isBlank()) return registrations; // Empty search will result in all Registrations
+
+        ArrayList<Registration> registrationsWithinInput = new ArrayList<>();
+        searchInput = searchInput.toLowerCase();
+        for (Registration registration : registrations) {
+            if (registration.getRegistrationDate().toLowerCase().contains(searchInput) || registration.getStudentEmail().toLowerCase().contains(searchInput) ||
+                    registration.getCourseName().toLowerCase().contains(searchInput)) {
+                registrationsWithinInput.add(registration);
+            }
+        }
+
+        return registrationsWithinInput;
     }
 
 }
