@@ -1,6 +1,5 @@
 package com.codecademy.informationhandling;
 
-import com.codecademy.Course;
 import com.codecademy.Registration;
 import com.codecademy.Student;
 
