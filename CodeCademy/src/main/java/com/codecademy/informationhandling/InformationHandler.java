@@ -1,6 +1,7 @@
 package com.codecademy.informationhandling;
 
 import com.codecademy.Course;
+import com.codecademy.Registration;
 import com.codecademy.Student;
 
 import java.time.LocalDate;
@@ -75,4 +76,6 @@ public class InformationHandler {
         databaseConnection.deleteCourse(selectedCourse);
     }
 
-}
+    public ArrayList<Registration> getRegistrations() {
+        return databaseConnection.getRegistrations();
+    }

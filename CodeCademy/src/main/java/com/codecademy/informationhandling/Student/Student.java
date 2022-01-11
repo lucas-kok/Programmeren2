@@ -7,20 +7,20 @@ public class Student {
     private String Email;
     private String Name;
     private LocalDate Birthday;
-    private char gender;
+    private String gender;
     private String Address;
     private String City;
     private String Country;
 
     //Constructor
-    public Student(String email, String name, LocalDate birthday, char gender, String address, String city, String country) {
-        Email = email;
-        Name = name;
-        Birthday = birthday;
+    public Student(String email, String name, LocalDate birthday, String gender, String address, String city, String country) {
+        this.Email = email;
+        this.Name = name;
+        this.Birthday = birthday;
         this.gender = gender;
-        Address = address;
-        City = city;
-        Country = country;
+        this.Address = address;
+        this.City = city;
+        this.Country = country;
     }
 
     //
@@ -38,7 +38,7 @@ public class Student {
         return Birthday;
     }
 
-    public char getGender() {
+    public String getGender() {
         return gender;
     }
 
@@ -66,7 +66,7 @@ public class Student {
         Birthday = birthday;
     }
 
-    public void setGender(char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
