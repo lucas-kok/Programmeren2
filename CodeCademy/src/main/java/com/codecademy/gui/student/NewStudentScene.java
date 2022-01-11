@@ -2,6 +2,7 @@ package com.codecademy.gui.student;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
+import com.codecademy.informationhandling.Student.Student;
 import com.codecademy.informationhandling.Student.StudentRepository;
 import com.codecademy.informationhandling.validators.StudentInformationValidator;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class NewStudentScene extends GUIScene {
     private Scene newStudentScene;
@@ -123,6 +125,8 @@ public class NewStudentScene extends GUIScene {
 
                 if (response.isBlank()) { // No errors, all inputs are valid
                     // Create new Student
+                    LocalDate BirthDay = LocalDate.parse(birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0]);
+                    studentRepository.createStudent(new Student(email, name, BirthDay, gender, address, city, country, postalCode));
 
                     // Clearing all fields
                     studentNameInput.clear();

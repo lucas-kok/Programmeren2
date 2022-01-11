@@ -15,19 +15,42 @@ public class StudentRepository {
     }
 
     public void createStudent(Student student) {
-        //maak 1 letter van gender
+        String gender = "";
+        if (student.getGender().equals("Male")) {
+            gender = "m";
+        } else if (student.getGender().equals("Female")) {
+            gender = "f";
+        } else if (student.getGender().equals("Other")) {
+            gender = "x";
+        }
+
         String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday().toString().replaceAll("-", "/") + "', 103)" +
-                ", '" + student.getGender() + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "')";
+                ", '" + gender + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "')";
         dbCon.setQuery(query);
     }
 
     public HashMap<String, Student> getAllStudents() throws SQLException {
-        //Maak een woord van gender
         HashMap<String, Student> studentList = new HashMap<>();
         String query = "SELECT * FROM Student";
         ResultSet rs = dbCon.getQuery(query);
         while (rs.next()) {
-            System.out.println(rs.getString("Name"));
+            String Email = rs.getString("Email");
+            String Name = rs.getString("Name");
+            LocalDate Birthday = LocalDate.parse(rs.getDate("Birthday").toString());
+            String gender = rs.getString("Gender");
+            if (gender.equals("m")) {
+                gender = "Male";
+            } else if (gender.equals("f")) {
+                gender = "Female";
+            } else if (gender.equals("x")) {
+                gender = "Other";
+            }
+            String Address = rs.getString("Address");
+            String City = rs.getString("City");
+            String Country = rs.getString("Country");
+            String PostalCode = rs.getString("PostalCode");
+
+            studentList.put(Email, new Student(Email, Name, Birthday, gender, Address, City, Country, PostalCode));
         }
         dbCon.CloseResultSet();
         return studentList;
