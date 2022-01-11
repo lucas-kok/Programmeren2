@@ -9,6 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="mssql-jdbc-7.4.1.jre12" level="project" />
+    <orderEntry type="library" name="mssql-jdbc-9.4.1.jre8" level="project" />
   </component>
 </module>
