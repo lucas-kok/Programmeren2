@@ -106,8 +106,10 @@ public class StudentInformationValidator {
     }
 
     public boolean validateAge(String[] birthdayPieces) {
-        String day = String.format("%02d", Integer.parseInt(birthdayPieces[0]));
-        String month = String.format("%02d", Integer.parseInt(birthdayPieces[1]));
+//        String day = String.format("%02d", birthdayPieces[0]);
+//        String month = String.format("%02d", birthdayPieces[1]);
+        String day = birthdayPieces[0];
+        String month = birthdayPieces[1];
         String year = birthdayPieces[2];
 
         LocalDate studentBirthday = LocalDate.parse(year + "-" + month + "-" + day);
