@@ -1,4 +1,4 @@
-package Student;
+package com.codecademy.informationhandling.Student;
 
 import java.time.LocalDate;
 
