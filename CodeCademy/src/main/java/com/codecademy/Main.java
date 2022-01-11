@@ -7,9 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-
-//        GUI gui = new GUI();
-//        Application.launch(GUI.class);
+        GUI gui = new GUI();
+        Application.launch(GUI.class);
     }
 
 }
