@@ -93,6 +93,6 @@ public class StudentRepository {
         dbCon.setQuery(query);
     }
 
-
+    //Get all registrations and get all certificates
 
 }

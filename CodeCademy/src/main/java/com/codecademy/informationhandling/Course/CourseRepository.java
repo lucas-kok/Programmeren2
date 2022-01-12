@@ -1,5 +1,6 @@
 package com.codecademy.informationhandling.Course;
 
+import com.codecademy.informationhandling.ContentItem.ContentItem;
 import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.InformationFormatter;
 
@@ -87,6 +88,16 @@ public class CourseRepository {
                 dbCon.setQuery(queryCreateRelatedCourse);
             }
         }
+    }
+
+    //get average progress for this courses contenitems
+    public HashMap<ContentItem, Integer> getAverageProgressPerContentItem() {
+        return  new HashMap<>();
+    }
+
+    //get how many certificates per course
+    public int getAmountOfCertificates (Course course) {
+        return 0;
     }
 
 }

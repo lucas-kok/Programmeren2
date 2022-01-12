@@ -1,5 +1,6 @@
 package com.codecademy.informationhandling.Registration;
 
+import com.codecademy.informationhandling.ContentItem.ContentItem;
 import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.Student.Student;
 
@@ -22,17 +23,6 @@ public class RegistrationRepository {
 
     }
 
-//    public HashMap<String, ArrayList<Registration>> getAllRegistrations() throws SQLException {
-//        ArrayList<Registration> registrations = new ArrayList<>();
-//        String queryGetAllRegistrations = "SELECT * FROM Registration";
-//        ResultSet rs = dbCon.getQuery(queryGetAllRegistrations);
-//        while (rs.next()) {
-//            registrations.add(new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail"),
-//                    rs.getString("Registerdate"), rs.getString("CourseName")));
-//        }
-//        return new HashMap<>();
-//    }
-
     public ArrayList<Registration> getAllRegistrations() {
         return new ArrayList<>();
     }
@@ -42,6 +32,14 @@ public class RegistrationRepository {
     }
 
     public void deleteRegistration(Student selectedStudent) {
+
+    }
+
+    public HashMap<ContentItem, Integer> getProgressForRegistration(Registration registration) {
+        return new HashMap<>();
+    }
+
+    public void updateProgress(Registration registration, ContentItem contentItem, int Progress) {
 
     }
 
