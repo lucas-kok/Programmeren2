@@ -6,13 +6,11 @@ public class ContentItem {
     private int id;
     private String title;
     private String publicationDate;
-    private String type;
 
-    public ContentItem(int id, String title, String publicationDate, String type) {
+    public ContentItem(int id, String title, String publicationDate) {
         this.id = id;
         this.title = title;
         this.publicationDate = publicationDate;
-        this.type = type;
     }
 
     public int getId() {
@@ -39,11 +37,4 @@ public class ContentItem {
         this.publicationDate = publicationDate;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 }
