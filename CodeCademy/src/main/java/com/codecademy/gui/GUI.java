@@ -1,6 +1,5 @@
 package com.codecademy.gui;
 
-import com.codecademy.informationhandling.Course.Course;
 import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
@@ -12,6 +11,7 @@ import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
 import com.codecademy.gui.student.ViewStudentScene;
+import com.codecademy.informationhandling.Course.Course;
 import com.codecademy.informationhandling.Course.CourseRepository;
 import com.codecademy.informationhandling.Registration.Registration;
 import com.codecademy.informationhandling.Registration.RegistrationRepository;
@@ -102,6 +102,8 @@ public class GUI extends Application {
 
     public Map<String, Course> getCourses() throws SQLException { return courseRepository.getAllCourses(); }
 
-    public ArrayList<Registration> getRegistrations() { return registrationRepository.getAllRegistrations(); }
+    public ArrayList<Registration> getRegistrations() throws SQLException {
+        return registrationRepository.getAllRegistrations();
+    }
 
 }

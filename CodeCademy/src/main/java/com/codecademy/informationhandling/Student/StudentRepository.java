@@ -85,7 +85,8 @@ public class StudentRepository {
                 "       , Country = '" + newStudent.getCountry() + "'" +
                 "       , Gender = '" + gender + "'" +
                 "       , Birthday = (convert(datetime, '" + newStudent.getBirthday() + "', 103)) " +
-                "       WHERE Email = '" + selectedStudent.getEmail() + "'";
+                "       WHERE Email = '" + selectedStudent.getEmail() + "'" +
+                "       UPDATE Viewing SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'";
         dbCon.setQuery(query);
     }
 

@@ -29,6 +29,15 @@ public class ContentItem {
         this.title = title;
     }
 
+    @Override
+    public String toString() {
+        return "ContentItem{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", publicationDate='" + publicationDate + '\'' +
+                '}';
+    }
+
     public String getPublicationDate() {
         return publicationDate;
     }
