@@ -117,6 +117,8 @@ public class OverviewRegistrationsScene extends GUIScene {
             studentInfoRow.getChildren().addAll(indexLabel, registrationDateLabel,
                     registrationStudentEmailLabel, informationDivider, registrationCourseNameLabel);
             studentListPane.getChildren().add(studentInfoRow);
+
+            index++;
         }
 
         return studentListPane;

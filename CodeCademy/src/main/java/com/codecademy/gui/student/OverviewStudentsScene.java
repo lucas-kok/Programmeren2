@@ -125,6 +125,8 @@ public class OverviewStudentsScene extends GUIScene {
             // Appending
             studentInfoRow.getChildren().addAll(indexLabel, studentName, informationDivider, studentEmail);
             studentListPane.getChildren().add(studentInfoRow);
+
+            index++;
         }
 
         return studentListPane;
