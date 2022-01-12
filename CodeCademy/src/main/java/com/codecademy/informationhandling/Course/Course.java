@@ -48,7 +48,7 @@ public class Course {
         this.level = level;
     }
 
-    public String getRelatedCourses() {
+    public String getRelatedCoursesAsString() {
         return relatedCourses;
     }
 
@@ -56,7 +56,4 @@ public class Course {
         this.relatedCourses = relatedCourses;
     }
 
-    public String getRelatedCoursesAsString() {
-        return "";
-    }
 }

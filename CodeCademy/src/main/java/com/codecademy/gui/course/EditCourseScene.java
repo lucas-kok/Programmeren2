@@ -13,6 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
+
 public class EditCourseScene extends GUIScene {
 
     private Scene editCourseScene;
@@ -109,12 +111,17 @@ public class EditCourseScene extends GUIScene {
                 String level = courseLevelInput.getValue();
                 String relatedCourses = courseRelatedCoursesInput.getText();
 
-                String response = courseInformationValidationTools.validateEditedCourse(name, relatedCourses, gui.getCourses(), selectedCourse);
+                String response = null;
+                try {
+                    response = courseInformationValidationTools.validateEditedCourse(name, relatedCourses, gui.getCourses(), selectedCourse);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
                     courseRepository.updateCourse(selectedCourse, name, subject, introductionText, level, relatedCourses);
-                    messageLabel.setText("The Student '" + name + "' has successfully been updated!");
+                    messageLabel.setText("The Course '" + name + "' has successfully been updated!");
                 }
 
             } else {

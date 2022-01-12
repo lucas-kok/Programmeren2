@@ -1,9 +1,9 @@
 package com.codecademy.gui.course;
 
-import com.codecademy.informationhandling.Course.Course;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.SearchBar;
+import com.codecademy.informationhandling.Course.Course;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -74,7 +75,12 @@ public class OverviewCoursesScene extends GUIScene {
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Course> result = searchBar.searchCourses(searchInput, gui.getCourses());
+            ArrayList<Course> result = null;
+            try {
+                result = searchBar.searchCourses(searchInput, gui.getCourses());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             coursesListPane.get().getChildren().clear();
             coursesListScroll.setContent(createCourseListPane(result));
@@ -89,7 +95,11 @@ public class OverviewCoursesScene extends GUIScene {
 
         courseOverviewWrapper.getChildren().addAll(searchBarPane, coursesListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
-        coursesListScroll.setContent(createCourseListPane(new ArrayList<>(gui.getCourses().values())));
+        try {
+            coursesListScroll.setContent(createCourseListPane(new ArrayList<>(gui.getCourses().values())));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Function that will convert a list of Courses to a vertical Pane containing a row for each Course

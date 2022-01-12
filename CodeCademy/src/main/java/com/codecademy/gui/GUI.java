@@ -100,7 +100,7 @@ public class GUI extends Application {
         return studentRepository.getAllStudents();
     }
 
-    public Map<String, Course> getCourses() { return courseRepository.getAllCourses(); }
+    public Map<String, Course> getCourses() throws SQLException { return courseRepository.getAllCourses(); }
 
     public ArrayList<Registration> getRegistrations() { return registrationRepository.getAllRegistrations(); }
 
