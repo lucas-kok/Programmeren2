@@ -55,6 +55,7 @@ public class RegistrationRepository {
         String queryDeleteRegistration = "DELETE FROM Register WHERE RegisterID = " + registration.getRegisterID() + " " +
                 "                         DELETE FROM Viewing WHERE StudentEmail = '" + registration.getStudentEmail() + "' " +
                 "                         AND ContenID IN (SELECT ContenID FROM ContentItem WHERE CourseName = '" + registration.getCourseName() + "')";
+        dbCon.setQuery(queryDeleteRegistration);
     }
 
     public HashMap<ContentItem, Integer> getProgressForRegistration(Registration registration) throws SQLException {
