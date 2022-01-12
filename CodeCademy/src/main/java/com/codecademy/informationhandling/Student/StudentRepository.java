@@ -94,5 +94,6 @@ public class StudentRepository {
     }
 
     //Get all registrations and get all certificates
+    //update student email in other tables
 
 }

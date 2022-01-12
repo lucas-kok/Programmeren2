@@ -90,9 +90,9 @@ public class CourseRepository {
         }
     }
 
-    //get average progress for this courses contenitems
+    //get average progress for this courses contentitems
     public HashMap<ContentItem, Integer> getAverageProgressPerContentItem() {
-        return  new HashMap<>();
+        return new HashMap<>();
     }
 
     //get how many certificates per course
