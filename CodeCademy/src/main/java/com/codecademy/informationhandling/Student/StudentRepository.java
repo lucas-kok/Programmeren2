@@ -1,12 +1,14 @@
 package com.codecademy.informationhandling.Student;
 
-import com.codecademy.informationhandling.ContentItem.ContentItem;
+import com.codecademy.informationhandling.Certificate.Certificate;
 import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.InformationFormatter;
+import com.codecademy.informationhandling.Registration.Registration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StudentRepository {
@@ -94,6 +96,29 @@ public class StudentRepository {
     }
 
     //Get all registrations and get all certificates
+    public ArrayList<Registration> getAllRegistrationsForStudent(Student student) throws SQLException {
+        ArrayList<Registration> registrations = new ArrayList<>();
+        String query = "SELECT * FROM Register WHERE StudentEmail = '" + student.getEmail() + "'";
+        ResultSet rs = dbCon.getQuery(query);
+        while (rs.next()) {
+            registrations.add(new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail"), rs.getString("RegisterDate"), rs.getString("CourseName")));
+        }
+        dbCon.CloseResultSet();
+        return registrations;
+    }
+
+    public ArrayList<Certificate> getAllCertificatesForStudent(Student student) throws SQLException {
+        ArrayList<Certificate> certificates = new ArrayList<>();
+        String query = "SELECT * FROM Certificate WHERE RegisterID IN (SELECT * FROM Register WHERE StudentEmail = '" + student.getEmail() + "')";
+        ResultSet rs = dbCon.getQuery(query);
+        while (rs.next()) {
+            certificates.add(new Certificate(rs.getInt("CertificateID"),rs.getInt("RegisterID"),rs.getInt("Score"),rs.getString("StaffName")));
+        }
+        dbCon.CloseResultSet();
+        return certificates;
+    }
+
     //update student email in other tables
+
 
 }

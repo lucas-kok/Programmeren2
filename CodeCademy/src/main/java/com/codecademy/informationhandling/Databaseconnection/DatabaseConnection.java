@@ -38,8 +38,6 @@ public class DatabaseConnection {
             rs = stmt.executeQuery(query);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-
         }
         return rs;
     }
