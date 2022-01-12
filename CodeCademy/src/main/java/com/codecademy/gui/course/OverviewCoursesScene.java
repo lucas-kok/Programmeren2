@@ -126,6 +126,8 @@ public class OverviewCoursesScene extends GUIScene {
             // Appending
             courseInfoRow.getChildren().addAll(indexLabel, courseName, informationDivider, courseSubject);
             courseListPane.getChildren().add(courseInfoRow);
+
+            index++;
         }
 
         return courseListPane;
