@@ -1,5 +1,6 @@
 package com.codecademy.informationhandling.Student;
 
+import com.codecademy.informationhandling.ContentItem.ContentItem;
 import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.InformationFormatter;
 
@@ -91,5 +92,7 @@ public class StudentRepository {
                 "       WHERE Email = '" + selectedStudent.getEmail() + "'";
         dbCon.setQuery(query);
     }
+
+
 
 }

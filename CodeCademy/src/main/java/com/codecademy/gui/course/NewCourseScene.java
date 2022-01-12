@@ -12,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
+
 public class NewCourseScene extends GUIScene {
 
     private Scene newCourseScene;
@@ -89,11 +91,16 @@ public class NewCourseScene extends GUIScene {
                 String level = courseLevelInput.getValue();
                 String relatedCoursesString = courseRelatedCoursesInput.getText();
 
-                String response = courseInformationValidator.validateNewCourse(name, relatedCoursesString, gui.getCourses());
+                String response = null;
+                try {
+                    response = courseInformationValidator.validateNewCourse(name, relatedCoursesString, gui.getCourses());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
-                    courseRepository.createNewCourse(name, subject, introductionText, level, relatedCoursesString);
+                    courseRepository.createCourse(new Course(name, subject, introductionText, level, relatedCoursesString));
 
                     // Clearing all fields
                     courseNameInput.clear();
