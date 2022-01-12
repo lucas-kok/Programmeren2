@@ -32,7 +32,7 @@ public class StudentRepository {
             gender = "x";
         }
 
-        String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday().toString().replaceAll("-", "/") + "', 103)" +
+        String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday() + "', 103)" +
                 ", '" + gender + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "', '" + student.getPostalCode() + "')";
         dbCon.setQuery(query);
     }
@@ -84,7 +84,7 @@ public class StudentRepository {
                 "       , City = '" + newStudent.getCity() + "'" +
                 "       , Country = '" + newStudent.getCountry() + "'" +
                 "       , Gender = '" + gender + "'" +
-                "       , Birthday = (convert(datetime, '" + newStudent.getBirthday().toString().replaceAll("-", "/") + "', 103)) " +
+                "       , Birthday = (convert(datetime, '" + newStudent.getBirthday() + "', 103)) " +
                 "       WHERE Email = '" + selectedStudent.getEmail() + "'";
         dbCon.setQuery(query);
     }
@@ -117,8 +117,5 @@ public class StudentRepository {
         dbCon.CloseResultSet();
         return certificates;
     }
-
-    //update student email in other tables
-
 
 }

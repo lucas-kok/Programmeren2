@@ -41,8 +41,10 @@ public class Student {
         return Name;
     }
 
-    public LocalDate getBirthday() {
-        return Birthday;
+    public String getBirthday() {
+        String[] pieces = this.Birthday.toString().split("-");
+        String answer = pieces[2] + "/" + pieces[1] + "/" + pieces[0];
+        return answer;
     }
 
     public String getGender() {
