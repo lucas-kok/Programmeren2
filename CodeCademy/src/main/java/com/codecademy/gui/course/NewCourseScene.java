@@ -2,37 +2,57 @@ package com.codecademy.gui.course;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
+import com.codecademy.informationhandling.contentitem.ContentItem;
+import com.codecademy.informationhandling.contentitem.ContentItemRepository;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.informationhandling.course.CourseRepository;
 import com.codecademy.informationhandling.validators.CourseInformationValidator;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class NewCourseScene extends GUIScene {
 
     private Scene newCourseScene;
     private final int sceneWidth;
     private final int sceneHeight;
+    private ArrayList<ContentItem> selectedContentItems;
+    private ArrayList<ContentItem> availableContentItems;
+
+    private ScrollPane selectedModulesScroll;
+    private ScrollPane availableModulesScroll;
 
     private final GUI gui;
     private final CourseInformationValidator courseInformationValidator;
     private final CourseRepository courseRepository;
+    private final ContentItemRepository contentItemRepository;
 
     public NewCourseScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        selectedContentItems = new ArrayList<>();
 
         this.gui = gui;
         courseInformationValidator = new CourseInformationValidator();
         courseRepository = new CourseRepository();
+        contentItemRepository = new ContentItemRepository();
+
+        try {
+            availableContentItems = contentItemRepository.getUnusedContentItems();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         createScene();
         setScene(newCourseScene);
@@ -44,6 +64,14 @@ public class NewCourseScene extends GUIScene {
         VBox header = new VBox(15);
         HBox navigation = new HBox(15);
         VBox newCoursePane = new VBox(15);
+
+        HBox modulesSelectionWrapper = new HBox(5);
+
+        VBox newCourseSelectedModulesWrapper = new VBox(5);
+        selectedModulesScroll = new ScrollPane();
+
+        VBox availableModulesWrapper = new VBox(5);
+        availableModulesScroll = new ScrollPane();
 
         newCourseScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
@@ -60,7 +88,7 @@ public class NewCourseScene extends GUIScene {
         Label courseSubjectLabel = new Label("Subject:");
         TextField courseSubjectInput = new TextField();
 
-        Label courseIntroductionTextLabel = new Label("IntroductionText");
+        Label courseIntroductionTextLabel = new Label("Introduction text:");
         TextArea courseIntroductionTextInput = new TextArea();
 
         Label courseLevelLabel = new Label("Level:");
@@ -69,6 +97,9 @@ public class NewCourseScene extends GUIScene {
 
         Label courseRelatedCoursesLabel = new Label("Related Courses (Split with ', ' and Case-Sensitive)");
         TextField courseRelatedCoursesInput = new TextField();
+
+        Label selectedModulesLabel = new Label("Selected Modules:");
+        Label availableModulesLabel = new Label("Available Modules:");
 
         Button createCourseButton = new Button("Create new Course");
         Label messageLabel = new Label();
@@ -84,7 +115,7 @@ public class NewCourseScene extends GUIScene {
         createCourseButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
             if (!courseNameInput.getText().isBlank() && !courseSubjectInput.getText().isEmpty() &&
-                    !courseIntroductionTextInput.getText().isEmpty() && courseLevelInput.getValue() != null) {
+                    !courseIntroductionTextInput.getText().isEmpty() && courseLevelInput.getValue() != null && selectedContentItems.size() > 0) {
                 String name = courseNameInput.getText();
                 String subject = courseSubjectInput.getText();
                 String introductionText = courseIntroductionTextInput.getText();
@@ -100,7 +131,9 @@ public class NewCourseScene extends GUIScene {
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
-                    courseRepository.createCourse(new Course(name, subject, introductionText, level, relatedCoursesString));
+                    Course newCourse = new Course(name, subject, introductionText, level, relatedCoursesString);
+                    courseRepository.createCourse(newCourse);
+                    contentItemRepository.addContentItemsToCourse(newCourse, selectedContentItems);
 
                     // Clearing all fields
                     courseNameInput.clear();
@@ -108,6 +141,13 @@ public class NewCourseScene extends GUIScene {
                     courseIntroductionTextInput.clear();
                     courseLevelInput.setValue(null);
                     courseRelatedCoursesInput.clear();
+                    selectedContentItems = new ArrayList<>();
+                    selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
+                    try {
+                        availableModulesScroll.setContent(createAvailableModulesPane(contentItemRepository.getUnusedContentItems()));
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
 
                     messageLabel.setText("The Course '" + name + "' has successfully been created!");
                 }
@@ -126,10 +166,92 @@ public class NewCourseScene extends GUIScene {
 
         newCoursePane.getChildren().addAll(courseNameLabel, courseNameInput, courseSubjectLabel, courseSubjectInput,
                 courseIntroductionTextLabel, courseIntroductionTextInput, courseLevelLabel, courseLevelInput,
-                courseRelatedCoursesLabel, courseRelatedCoursesInput, createCourseButton, messageLabel);
+                courseRelatedCoursesLabel, courseRelatedCoursesInput, modulesSelectionWrapper, createCourseButton, messageLabel);
+
+        modulesSelectionWrapper.getChildren().addAll(newCourseSelectedModulesWrapper, availableModulesWrapper);
+        newCourseSelectedModulesWrapper.getChildren().addAll(selectedModulesLabel, selectedModulesScroll);
+        availableModulesWrapper.getChildren().addAll(availableModulesLabel, availableModulesScroll);
+
+        selectedModulesScroll.setContent(new VBox(5));
+        try {
+            availableModulesScroll.setContent(createAvailableModulesPane(contentItemRepository.getUnusedContentItems()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Function that will convert a list of the selected Modules into a VBox
+    private VBox createSelectedModulesPane(ArrayList<ContentItem> contentItems) {
+        VBox studentListPane = new VBox(5);
+
+        int index = 0;
+        for (ContentItem contentItem : contentItems) {
+            // Panes
+            HBox contentItemInformationRow = new HBox(10);
+
+            // Nodes
+            Label indexLabel = new Label(index + 1 + ". ");
+            Label contentItemPublicationDateLabel = new Label(contentItem.getPublicationDate());
+            Label informationDivider = new Label("-");
+            Label contentItemTitleLabel = new Label(contentItem.getTitle());
+
+            // Event Handlers
+            contentItemInformationRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
+                selectedContentItems.remove(contentItem);
+
+                selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
+                availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
+            });
+
+            // Appending
+            contentItemInformationRow.getChildren().addAll(indexLabel, contentItemPublicationDateLabel, informationDivider, contentItemTitleLabel);
+            studentListPane.getChildren().add(contentItemInformationRow);
+
+            index++;
+        }
+
+        return studentListPane;
+    }
+
+    // Function that will convert a list of the available Modules into a VBox
+    private VBox createAvailableModulesPane(ArrayList<ContentItem> contentItems) {
+        VBox studentListPane = new VBox(5);
+
+        int index = 0;
+        for (ContentItem contentItem : contentItems) {
+            if (!selectedContentItems.contains(contentItem)) {
+                // Panes
+                HBox contentItemInformationRow = new HBox(10);
+
+                // Nodes
+                Label indexLabel = new Label(index + 1 + ". ");
+                Label contentItemPublicationDateLabel = new Label(contentItem.getPublicationDate());
+                Label informationDivider = new Label("-");
+                Label contentItemTitleLabel = new Label(contentItem.getTitle());
+
+                // Event Handlers
+                contentItemInformationRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
+                    if (!selectedContentItems.contains(contentItem)) {
+                        selectedContentItems.add(contentItem);
+
+                        selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
+                        availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
+                    }
+                });
+
+                // Appending
+                contentItemInformationRow.getChildren().addAll(indexLabel, contentItemPublicationDateLabel, informationDivider, contentItemTitleLabel);
+                studentListPane.getChildren().add(contentItemInformationRow);
+
+                index++;
+            }
+        }
+
+        return studentListPane;
     }
 
     public void resetScene() {
+        selectedContentItems = new ArrayList<>();
         createScene();
         setScene(newCourseScene);
     }

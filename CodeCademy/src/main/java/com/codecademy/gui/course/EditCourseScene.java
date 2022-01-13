@@ -53,7 +53,7 @@ public class EditCourseScene extends GUIScene {
         header.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Edit Student");
+        Label title = new Label("Edit Course");
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
         Button deleteCourseButton = new Button("Delete");

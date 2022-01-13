@@ -15,11 +15,13 @@ public class ContentItemRepository {
         dbCon = new DatabaseConnection();
     }
 
-    public void addContentItemToCourse(Course course, ContentItem contentItem) {
-        String query = "UPDATE ContentItem " +
-                "SET CourseName = '" + course.getName() + "' " +
-                "WHERE ContentID = '" + contentItem.getId() + "'";
-        dbCon.setQuery(query);
+    public void addContentItemsToCourse(Course course, ArrayList<ContentItem> contentItems) {
+        for (ContentItem contentItem : contentItems) {
+            String query = "UPDATE ContentItem " +
+                    "SET CourseName = '" + course.getName() + "' " +
+                    "WHERE ContentID = '" + contentItem.getId() + "'";
+            dbCon.setQuery(query);
+        }
     }
 
     public ArrayList<ContentItem> getUnusedContentItems() throws SQLException {
