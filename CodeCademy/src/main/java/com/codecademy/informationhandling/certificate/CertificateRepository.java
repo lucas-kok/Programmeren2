@@ -21,10 +21,10 @@ public class CertificateRepository {
 
     public ArrayList<Certificate> getALlCertificates() throws SQLException {
         ArrayList<Certificate> certificates = new ArrayList<>();
-        String queryGetAllCertificates = "SELECT * FROM Certificate";
+        String queryGetAllCertificates = "SELECT Certificate.*, Register.StudentEmail, Register.CourseName FROM Certificate INNER JOIN Register ON Register.RegisterID = Certificate.RegisterID";
         ResultSet rs = dbCon.getQuery(queryGetAllCertificates);
         while (rs.next()) {
-            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getInt("Score"), rs.getString("StaffName")));
+            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getString("StudentEmail"),rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
         }
         dbCon.CloseResultSet();
         return certificates;

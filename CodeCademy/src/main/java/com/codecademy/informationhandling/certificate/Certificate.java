@@ -4,14 +4,34 @@ public class Certificate {
 
     private int CertificateID;
     private int RegisterID;
+    private String StudentEmail;
+    private String CourseName;
     private int score;
     private String StaffName;
 
-    public Certificate(int certificateID, int registerID, int score, String staffName) {
-        CertificateID = certificateID;
-        RegisterID = registerID;
+    public Certificate(int certificateID, int registerID, String studentEmail, String courseName, int score, String staffName) {
+        this.CertificateID = certificateID;
+        this.RegisterID = registerID;
         this.score = score;
-        StaffName = staffName;
+        this.StaffName = staffName;
+        this.StudentEmail = studentEmail;
+        this.CourseName = courseName;
+    }
+
+    public String getStudentEmail() {
+        return StudentEmail;
+    }
+
+    public void setStudentEmail(String studentEmail) {
+        StudentEmail = studentEmail;
+    }
+
+    public String getCourseName() {
+        return CourseName;
+    }
+
+    public void setCourseName(String courseName) {
+        CourseName = courseName;
     }
 
     public int getCertificateID() {
