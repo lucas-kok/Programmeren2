@@ -1,12 +1,14 @@
 package com.codecademy.informationhandling.Student;
 
-import com.codecademy.informationhandling.ContentItem.ContentItem;
+import com.codecademy.informationhandling.Certificate.Certificate;
 import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.InformationFormatter;
+import com.codecademy.informationhandling.Registration.Registration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StudentRepository {
@@ -30,7 +32,7 @@ public class StudentRepository {
             gender = "x";
         }
 
-        String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday().toString().replaceAll("-", "/") + "', 103)" +
+        String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday() + "', 103)" +
                 ", '" + gender + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "', '" + student.getPostalCode() + "')";
         dbCon.setQuery(query);
     }
@@ -82,8 +84,9 @@ public class StudentRepository {
                 "       , City = '" + newStudent.getCity() + "'" +
                 "       , Country = '" + newStudent.getCountry() + "'" +
                 "       , Gender = '" + gender + "'" +
-                "       , Birthday = (convert(datetime, '" + newStudent.getBirthday().toString().replaceAll("-", "/") + "', 103)) " +
-                "       WHERE Email = '" + selectedStudent.getEmail() + "'";
+                "       , Birthday = (convert(datetime, '" + newStudent.getBirthday() + "', 103)) " +
+                "       WHERE Email = '" + selectedStudent.getEmail() + "'" +
+                "       UPDATE Viewing SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'";
         dbCon.setQuery(query);
     }
 
@@ -93,6 +96,27 @@ public class StudentRepository {
         dbCon.setQuery(query);
     }
 
+    //Get all registrations and get all certificates
+    public ArrayList<Registration> getAllRegistrationsForStudent(Student student) throws SQLException {
+        ArrayList<Registration> registrations = new ArrayList<>();
+        String query = "SELECT * FROM Register WHERE StudentEmail = '" + student.getEmail() + "'";
+        ResultSet rs = dbCon.getQuery(query);
+        while (rs.next()) {
+            registrations.add(new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail"), rs.getString("RegisterDate"), rs.getString("CourseName")));
+        }
+        dbCon.CloseResultSet();
+        return registrations;
+    }
 
+    public ArrayList<Certificate> getAllCertificatesForStudent(Student student) throws SQLException {
+        ArrayList<Certificate> certificates = new ArrayList<>();
+        String query = "SELECT * FROM Certificate WHERE RegisterID IN (SELECT * FROM Register WHERE StudentEmail = '" + student.getEmail() + "')";
+        ResultSet rs = dbCon.getQuery(query);
+        while (rs.next()) {
+            certificates.add(new Certificate(rs.getInt("CertificateID"),rs.getInt("RegisterID"),rs.getInt("Score"),rs.getString("StaffName")));
+        }
+        dbCon.CloseResultSet();
+        return certificates;
+    }
 
 }

@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -73,7 +74,12 @@ public class OverviewRegistrationsScene extends GUIScene {
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Registration> searchResult = searchBar.searchRegistrations(searchInput, gui.getRegistrations());
+            ArrayList<Registration> searchResult = null;
+            try {
+                searchResult = searchBar.searchRegistrations(searchInput, gui.getRegistrations());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
             registrationListPane.get().getChildren().clear();
             registrationListScroll.setContent(createRegistrationListPane(searchResult));
@@ -88,7 +94,11 @@ public class OverviewRegistrationsScene extends GUIScene {
 
         registrationOverviewWrapper.getChildren().addAll(searchBarPane, registrationListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
-        registrationListScroll.setContent(createRegistrationListPane(new ArrayList<>(gui.getRegistrations())));
+        try {
+            registrationListScroll.setContent(createRegistrationListPane(new ArrayList<>(gui.getRegistrations())));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Function that will convert a list of Students to a vertical Pane containing a row for each Student

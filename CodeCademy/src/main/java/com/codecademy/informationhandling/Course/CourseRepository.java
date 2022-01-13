@@ -1,10 +1,12 @@
 package com.codecademy.informationhandling.Course;
 
+import com.codecademy.informationhandling.ContentItem.ContentItem;
 import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.InformationFormatter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -87,6 +89,42 @@ public class CourseRepository {
                 dbCon.setQuery(queryCreateRelatedCourse);
             }
         }
+    }
+
+    //get average progress for this courses contentitems
+    public HashMap<ContentItem, Integer> getAverageProgressPerContentItem(Course course) throws SQLException {
+        HashMap<ContentItem, Integer> averageProgressPerContentItem = new HashMap<>();
+        ArrayList<ContentItem> contentItems = new ArrayList<>();
+        String queryGetALlContentItems = "SELECT * FROM ContentItem WHERE CourseName = '" + course.getName() + "'";
+        ResultSet rs = dbCon.getQuery(queryGetALlContentItems);
+        while (rs.next()) {
+            contentItems.add(new ContentItem(rs.getInt("ContentID"), rs.getString("Title"), rs.getDate("PublicationDate").toString()));
+        }
+        dbCon.CloseResultSet();
+        for (ContentItem contentItem : contentItems) {
+            String queryGetAllProgress = "SELECT Progress FROM Viewing WHERE ContenID = " + contentItem.getId() + "";
+            ResultSet rsAllprogress = dbCon.getQuery(queryGetAllProgress);
+            int counter = 0;
+            int totalProgress = 0;
+            while (rsAllprogress.next()) {
+                counter++;
+                totalProgress += rsAllprogress.getInt("Progress");
+            }
+            dbCon.CloseResultSet();
+            averageProgressPerContentItem.put(contentItem, (totalProgress / counter));
+        }
+        return averageProgressPerContentItem;
+    }
+
+    //get how many certificates per course
+    public int getAmountOfCertificates (Course course) throws SQLException {
+        String queryGetAmountOfCertificates = "SELECT COUNT(CertificateID) as 'amount' FROM Certificate WHERE RegisterID IN (SELECT RegisterID FROM Register WHERE CourseName = '" + course.getName() + "')";
+        ResultSet rs = dbCon.getQuery(queryGetAmountOfCertificates);
+        int amountOfCertificates = 0;
+        while (rs.next()) {
+            amountOfCertificates = rs.getInt("amount");
+        }
+        return amountOfCertificates;
     }
 
 }
