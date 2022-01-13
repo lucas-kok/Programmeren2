@@ -19,7 +19,7 @@ public class StatisticsScene extends GUIScene {
     private Scene statisticsScene;
     private final int sceneWidth;
     private final int sceneHeight;
-    private TableView table = new TableView();
+    private final TableView<String> table = new TableView<>();
 
     public StatisticsScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
@@ -34,30 +34,47 @@ public class StatisticsScene extends GUIScene {
     private void createScene() {
         Scene scene = new Scene(new Group());
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        VBox homePageButtonsPage = new VBox(15);
+        BorderPane buttonsPane = new BorderPane();
+
+        // To be initialised into original values
+        String totAppliedVal = "null";
+        String perPassedVal = "null";
+
 
         statisticsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        //Nodes, using tables to display data
+        //Nodes
         final Label label = new Label("Gender Filtered");
 
-        table.setEditable(false);
 
-        TableColumn course = new TableColumn("Course");
-        TableColumn totApplied = new TableColumn("Total applied");
-        TableColumn percPassed = new TableColumn("Percentage");
+        TableColumn<String, String> totApplied = new TableColumn<>("Total applied");
+        TableColumn<String, String> perPassed = new TableColumn<>("Percentage");
+        Button buttonMale = new Button("Male");
+        Button buttonFemale = new Button("Female");
+        Button buttonOther = new Button("Other");
 
-        table.getColumns().addAll(course, totApplied, percPassed);
 
-        final VBox vbox = new VBox();
+        // Table initialisation
+        final VBox vbox = new VBox(1);
+        table.getColumns().addAll(totApplied, perPassed);
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10,0,0,10));
-        vbox.getChildren().addAll (label, table);
-
+        vbox.getChildren().addAll(label, table);
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
 
 
-        mainPane.setTop(header);
+        // Appending
+        buttonsPane.setLeft(buttonFemale);
+        buttonsPane.setRight(buttonMale);
+        buttonsPane.setCenter(buttonOther);
+
+        mainPane.setTop(vbox);
+        mainPane.setCenter(buttonsPane);
+
+    }
+
+    public void resetScene() {
+        createScene();
+        setScene(statisticsScene);
     }
 }
