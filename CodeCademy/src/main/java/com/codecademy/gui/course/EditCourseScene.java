@@ -90,8 +90,8 @@ public class EditCourseScene extends GUIScene {
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewStudentsScene) getSceneObject("overviewStudentsScene")).resetScene();
-            showScene("overviewStudentsScene");
+            ((OverviewCoursesScene) getSceneObject("overviewCourseScene")).resetScene();
+            showScene("overviewCourseScene");
         });
 
         deleteCourseButton.setOnAction((event) -> {

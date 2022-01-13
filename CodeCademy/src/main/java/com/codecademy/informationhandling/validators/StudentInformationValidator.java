@@ -5,6 +5,8 @@ import com.codecademy.informationhandling.Student.Student;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StudentInformationValidator {
 
@@ -55,19 +57,13 @@ public class StudentInformationValidator {
 
     // Email
     public boolean validateMailAddress(String mailAddress) {
-        if (!mailAddress.contains("@")) return false;
+        String emailFormat = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
 
-        String[] emailParts = mailAddress.split("@");
-        if (emailParts.length != 2) return false;
-        if (emailParts[0].isBlank() || emailParts[1].isBlank()) return false;
-
-        if (emailParts[1].contains(".")) {
-            String[] domainParts = emailParts[1].split("\\.");
-            if (domainParts.length != 2) return false;
-            return !domainParts[0].isBlank() && !domainParts[1].isBlank();
-        } else {
-            return false;
-        }
+        Pattern pat = Pattern.compile(emailFormat);
+        return pat.matcher(mailAddress).matches();
     }
 
     public boolean mailAddressDoesNotExist(String mailAddress, Map<String, Student> students) {

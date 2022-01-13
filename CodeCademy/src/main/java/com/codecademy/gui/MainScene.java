@@ -43,6 +43,7 @@ public class MainScene extends GUIScene{
         Button certificationsButton = new Button("Certifications");
         Button registrationsButton = new Button("Registrations");
         Button statisticsButton = new Button("Statistics");
+        Button templateSceneButton = new Button("Template Scene");
 
         // Event Handlers
         studentsButton.setOnAction((event) -> {
@@ -66,12 +67,17 @@ public class MainScene extends GUIScene{
             showScene("overviewRegistrationsScene");
         });
 
+        templateSceneButton.setOnAction((event) -> {
+            ((TemplateScene)getSceneObject("templateScene")).resetScene();
+            showScene("templateScene");
+        });
+
         // Appending
         mainPane.setTop(header);
         mainPane.setCenter(homePageButtonsPane);
 
         header.getChildren().add(title);
-        homePageButtonsPane.getChildren().addAll(studentsButton, coursesButton, certificationsButton, registrationsButton, statisticsButton);
+        homePageButtonsPane.getChildren().addAll(studentsButton, coursesButton, certificationsButton, registrationsButton, statisticsButton, templateSceneButton);
     }
 
     public void resetScene() {
