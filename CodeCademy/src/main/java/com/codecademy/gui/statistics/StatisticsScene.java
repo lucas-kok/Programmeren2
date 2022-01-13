@@ -1,5 +1,7 @@
-package com.codecademy.gui;
+package com.codecademy.gui.statistics;
 
+import com.codecademy.gui.GUI;
+import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.student.OverviewStudentsScene;

@@ -14,4 +14,8 @@ module com.example.codecademy {
     opens com.codecademy.informationhandling to javafx.fxml;
     exports com.codecademy.informationhandling.validators;
     opens com.codecademy.informationhandling.validators to javafx.fxml;
+    exports com.codecademy.gui.statistics;
+    opens com.codecademy.gui.statistics to javafx.fxml;
+    exports com.codecademy.gui.template;
+    opens com.codecademy.gui.template to javafx.fxml;
 }

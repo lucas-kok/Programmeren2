@@ -1,5 +1,7 @@
-package com.codecademy.gui;
+package com.codecademy.gui.template;
 
+import com.codecademy.gui.GUI;
+import com.codecademy.gui.GUIScene;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class TemplateScene extends GUIScene{
+public class TemplateScene extends GUIScene {
     private Scene crudTypeObjectNameScene; // Example: createStudentScene
     private int sceneWidth;
     private int sceneHeight;
