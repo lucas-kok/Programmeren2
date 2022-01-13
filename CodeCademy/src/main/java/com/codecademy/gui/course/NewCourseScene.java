@@ -2,8 +2,8 @@ package com.codecademy.gui.course;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
-import com.codecademy.informationhandling.Course.Course;
-import com.codecademy.informationhandling.Course.CourseRepository;
+import com.codecademy.informationhandling.course.Course;
+import com.codecademy.informationhandling.course.CourseRepository;
 import com.codecademy.informationhandling.validators.CourseInformationValidator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

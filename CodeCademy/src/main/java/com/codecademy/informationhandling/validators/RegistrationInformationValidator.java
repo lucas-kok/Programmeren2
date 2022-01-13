@@ -1,7 +1,7 @@
 package com.codecademy.informationhandling.validators;
 
-import com.codecademy.informationhandling.Course.Course;
-import com.codecademy.informationhandling.Student.Student;
+import com.codecademy.informationhandling.course.Course;
+import com.codecademy.informationhandling.student.Student;
 
 import java.util.Map;
 
@@ -11,14 +11,21 @@ public class RegistrationInformationValidator {
 
     }
 
-    public String validateNewRegistration(String[] registrationDatePieces, String studentEmail, String courseName, Map<String, Student> students, Map<String, Course> courses) {
+    public String validateNewRegistration(String studentEmail, String courseName, Map<String, Student> students, Map<String, Course> courses) {
         StringBuilder message = new StringBuilder();
 
-        if (!validateRegistrationDate(registrationDatePieces)) message.append("The registration date is not valid!");
-        if (!validateStudentEmail(studentEmail, students)) message.append("The email: '").append(studentEmail).append("' does not exists!");
-        if (!validateCourseName(courseName, courses)) message.append("The Course: '").append(courseName).append("' does not exists!");
+        if (!validateStudentEmail(studentEmail, students)) message.append("\nThe email: '").append(studentEmail).append("' does not exists!");
+        if (!validateCourseName(courseName, courses)) message.append("\nThe Course: '").append(courseName).append("' does not exists!");
 
         return message.toString();
+    }
+
+    public String validateEditedRegistration(String[] registrationDatePieces) {
+        if (!validateRegistrationDate(registrationDatePieces)) {
+            return "The Registration Date is not valid!";
+        }
+
+        return "";
     }
 
     // Registration Date

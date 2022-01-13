@@ -1,4 +1,4 @@
-package com.codecademy.informationhandling.Course;
+package com.codecademy.informationhandling.course;
 
 public class Course {
 

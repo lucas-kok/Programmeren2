@@ -1,4 +1,4 @@
-package com.codecademy.informationhandling.Databaseconnection;
+package com.codecademy.informationhandling.databaseconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class DatabaseConnection {
 
-    private String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCadamyDB;user=sa;password=TurboSjaantjeFTW!";
+    private String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCadamyDB;user=sa;password=LucasKokSQL!";
     Connection con = null;
     Statement stmt = null;
     ResultSet rs = null;

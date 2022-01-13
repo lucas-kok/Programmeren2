@@ -3,7 +3,7 @@ package com.codecademy.gui.registration;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.SearchBar;
-import com.codecademy.informationhandling.Registration.Registration;
+import com.codecademy.informationhandling.registration.Registration;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -57,7 +57,7 @@ public class OverviewRegistrationsScene extends GUIScene {
         overviewRegistrationsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
-        Label title = new Label("Students Overview");
+        Label title = new Label("Registrations Overview");
         Button homeButton = new Button("Home");
         Button newRegistrationButton = new Button("New Registration");
 
@@ -112,7 +112,7 @@ public class OverviewRegistrationsScene extends GUIScene {
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ".");
-            Label registrationDateLabel = new Label(registration.getRegistrationDate() + ":");
+            Label registrationDateLabel = new Label(registration.getRegistrationDate());
             Label registrationStudentEmailLabel = new Label(registration.getStudentEmail());
             Label informationDivider = new Label("-");
             Label registrationCourseNameLabel = new Label(registration.getCourseName());

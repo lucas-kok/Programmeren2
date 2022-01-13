@@ -1,6 +1,6 @@
 package com.codecademy.informationhandling.validators;
 
-import com.codecademy.informationhandling.Course.Course;
+import com.codecademy.informationhandling.course.Course;
 import com.codecademy.informationhandling.InformationFormatter;
 
 import java.util.Map;

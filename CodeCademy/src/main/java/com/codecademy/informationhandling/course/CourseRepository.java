@@ -1,7 +1,7 @@
-package com.codecademy.informationhandling.Course;
+package com.codecademy.informationhandling.course;
 
-import com.codecademy.informationhandling.ContentItem.ContentItem;
-import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
+import com.codecademy.informationhandling.contentitem.ContentItem;
+import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.InformationFormatter;
 
 import java.sql.ResultSet;

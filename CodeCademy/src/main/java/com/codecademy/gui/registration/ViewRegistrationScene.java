@@ -2,7 +2,7 @@ package com.codecademy.gui.registration;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
-import com.codecademy.informationhandling.Registration.Registration;
+import com.codecademy.informationhandling.registration.Registration;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

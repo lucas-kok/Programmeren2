@@ -1,6 +1,6 @@
-package com.codecademy.informationhandling.Certificate;
+package com.codecademy.informationhandling.certificate;
 
-import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
+import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

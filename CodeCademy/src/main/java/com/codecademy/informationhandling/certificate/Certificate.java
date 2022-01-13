@@ -1,4 +1,4 @@
-package com.codecademy.informationhandling.Certificate;
+package com.codecademy.informationhandling.certificate;
 
 public class Certificate {
 

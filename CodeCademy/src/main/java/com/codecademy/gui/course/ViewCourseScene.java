@@ -1,6 +1,6 @@
 package com.codecademy.gui.course;
 
-import com.codecademy.informationhandling.Course.Course;
+import com.codecademy.informationhandling.course.Course;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import javafx.geometry.Pos;

@@ -1,9 +1,9 @@
-package com.codecademy.informationhandling.Student;
+package com.codecademy.informationhandling.student;
 
-import com.codecademy.informationhandling.Certificate.Certificate;
-import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
+import com.codecademy.informationhandling.certificate.Certificate;
+import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
 import com.codecademy.informationhandling.InformationFormatter;
-import com.codecademy.informationhandling.Registration.Registration;
+import com.codecademy.informationhandling.registration.Registration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

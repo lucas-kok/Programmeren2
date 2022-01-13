@@ -1,8 +1,8 @@
 package com.codecademy.gui;
 
-import com.codecademy.informationhandling.Course.Course;
-import com.codecademy.informationhandling.Student.Student;
-import com.codecademy.informationhandling.Registration.Registration;
+import com.codecademy.informationhandling.course.Course;
+import com.codecademy.informationhandling.student.Student;
+import com.codecademy.informationhandling.registration.Registration;
 
 import java.util.ArrayList;
 import java.util.Map;

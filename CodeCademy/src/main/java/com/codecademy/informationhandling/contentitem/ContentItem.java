@@ -1,4 +1,4 @@
-package com.codecademy.informationhandling.ContentItem;
+package com.codecademy.informationhandling.contentitem;
 
 public class ContentItem {
 

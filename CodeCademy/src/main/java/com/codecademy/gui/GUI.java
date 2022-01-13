@@ -11,12 +11,12 @@ import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
 import com.codecademy.gui.student.ViewStudentScene;
-import com.codecademy.informationhandling.Course.Course;
-import com.codecademy.informationhandling.Course.CourseRepository;
-import com.codecademy.informationhandling.Registration.Registration;
-import com.codecademy.informationhandling.Registration.RegistrationRepository;
-import com.codecademy.informationhandling.Student.Student;
-import com.codecademy.informationhandling.Student.StudentRepository;
+import com.codecademy.informationhandling.course.Course;
+import com.codecademy.informationhandling.course.CourseRepository;
+import com.codecademy.informationhandling.registration.Registration;
+import com.codecademy.informationhandling.registration.RegistrationRepository;
+import com.codecademy.informationhandling.student.Student;
+import com.codecademy.informationhandling.student.StudentRepository;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

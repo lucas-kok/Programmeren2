@@ -3,7 +3,7 @@ package com.codecademy.gui.student;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.SearchBar;
-import com.codecademy.informationhandling.Student.Student;
+import com.codecademy.informationhandling.student.Student;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

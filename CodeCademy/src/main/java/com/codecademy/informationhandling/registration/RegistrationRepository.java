@@ -1,8 +1,8 @@
-package com.codecademy.informationhandling.Registration;
+package com.codecademy.informationhandling.registration;
 
-import com.codecademy.informationhandling.ContentItem.ContentItem;
-import com.codecademy.informationhandling.Databaseconnection.DatabaseConnection;
-import com.codecademy.informationhandling.Student.Student;
+import com.codecademy.informationhandling.contentitem.ContentItem;
+import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
+import com.codecademy.informationhandling.student.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +17,9 @@ public class RegistrationRepository {
         dbCon = new DatabaseConnection();
     }
 
-    public void createRegistration(Student student, String courseName, String[] datePieces) throws SQLException {
+    public void createRegistration(String studentEmail, String courseName, String[] datePieces) throws SQLException {
         String date = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
-        String queryCreateRegistration = "INSERT INTO Register values (convert(datetime, '" + date + "', 103), '" + student.getEmail() + "', '" + courseName + "')";
+        String queryCreateRegistration = "INSERT INTO Register values (convert(datetime, '" + date + "', 103), '" + studentEmail + "', '" + courseName + "')";
         dbCon.setQuery(queryCreateRegistration);
         ArrayList<Integer> contentItemIDs = new ArrayList<>();
         String querygetAllContentItemsForCourse = "SELECT ContentID FROM ContentItem WHERE CourseName = '" + courseName + "'";
@@ -29,7 +29,7 @@ public class RegistrationRepository {
         }
         dbCon.CloseResultSet();
         for (Integer id : contentItemIDs) {
-            String queryAddProgressItemForRegistration = "INSERT INTO Viewing values ('" + student.getEmail() + "', " + id + ", 0)";
+            String queryAddProgressItemForRegistration = "INSERT INTO Viewing values ('" + studentEmail + "', " + id + ", 0)";
             dbCon.setQuery(queryAddProgressItemForRegistration);
         }
     }

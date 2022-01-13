@@ -1,4 +1,4 @@
-package com.codecademy.informationhandling.Registration;
+package com.codecademy.informationhandling.registration;
 
 public class Registration {
 

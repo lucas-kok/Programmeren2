@@ -1,11 +1,10 @@
 package com.codecademy.informationhandling.validators;
 
-import com.codecademy.informationhandling.Student.Student;
+import com.codecademy.informationhandling.student.Student;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StudentInformationValidator {
