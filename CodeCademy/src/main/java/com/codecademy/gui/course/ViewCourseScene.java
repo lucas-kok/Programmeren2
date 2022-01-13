@@ -3,6 +3,7 @@ package com.codecademy.gui.course;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
+import com.codecademy.informationhandling.course.CourseRepository;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.sql.SQLException;
+
 public class ViewCourseScene extends GUIScene {
 
     private Scene viewCourseScene;
@@ -18,6 +21,7 @@ public class ViewCourseScene extends GUIScene {
     private final int sceneHeight;
 
     private Course selectedCourse;
+    private final CourseRepository courseRepository;
 
     public ViewCourseScene(GUI gui, int sceneWidth, int sceneHeight, Course selectedCourse) {
         super(gui);
@@ -25,6 +29,7 @@ public class ViewCourseScene extends GUIScene {
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
         this.selectedCourse = selectedCourse;
+        courseRepository = new CourseRepository();
 
         if (selectedCourse != null) {
             createScene();
@@ -55,6 +60,12 @@ public class ViewCourseScene extends GUIScene {
         Label selectedCourseIntroductionTextLabel = new Label("Introduction: " + selectedCourse.getIntroductionText());
         Label selectedCourseLevelLabel = new Label("Level: " + selectedCourse.getLevel());
         Label selectedCourseRelatedCoursesLabel = new Label("Related Courses: " + selectedCourse.getRelatedCoursesAsString());
+        Label selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates:");
+        try {
+            selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates: " + courseRepository.getAmountOfCertificates(selectedCourse));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
@@ -77,7 +88,7 @@ public class ViewCourseScene extends GUIScene {
         navigationPane.getChildren().addAll(homeButton, coursesButton, editSelectedCourseButton);
 
         viewCoursePane.getChildren().addAll(selectedCourseNameLabel, selectedCourseSubjectLabel,
-                selectedCourseIntroductionTextLabel, selectedCourseLevelLabel, selectedCourseRelatedCoursesLabel);
+                selectedCourseIntroductionTextLabel, selectedCourseLevelLabel, selectedCourseRelatedCoursesLabel, selectedCourseNumberOfCertificatesLabel);
     }
 
     public void resetScene(Course selectedCourse) {
