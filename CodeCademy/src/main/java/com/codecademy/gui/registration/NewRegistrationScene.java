@@ -100,7 +100,7 @@ public class NewRegistrationScene extends GUIScene {
                     registrationStudentEmailInput.clear();
                     registrationCourseNameInput.clear();
 
-                    messageLabel.setText("The Registration for '" + studentEmail + "' has successfully been created!");
+                    messageLabel.setText("The Registration for '" + studentEmail.toLowerCase() + "' has successfully been created!");
                 }
 
             } else {

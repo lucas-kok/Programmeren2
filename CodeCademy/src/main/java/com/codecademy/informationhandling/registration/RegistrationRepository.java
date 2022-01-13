@@ -1,8 +1,8 @@
 package com.codecademy.informationhandling.registration;
 
+import com.codecademy.informationhandling.InformationFormatter;
 import com.codecademy.informationhandling.contentitem.ContentItem;
 import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
-import com.codecademy.informationhandling.student.Student;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,13 +12,30 @@ import java.util.HashMap;
 public class RegistrationRepository {
 
     private final DatabaseConnection dbCon;
+    private final InformationFormatter informationFormatter;
 
     public RegistrationRepository() {
         dbCon = new DatabaseConnection();
+        informationFormatter = new InformationFormatter();
+    }
+
+    public ArrayList<Registration> getAllRegistrations() throws SQLException {
+        ArrayList<Registration> registrations = new ArrayList<>();
+        String queryGetAllRegistrations = "SELECT * FROM Register";
+        ResultSet rs = dbCon.getQuery(queryGetAllRegistrations);
+        while (rs.next()) {
+            registrations.add(new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail")
+                    , rs.getDate("Registerdate").toString(), rs.getString("CourseName")));
+        }
+        dbCon.CloseResultSet();
+        return registrations;
     }
 
     public void createRegistration(String studentEmail, String courseName, String[] datePieces) throws SQLException {
+        studentEmail = studentEmail.toLowerCase();
+        courseName = informationFormatter.capitalizeString(courseName);
         String date = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
+
         String queryCreateRegistration = "INSERT INTO Register values (convert(datetime, '" + date + "', 103), '" + studentEmail + "', '" + courseName + "')";
         dbCon.setQuery(queryCreateRegistration);
         ArrayList<Integer> contentItemIDs = new ArrayList<>();
@@ -32,18 +49,6 @@ public class RegistrationRepository {
             String queryAddProgressItemForRegistration = "INSERT INTO Viewing values ('" + studentEmail + "', " + id + ", 0)";
             dbCon.setQuery(queryAddProgressItemForRegistration);
         }
-    }
-
-    public ArrayList<Registration> getAllRegistrations() throws SQLException {
-        ArrayList<Registration> registrations = new ArrayList<>();
-        String queryGetAllRegistrations = "SELECT * FROM Register";
-        ResultSet rs = dbCon.getQuery(queryGetAllRegistrations);
-        while (rs.next()) {
-            registrations.add(new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail")
-                    , rs.getDate("Registerdate").toString(), rs.getString("CourseName")));
-        }
-        dbCon.CloseResultSet();
-        return registrations;
     }
 
     public void updateRegistration(Registration registration, String[] datePieces) {

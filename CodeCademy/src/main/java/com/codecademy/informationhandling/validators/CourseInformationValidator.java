@@ -27,7 +27,7 @@ public class CourseInformationValidator {
     public String validateEditedCourse(String name, String relatedCoursesString, Map<String, Course> courses, Course selectedCourse) {
         StringBuilder message = new StringBuilder();
 
-        if (name.equals(selectedCourse.getName())) {
+        if (!name.equals(selectedCourse.getName())) {
             if (!validateName(name, courses)) message.append("\nThe name: ").append(name).append(" already exists!");
         }
         if (!validateRelatedCourses(relatedCoursesString, courses))

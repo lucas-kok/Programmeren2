@@ -1,14 +1,16 @@
 package com.codecademy.informationhandling.validators;
 
+import com.codecademy.informationhandling.InformationFormatter;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.informationhandling.student.Student;
 
 import java.util.Map;
 
 public class RegistrationInformationValidator {
+    InformationFormatter informationFormatter;
 
     public RegistrationInformationValidator() {
-
+        informationFormatter = new InformationFormatter();
     }
 
     public String validateNewRegistration(String studentEmail, String courseName, Map<String, Student> students, Map<String, Course> courses) {
@@ -53,11 +55,11 @@ public class RegistrationInformationValidator {
 
     // Student email
     private boolean validateStudentEmail(String studentEmail, Map<String, Student> students) {
-        return students.get(studentEmail) != null;
+        return students.get(studentEmail.toLowerCase()) != null;
     }
 
     // Course name
     private boolean validateCourseName(String courseName, Map<String, Course> courses) {
-        return courses.get(courseName) != null;
+        return courses.get(informationFormatter.capitalizeString(courseName)) != null;
     }
 }

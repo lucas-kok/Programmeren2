@@ -30,7 +30,7 @@ public class Registration {
         StudentEmail = studentEmail;
     }
 
-    public String getRegisterDate() {
+    public String getRegistrationDate() {
         return registerDate;
     }
 
@@ -46,9 +46,6 @@ public class Registration {
         this.courseName = courseName;
     }
 
-    public String getRegistrationDate() {
-        return"";
-    }
 }
 
 

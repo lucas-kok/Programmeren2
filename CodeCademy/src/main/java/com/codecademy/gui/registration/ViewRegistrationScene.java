@@ -43,7 +43,7 @@ public class ViewRegistrationScene extends GUIScene {
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Viewing Registration: " + selectedRegistration);
+        Label title = new Label("Viewing Registration: " + selectedRegistration.getStudentEmail() + ", " + selectedRegistration.getCourseName());
 
         Button homeButton = new Button("Home");
         Button registrationsButton = new Button("Registrations");

@@ -89,8 +89,8 @@ public class EditCourseScene extends GUIScene {
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewCoursesScene) getSceneObject("overviewCourseScene")).resetScene();
-            showScene("overviewCourseScene");
+            ((OverviewCoursesScene) getSceneObject("overviewCoursesScene")).resetScene();
+            showScene("overviewCoursesScene");
         });
 
         deleteCourseButton.setOnAction((event) -> {
@@ -103,7 +103,7 @@ public class EditCourseScene extends GUIScene {
         updateSelectedCourseButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
             if (!courseNameInput.getText().isEmpty() && !courseSubjectInput.getText().isEmpty() && !courseIntroductionTextInput.getText().isEmpty() &&
-                    courseLevelInput.getValue() != null && !courseRelatedCoursesInput.getText().isEmpty()) {
+                    courseLevelInput.getValue() != null) {
                 String name = courseNameInput.getText();
                 String subject = courseSubjectInput.getText();
                 String introductionText = courseIntroductionTextInput.getText();

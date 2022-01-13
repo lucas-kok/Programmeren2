@@ -23,7 +23,11 @@ public class StudentInformationValidator {
             message.append("\nThe email: ").append(email).append(" already exists!");
         if (!validatePostalCode(postalCode))
             message.append("\nThe postal-code: '").append(postalCode).append("' is not valid!");
-        if (!validateAge(birthday)) message.append("\nThe person is not old enough!");
+        if (validateBirthday(birthday)) {
+            if (!validateAge(birthday)) message.append("\nThe person is not old enough!");
+        } else {
+            message.append("The given date is not valid!");
+        }
 
         return message.toString();
     }
