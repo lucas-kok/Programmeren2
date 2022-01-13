@@ -8,6 +8,7 @@ import com.codecademy.gui.registration.EditRegistrationScene;
 import com.codecademy.gui.registration.NewRegistrationScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
+import com.codecademy.gui.statistics.StatisticsScene;
 import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
@@ -64,6 +65,8 @@ public class GUI extends Application {
         ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneWidth, sceneHeight, null);
         EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneWidth, sceneHeight, null);
 
+        StatisticsScene statisticsScene = new StatisticsScene(this, sceneWidth, sceneHeight);
+
         // Adding the GUIScene's to a map that will be used to show the scene's
         scenes.put("mainScene", mainScene);
         scenes.put("overviewStudentsScene", overviewStudentScene);
@@ -78,6 +81,7 @@ public class GUI extends Application {
         scenes.put("newRegistrationScene", newRegistrationScene);
         scenes.put("viewRegistrationScene", viewRegistrationScene);
         scenes.put("editRegistrationScene", editRegistrationScene);
+        scenes.put("statisticsScene", statisticsScene);
 
         showScene("mainScene");
 
