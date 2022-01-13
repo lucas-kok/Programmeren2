@@ -64,8 +64,6 @@ public class GUI extends Application {
         ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneWidth, sceneHeight, null);
         EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneWidth, sceneHeight, null);
 
-        TemplateScene templateScene = new TemplateScene(this, 500, 750);
-
         // Adding the GUIScene's to a map that will be used to show the scene's
         scenes.put("mainScene", mainScene);
         scenes.put("overviewStudentsScene", overviewStudentScene);
@@ -81,7 +79,6 @@ public class GUI extends Application {
         scenes.put("viewRegistrationScene", viewRegistrationScene);
         scenes.put("editRegistrationScene", editRegistrationScene);
 
-        scenes.put("templateScene", templateScene);
         showScene("mainScene");
 
         mainStage.show();
