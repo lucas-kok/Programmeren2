@@ -62,7 +62,8 @@ public class ViewRegistrationScene extends GUIScene {
         });
 
         editSelectedRegistration.setOnAction((event) -> {
-            // Edit Registration Scene
+            ((EditRegistrationScene)getSceneObject("editRegistrationScene")).resetScene(selectedRegistration);
+            showScene("editRegistrationScene");
         });
 
         // Appending

@@ -38,6 +38,8 @@ public class Registration {
         this.registerDate = registerDate;
     }
 
+    public String[] getRegistrationDatePieces() { return getRegistrationDate().split("-"); }
+
     public String getCourseName() {
         return courseName;
     }

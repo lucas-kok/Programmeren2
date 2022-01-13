@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class RegistrationRepository {
 
@@ -19,13 +20,14 @@ public class RegistrationRepository {
         informationFormatter = new InformationFormatter();
     }
 
-    public ArrayList<Registration> getAllRegistrations() throws SQLException {
-        ArrayList<Registration> registrations = new ArrayList<>();
+    public Map<String, Registration> getAllRegistrations() throws SQLException {
+        Map<String, Registration> registrations = new HashMap<>();
         String queryGetAllRegistrations = "SELECT * FROM Register";
         ResultSet rs = dbCon.getQuery(queryGetAllRegistrations);
         while (rs.next()) {
-            registrations.add(new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail")
-                    , rs.getDate("Registerdate").toString(), rs.getString("CourseName")));
+            Registration newRegistration = new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail")
+                    , rs.getDate("Registerdate").toString(), rs.getString("CourseName"));
+            registrations.put(newRegistration.getStudentEmail() + "-" + newRegistration.getCourseName(), newRegistration);
         }
         dbCon.CloseResultSet();
         return registrations;
@@ -53,7 +55,8 @@ public class RegistrationRepository {
 
     public void updateRegistration(Registration registration, String[] datePieces) {
         String date = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
-        String query = "UPDATE Register SET Registerdate = convert(datetime, '" + date + "', 103) WHERE RegisterID = '" + registration.getRegisterID();
+        String query = "UPDATE Register SET Registerdate = convert(datetime, '" + date + "', 103) WHERE RegisterID = " + registration.getRegisterID();
+        dbCon.setQuery(query);
     }
 
     public void deleteRegistration(Registration registration) {

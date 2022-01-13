@@ -15,7 +15,6 @@ import javafx.scene.layout.VBox;
 import java.sql.SQLException;
 
 public class EditCourseScene extends GUIScene {
-
     private Scene editCourseScene;
     private final int sceneWidth;
     private final int sceneHeight;

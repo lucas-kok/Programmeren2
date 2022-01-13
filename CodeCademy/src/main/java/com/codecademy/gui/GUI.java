@@ -4,6 +4,7 @@ import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.course.ViewCourseScene;
+import com.codecademy.gui.registration.EditRegistrationScene;
 import com.codecademy.gui.registration.NewRegistrationScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
@@ -44,21 +45,25 @@ public class GUI extends Application {
         mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217), Daan van der Meulen() & Anne van den Bosch()");
 
         // Creating all the scenes
+        int sceneWidth = 500;
+        int sceneHeight = 750;
+
         MainScene mainScene = new MainScene(this, 500, 750);
 
-        OverviewStudentsScene overviewStudentScene = new OverviewStudentsScene(this, 500, 750);
-        NewStudentScene newStudentScene = new NewStudentScene(this, 500, 750);
-        ViewStudentScene viewStudentScene = new ViewStudentScene(this, 500, 750, null);
-        EditStudentScene editStudentScene = new EditStudentScene(this, 500, 750, null);
+        OverviewStudentsScene overviewStudentScene = new OverviewStudentsScene(this, sceneHeight, sceneHeight);
+        NewStudentScene newStudentScene = new NewStudentScene(this, sceneHeight, sceneHeight);
+        ViewStudentScene viewStudentScene = new ViewStudentScene(this, sceneHeight, sceneHeight, null);
+        EditStudentScene editStudentScene = new EditStudentScene(this, sceneHeight, sceneHeight, null);
 
-        OverviewCoursesScene overviewCoursesScene = new OverviewCoursesScene(this, 500, 750);
-        ViewCourseScene viewCourseScene = new ViewCourseScene(this, 500, 750, null);
-        NewCourseScene newCourseScene = new NewCourseScene(this, 500, 750);
-        EditCourseScene editCourseScene = new EditCourseScene(this, 500, 750, null);
+        OverviewCoursesScene overviewCoursesScene = new OverviewCoursesScene(this, sceneHeight, sceneHeight);
+        ViewCourseScene viewCourseScene = new ViewCourseScene(this, sceneHeight, sceneHeight, null);
+        NewCourseScene newCourseScene = new NewCourseScene(this, sceneHeight, sceneHeight);
+        EditCourseScene editCourseScene = new EditCourseScene(this, sceneHeight, sceneHeight, null);
 
-        OverviewRegistrationsScene overviewRegistrationsScene = new OverviewRegistrationsScene(this, 500, 750);
-        NewRegistrationScene newRegistrationScene = new NewRegistrationScene(this, 500, 750);
-        ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, 500, 750, null);
+        OverviewRegistrationsScene overviewRegistrationsScene = new OverviewRegistrationsScene(this, sceneHeight, sceneHeight);
+        NewRegistrationScene newRegistrationScene = new NewRegistrationScene(this, sceneHeight, sceneHeight);
+        ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneHeight, sceneHeight, null);
+        EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneHeight, sceneHeight, null);
 
         TemplateScene templateScene = new TemplateScene(this, 500, 750);
 
@@ -75,6 +80,7 @@ public class GUI extends Application {
         scenes.put("overviewRegistrationsScene", overviewRegistrationsScene);
         scenes.put("newRegistrationScene", newRegistrationScene);
         scenes.put("viewRegistrationScene", viewRegistrationScene);
+        scenes.put("editRegistrationScene", editRegistrationScene);
 
         scenes.put("templateScene", templateScene);
         showScene("mainScene");
@@ -105,7 +111,7 @@ public class GUI extends Application {
 
     public Map<String, Course> getCourses() throws SQLException { return courseRepository.getAllCourses(); }
 
-    public ArrayList<Registration> getRegistrations() throws SQLException {
+    public Map<String, Registration> getRegistrations() throws SQLException {
         return registrationRepository.getAllRegistrations();
     }
 

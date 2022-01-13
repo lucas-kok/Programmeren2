@@ -106,6 +106,10 @@ public class EditStudentScene extends GUIScene {
         studentBirthdayMonthInput.setText(selectedUserBirthdayPieces[1]);
         studentBirthdayYearInput.setText(selectedUserBirthdayPieces[2]);
 
+        studentBirthdayDayInput.setPromptText("Day");
+        studentBirthdayMonthInput.setPromptText("Month");
+        studentBirthdayYearInput.setPromptText("Year");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 

@@ -2,6 +2,7 @@ package com.codecademy.informationhandling.validators;
 
 import com.codecademy.informationhandling.InformationFormatter;
 import com.codecademy.informationhandling.course.Course;
+import com.codecademy.informationhandling.registration.Registration;
 import com.codecademy.informationhandling.student.Student;
 
 import java.util.Map;
@@ -32,9 +33,9 @@ public class RegistrationInformationValidator {
 
     // Registration Date
     public boolean validateRegistrationDate(String[] registrationDatePieces) {
-        int day = Integer.parseInt(registrationDatePieces[0]);
+        int day = Integer.parseInt(registrationDatePieces[2]);
         int month = Integer.parseInt(registrationDatePieces[1]);
-        int year = Integer.parseInt(registrationDatePieces[2]);
+        int year = Integer.parseInt(registrationDatePieces[0]);
 
         if ((day < 1 || day > 31) || (month < 1 || month >= 12)) return false;
 
@@ -61,5 +62,9 @@ public class RegistrationInformationValidator {
     // Course name
     private boolean validateCourseName(String courseName, Map<String, Course> courses) {
         return courses.get(informationFormatter.capitalizeString(courseName)) != null;
+    }
+
+    private boolean registrationDoesNotExists(String studentEmail, String courseName, Map<String, Registration> registration) {
+        return registration.get(studentEmail + "-" + courseName) != null;
     }
 }
