@@ -13,6 +13,8 @@ import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
 import com.codecademy.gui.student.ViewStudentScene;
+import com.codecademy.informationhandling.certificate.Certificate;
+import com.codecademy.informationhandling.certificate.CertificateRepository;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.informationhandling.course.CourseRepository;
 import com.codecademy.informationhandling.registration.Registration;
@@ -22,7 +24,9 @@ import com.codecademy.informationhandling.student.StudentRepository;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.sql.Array;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +34,7 @@ public class GUI extends Application {
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final RegistrationRepository registrationRepository;
+    private final CertificateRepository certificateRepository;
     private Map<String, GUIScene> scenes = new HashMap<>();
     private Stage mainStage;
 
@@ -37,6 +42,7 @@ public class GUI extends Application {
         studentRepository = new StudentRepository();
         courseRepository = new CourseRepository();
         registrationRepository = new RegistrationRepository();
+        certificateRepository = new CertificateRepository();
     }
 
     @Override
@@ -113,6 +119,10 @@ public class GUI extends Application {
 
     public Map<String, Registration> getRegistrations() throws SQLException {
         return registrationRepository.getAllRegistrations();
+    }
+
+    public ArrayList<Certificate> getCertificates() throws SQLException {
+        return certificateRepository.getALlCertificates();
     }
 
 }

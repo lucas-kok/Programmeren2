@@ -1,5 +1,6 @@
 package com.codecademy.gui;
 
+import com.codecademy.informationhandling.certificate.Certificate;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.informationhandling.student.Student;
 import com.codecademy.informationhandling.registration.Registration;
@@ -54,6 +55,20 @@ public class SearchBar {
         }
 
         return registrationsWithinInput;
+    }
+
+    public ArrayList<Certificate> searchCertificates(String searchInput, ArrayList<Certificate> certificates) {
+        if (searchInput.isBlank()) return certificates; // Empty search will result in all Registrations
+
+        ArrayList<Certificate> certificatesWithInput = new ArrayList<>();
+        searchInput = searchInput.toLowerCase();
+        for (Certificate certificate: certificates) {
+            if (certificate.getStudentEmail().toLowerCase().contains(searchInput) || certificate.getCourseName().toLowerCase().contains(searchInput) || String.valueOf(certificate.getScore()).contains(searchInput)) {
+                certificatesWithInput.add(certificate);
+            }
+        }
+
+        return certificatesWithInput;
     }
 
 }
