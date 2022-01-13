@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class DatabaseConnection {
 
-    private String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCadamyDB;user=sa;password=LucasKokSQL!";
+    private String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCadamyDB;user=sa;password=TurboSjaantjeFTW!";
     Connection con = null;
     Statement stmt = null;
     ResultSet rs = null;
