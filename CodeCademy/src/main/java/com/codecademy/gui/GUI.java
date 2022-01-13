@@ -22,7 +22,6 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,7 +41,7 @@ public class GUI extends Application {
     @Override
     public void start(Stage mainStage) {
         this.mainStage = mainStage;
-        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217), Daan van der Meulen() & Anne van den Bosch()");
+        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217...), Daan van der Meulen(...) & Anne van den Bosch(...)");
 
         // Creating all the scenes
         int sceneWidth = 500;
@@ -50,20 +49,20 @@ public class GUI extends Application {
 
         MainScene mainScene = new MainScene(this, 500, 750);
 
-        OverviewStudentsScene overviewStudentScene = new OverviewStudentsScene(this, sceneHeight, sceneHeight);
-        NewStudentScene newStudentScene = new NewStudentScene(this, sceneHeight, sceneHeight);
-        ViewStudentScene viewStudentScene = new ViewStudentScene(this, sceneHeight, sceneHeight, null);
-        EditStudentScene editStudentScene = new EditStudentScene(this, sceneHeight, sceneHeight, null);
+        OverviewStudentsScene overviewStudentScene = new OverviewStudentsScene(this, sceneWidth, sceneHeight);
+        NewStudentScene newStudentScene = new NewStudentScene(this, sceneWidth, sceneHeight);
+        ViewStudentScene viewStudentScene = new ViewStudentScene(this, sceneWidth, sceneHeight, null);
+        EditStudentScene editStudentScene = new EditStudentScene(this, sceneWidth, sceneHeight, null);
 
-        OverviewCoursesScene overviewCoursesScene = new OverviewCoursesScene(this, sceneHeight, sceneHeight);
-        ViewCourseScene viewCourseScene = new ViewCourseScene(this, sceneHeight, sceneHeight, null);
-        NewCourseScene newCourseScene = new NewCourseScene(this, sceneHeight, sceneHeight);
-        EditCourseScene editCourseScene = new EditCourseScene(this, sceneHeight, sceneHeight, null);
+        OverviewCoursesScene overviewCoursesScene = new OverviewCoursesScene(this, sceneWidth, sceneHeight);
+        ViewCourseScene viewCourseScene = new ViewCourseScene(this, sceneWidth, sceneHeight, null);
+        NewCourseScene newCourseScene = new NewCourseScene(this, sceneWidth, sceneHeight);
+        EditCourseScene editCourseScene = new EditCourseScene(this, sceneWidth, sceneHeight, null);
 
-        OverviewRegistrationsScene overviewRegistrationsScene = new OverviewRegistrationsScene(this, sceneHeight, sceneHeight);
-        NewRegistrationScene newRegistrationScene = new NewRegistrationScene(this, sceneHeight, sceneHeight);
-        ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneHeight, sceneHeight, null);
-        EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneHeight, sceneHeight, null);
+        OverviewRegistrationsScene overviewRegistrationsScene = new OverviewRegistrationsScene(this, sceneWidth, sceneHeight);
+        NewRegistrationScene newRegistrationScene = new NewRegistrationScene(this, sceneWidth, sceneHeight);
+        ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneWidth, sceneHeight, null);
+        EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneWidth, sceneHeight, null);
 
         TemplateScene templateScene = new TemplateScene(this, 500, 750);
 

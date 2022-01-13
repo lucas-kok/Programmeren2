@@ -50,7 +50,6 @@ public class OverviewStudentsScene extends GUIScene {
         VBox studentOverviewWrapper = new VBox(15);
         HBox searchBarPane = new HBox(5);
         ScrollPane studentListScroll = new ScrollPane();
-        AtomicReference<VBox> studentListPane = new AtomicReference<>(new VBox(5));
 
         headerPane.setAlignment(Pos.CENTER);
 
@@ -81,7 +80,6 @@ public class OverviewStudentsScene extends GUIScene {
                 e.printStackTrace();
             }
 
-            studentListPane.get().getChildren().clear();
             studentListScroll.setContent(createStudentListPane(searchResult));
         });
 
