@@ -69,6 +69,7 @@ public class MainScene extends GUIScene{
 
         statisticsButton.setOnAction((event) -> {
             ((StatisticsScene)getSceneObject("statisticsScene")).resetScene();
+            showScene("statisticsScene");
         });
 
         // Appending
