@@ -41,7 +41,7 @@ public class Student {
         return Name;
     }
 
-    public String getBirthday() {
+    public String getBirthdayAsString() {
         String[] pieces = this.Birthday.toString().split("-");
         String answer = pieces[2] + "/" + pieces[1] + "/" + pieces[0];
         return answer;

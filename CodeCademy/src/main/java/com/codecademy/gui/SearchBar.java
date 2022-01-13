@@ -41,12 +41,12 @@ public class SearchBar {
         return coursesWithinInput;
     }
 
-    public ArrayList<Registration> searchRegistrations(String searchInput, ArrayList<Registration> registrations) {
-        if (searchInput.isBlank()) return registrations; // Empty search will result in all Registrations
+    public ArrayList<Registration> searchRegistrations(String searchInput, Map<String, Registration> registrations) {
+        if (searchInput.isBlank()) return new ArrayList<>(registrations.values()); // Empty search will result in all Registrations
 
         ArrayList<Registration> registrationsWithinInput = new ArrayList<>();
         searchInput = searchInput.toLowerCase();
-        for (Registration registration : registrations) {
+        for (Registration registration : registrations.values()) {
             if (registration.getRegistrationDate().toLowerCase().contains(searchInput) || registration.getStudentEmail().toLowerCase().contains(searchInput) ||
                     registration.getCourseName().toLowerCase().contains(searchInput)) {
                 registrationsWithinInput.add(registration);

@@ -49,7 +49,7 @@ public class ViewRegistrationScene extends GUIScene {
         Button registrationsButton = new Button("Registrations");
         Button editSelectedRegistration = new Button("Edit Registration");
 
-        Label selectedRegistrationDateLabel = new Label("Registration Date: " + selectedRegistration.getRegistrationDate());
+        Label selectedRegistrationDateLabel = new Label("Registration Date: " + selectedRegistration.getRegistrationDateAsString());
         Label selectedRegistrationStudentEmailLabel = new Label("Student email: " + selectedRegistration.getStudentEmail());
         Label selectedRegistrationCourseNameLabel = new Label("Course: " + selectedRegistration.getCourseName());
 

@@ -79,7 +79,7 @@ public class NewRegistrationScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName, gui.getStudents(), gui.getCourses());
+                    response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName, gui.getStudents(), gui.getCourses(), gui.getRegistrations());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

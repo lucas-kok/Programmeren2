@@ -14,11 +14,12 @@ public class RegistrationInformationValidator {
         informationFormatter = new InformationFormatter();
     }
 
-    public String validateNewRegistration(String studentEmail, String courseName, Map<String, Student> students, Map<String, Course> courses) {
+    public String validateNewRegistration(String studentEmail, String courseName, Map<String, Student> students, Map<String, Course> courses, Map<String, Registration> registrations) {
         StringBuilder message = new StringBuilder();
 
         if (!validateStudentEmail(studentEmail, students)) message.append("\nThe email: '").append(studentEmail).append("' does not exists!");
         if (!validateCourseName(courseName, courses)) message.append("\nThe Course: '").append(courseName).append("' does not exists!");
+        if (!registrationDoesNotExists(studentEmail, courseName, registrations)) message.append("The registration already exists!");
 
         return message.toString();
     }

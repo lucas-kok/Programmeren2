@@ -95,7 +95,7 @@ public class OverviewRegistrationsScene extends GUIScene {
         registrationOverviewWrapper.getChildren().addAll(searchBarPane, registrationListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
         try {
-            registrationListScroll.setContent(createRegistrationListPane(new ArrayList<>(gui.getRegistrations())));
+            registrationListScroll.setContent(createRegistrationListPane(new ArrayList<>(gui.getRegistrations().values())));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -112,7 +112,7 @@ public class OverviewRegistrationsScene extends GUIScene {
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ".");
-            Label registrationDateLabel = new Label(registration.getRegistrationDate());
+            Label registrationDateLabel = new Label(registration.getRegistrationDateAsString());
             Label registrationStudentEmailLabel = new Label(registration.getStudentEmail());
             Label informationDivider = new Label("-");
             Label registrationCourseNameLabel = new Label(registration.getCourseName());

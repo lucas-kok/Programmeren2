@@ -55,7 +55,7 @@ public class ViewStudentScene extends GUIScene {
         Label selectedStudentCityLabel = new Label("City: " + selectedStudent.getCity());
         Label selectedStudentCountryLabel = new Label("Country: " + selectedStudent.getCountry());
         Label selectedStudentGenderLabel = new Label("Gender: " + selectedStudent.getGender());
-        Label selectedStudentBirthdayLabel = new Label("Birthday: " + selectedStudent.getBirthday());
+        Label selectedStudentBirthdayLabel = new Label("Birthday: " + selectedStudent.getBirthdayAsString());
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
