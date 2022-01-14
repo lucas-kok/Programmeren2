@@ -110,7 +110,7 @@ public class StudentRepository {
 
     public ArrayList<Certificate> getAllCertificatesForStudent(Student student) throws SQLException {
         ArrayList<Certificate> certificates = new ArrayList<>();
-        String query = "SELECT Certificate.*, Register.StudentEmail, Register.CourseName FROM Certificate INNER JOIN Register ON Register.RegisterID = Certificate.RegisterID WHERE StudentEmail = '" + student.getEmail() + "')";
+        String query = "SELECT Certificate.*, Register.StudentEmail, Register.CourseName FROM Certificate INNER JOIN Register ON Register.RegisterID = Certificate.RegisterID WHERE StudentEmail = '" + student.getEmail() + "'";
         ResultSet rs = dbCon.getQuery(query);
         while (rs.next()) {
             certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getString("StudentEmail"),rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));

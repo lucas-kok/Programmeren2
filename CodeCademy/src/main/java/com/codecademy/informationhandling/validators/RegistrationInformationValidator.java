@@ -66,6 +66,6 @@ public class RegistrationInformationValidator {
     }
 
     private boolean registrationDoesNotExists(String studentEmail, String courseName, Map<String, Registration> registration) {
-        return registration.get(studentEmail + "-" + courseName) != null;
+        return registration.get(studentEmail + "-" + courseName) == null;
     }
 }

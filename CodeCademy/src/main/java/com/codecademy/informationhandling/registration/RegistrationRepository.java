@@ -71,16 +71,23 @@ public class RegistrationRepository {
         ArrayList<ContentItem> contentItems = new ArrayList<>();
         String queryGetAllContentItems = "SELECT * FROM ContentItem WHERE CourseName = '" + registration.getCourseName() + "'";
         ResultSet rs = dbCon.getQuery(queryGetAllContentItems);
+
         while (rs.next()) {
-            contentItems.add(new ContentItem(rs.getInt("ContentID"), rs.getString("Title"), rs.getString("PublicationDate'")));
+            contentItems.add(new ContentItem(rs.getInt("ContentID"), rs.getString("Title"), rs.getDate("PublicationDate").toString()));
         }
+
         dbCon.CloseResultSet();
+
         for (ContentItem contentItem : contentItems) {
-            String queryGetProgress = "SELECT Progress FROM Viewing WHERE StudentEmail = '" + registration.getStudentEmail() + "' AND ContenID = '" + contentItem.getId() + "'";
-            dbCon.getQuery(queryGetProgress);
-            progressPerContentItem.put(contentItem, rs.getInt("Progress"));
+            String queryGetProgress = "SELECT Progress FROM Viewing WHERE StudentEmail = '" + registration.getStudentEmail() + "' AND ContenID = " + contentItem.getId();
+            System.out.println(queryGetProgress);
+            ResultSet rsProgress = dbCon.getQuery(queryGetProgress);
+            while (rsProgress.next()) {
+                progressPerContentItem.put(contentItem, rsProgress.getInt("Progress"));
+            }
             dbCon.CloseResultSet();
         }
+
         return progressPerContentItem;
     }
 
