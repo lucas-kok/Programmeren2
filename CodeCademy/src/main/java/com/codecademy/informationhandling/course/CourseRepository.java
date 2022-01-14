@@ -111,7 +111,13 @@ public class CourseRepository {
                 totalProgress += rsAllprogress.getInt("Progress");
             }
             dbCon.CloseResultSet();
-            averageProgressPerContentItem.put(contentItem, (totalProgress / counter));
+
+            // Can't divide by 0!
+            if (counter != 0) {
+                averageProgressPerContentItem.put(contentItem, (totalProgress / counter));
+            } else {
+                averageProgressPerContentItem.put(contentItem, 0);
+            }
         }
         return averageProgressPerContentItem;
     }

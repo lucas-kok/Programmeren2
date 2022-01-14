@@ -4,6 +4,7 @@ import com.codecademy.informationhandling.course.CourseRepository;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
+import com.codecademy.informationhandling.registration.RegistrationRepository;
 import com.codecademy.informationhandling.validators.CourseInformationValidator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -22,6 +23,8 @@ public class EditCourseScene extends GUIScene {
     private final GUI gui;
     private final CourseInformationValidator courseInformationValidationTools;
     private final CourseRepository courseRepository;
+    private final RegistrationRepository registrationRepository;
+
     private Course selectedCourse;
 
     public EditCourseScene(GUI gui, int sceneWidth, int sceneHeight, Course selectedCourse) {
@@ -33,6 +36,8 @@ public class EditCourseScene extends GUIScene {
         this.gui = gui;
         courseInformationValidationTools = new CourseInformationValidator();
         courseRepository = new CourseRepository();
+        registrationRepository = new RegistrationRepository();
+        
         this.selectedCourse = selectedCourse;
 
         if (selectedCourse != null) {
@@ -93,10 +98,19 @@ public class EditCourseScene extends GUIScene {
         });
 
         deleteCourseButton.setOnAction((event) -> {
-            courseRepository.deleteCourse(selectedCourse);
+            // Prevent the Course from getting deleted when it has Registrations for the Course
+            try {
+                if (!courseInformationValidationTools.courseHasRegistrations(selectedCourse.getName(), registrationRepository.getAllRegistrations())) {
+                    courseRepository.deleteCourse(selectedCourse);
 
-            ((OverviewCoursesScene) getSceneObject("overviewCoursesScene")).resetScene();
-            showScene("overviewCoursesScene");
+                    ((OverviewCoursesScene) getSceneObject("overviewCoursesScene")).resetScene();
+                    showScene("overviewCoursesScene");
+                } else {
+                    messageLabel.setText("The Course can't be deleted because it has Registrations!");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
         updateSelectedCourseButton.setOnAction((event) -> {

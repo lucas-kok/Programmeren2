@@ -35,4 +35,18 @@ public class ContentItemRepository {
         return contentItems;
     }
 
+    public ContentItem getContentItem(String id) throws SQLException {
+        String query = "SELECT * FROM ContentItem WHERE ContentiD = '" + id + "'";
+        ResultSet rs = dbCon.getQuery(query);
+
+        ContentItem newContentItem;
+        while (rs.next()) {
+            newContentItem = new ContentItem(rs.getInt("ContentiD"), rs.getString("Title"), rs.getString("PublicationDate"));
+            return newContentItem;
+        }
+        dbCon.CloseResultSet();
+
+        return null;
+    }
+
 }
