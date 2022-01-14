@@ -10,6 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
+import javafx.scene.layout.VBox;
 
 
 public class StatisticsScene extends GUIScene {
@@ -29,59 +30,61 @@ public class StatisticsScene extends GUIScene {
 
     private void createScene() {
         BorderPane mainPane = new BorderPane();
-        HBox buttonsBox = new HBox(2);
-        HBox listBox = new HBox();
-        HBox header = new HBox();
+        VBox headerPane = new VBox(15);
+        VBox overviewPane = new VBox(15);
+        HBox buttonBox = new HBox(15);
+        HBox navigationBox = new HBox(15);
 
-
-
-        // Database connection to be implemented
-        String totApplied = null;
-        String perPassed = null;
-
-
+        headerPane.setAlignment(Pos.CENTER);
+        buttonBox.setAlignment(Pos.CENTER);
+        overviewPane.setAlignment(Pos.CENTER);
+        navigationBox.setAlignment(Pos.CENTER);
 
         statisticsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        //Nodes
-        final Label label = new Label("Gender Filtered");
-        ListView<String> totAppliedList = new ListView<>();
-        ListView<String> perPassedList = new ListView<>();
-        Button buttonMale = new Button("Male");
-        Button buttonFemale = new Button("Female");
-        Button buttonOther = new Button("Other");
-        Button buttonHome = new Button("Home");
+        // Nodes
+        final Label title = new Label("Statistics Menu");
 
-        // Event Handlers
-        buttonFemale.setOnAction((event) -> {
-            // Filter on Females
+        Label selectedGender = new Label("Selected Gender: ");
+        Label totalApplied = new Label("Applicants: ");
+        Label totalCertified = new Label("Certificates: ");
+
+        Button male = new Button("Male");
+        Button female = new Button("Female");
+        Button other = new Button("Other");
+
+        Button home = new Button("Home");
+        Button back = new Button("Back");
+
+        //Actions
+        male.setOnAction(event -> {
+            selectedGender.setText("Selected Gender: Male");
         });
 
-        buttonMale.setOnAction((event) -> {
-            // Filter on Male
+        female.setOnAction(event -> {
+            selectedGender.setText("Selected Gender: Female");
         });
 
-        buttonOther.setOnAction((event) -> {
-            // Filter on Other
+        other.setOnAction(event -> {
+            selectedGender.setText("Selected Gender: Other");
         });
 
-        buttonHome.setOnAction((event) -> showScene("mainScene"));
+        home.setOnAction(event -> {
+            showScene("mainScene");
+        });
+
+        back.setOnAction(event -> {
+            showScene("statisticsMenuScene");
+        });
+
         // Appending
-        buttonsBox.setAlignment(Pos.CENTER);
-        header.getChildren().addAll(label, buttonHome);
-        buttonHome.setAlignment(Pos.CENTER_RIGHT);
+        buttonBox.getChildren().addAll(male, female, other);
+        overviewPane.getChildren().addAll(selectedGender, totalApplied, totalCertified, buttonBox);
 
-        totAppliedList.getItems().add(totApplied);
-        perPassedList.getItems().add(perPassed);
-
-        listBox.getChildren().addAll(totAppliedList, perPassedList);
-        buttonsBox.getChildren().addAll(buttonFemale, buttonOther, buttonMale);
-
-        mainPane.setTop(header);
-        mainPane.setCenter(listBox);
-        mainPane.setBottom(buttonsBox);
-        buttonsBox.setAlignment(Pos.CENTER);
-
+        mainPane.setTop(headerPane);
+        mainPane.setCenter(overviewPane);
+        headerPane.getChildren().addAll(title, navigationBox);
+        navigationBox.getChildren().addAll(home, back);
     }
 
     public void resetScene() {

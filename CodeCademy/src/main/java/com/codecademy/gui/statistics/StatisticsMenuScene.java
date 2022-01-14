@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class StatisticsMenuScene extends GUIScene {
@@ -27,6 +28,11 @@ public class StatisticsMenuScene extends GUIScene {
     private void createScene() {
         BorderPane mainPane = new BorderPane();
         VBox buttonsBox = new VBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationBox = new HBox(15);
+
+        headerPane.setAlignment(Pos.CENTER);
+        navigationBox.setAlignment(Pos.CENTER);
 
         statisticsMenuScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
@@ -36,6 +42,7 @@ public class StatisticsMenuScene extends GUIScene {
         Button topCourseButton = new Button ("Top 3 highest");
         Button topWebcastButton = new Button("Top 3 Webcasts");
 
+        Button home = new Button("Home");
 
         // Event Handlers
         statisticsButton.setOnAction((event) -> {
@@ -53,12 +60,18 @@ public class StatisticsMenuScene extends GUIScene {
             showScene("topWebcastScene");
         });
 
+        home.setOnAction(event -> {
+            showScene("mainScene");
+        });
 
         // Appending
         buttonsBox.getChildren().addAll(statisticsButton, topCourseButton, topWebcastButton);
 
-        mainPane.setTop(title);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(buttonsBox);
+
+        headerPane.getChildren().addAll(title, navigationBox);
+        navigationBox.getChildren().addAll(home);
 
         buttonsBox.setAlignment(Pos.CENTER);
         title.setAlignment(Pos.CENTER);
