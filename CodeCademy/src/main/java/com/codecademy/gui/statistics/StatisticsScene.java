@@ -80,6 +80,7 @@ public class StatisticsScene extends GUIScene {
         mainPane.setTop(header);
         mainPane.setCenter(listBox);
         mainPane.setBottom(buttonsBox);
+        buttonsBox.setAlignment(Pos.CENTER);
 
     }
 
