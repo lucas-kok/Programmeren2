@@ -91,9 +91,13 @@ public class RegistrationRepository {
         return progressPerContentItem;
     }
 
-    public void updateProgress(Registration registration, ContentItem contentItem, int Progress) {
-        String queryUpdateProgress = "UPDATE Viewing SET Progress = " + Progress + " WHERE StudentEmail = '" + registration.getStudentEmail() + "' AND ContenID = " + contentItem.getId() + " ";
-        dbCon.setQuery(queryUpdateProgress);
+    public void updateProgress(Registration registration, Map<ContentItem, Integer> newProgression) {
+        for (ContentItem contentItem : newProgression.keySet()) {
+            int progress = newProgression.get(contentItem);
+
+            String queryUpdateProgress = "UPDATE Viewing SET Progress = " + progress + " WHERE StudentEmail = '" + registration.getStudentEmail() + "' AND ContenID = " + contentItem.getId() + " ";
+            dbCon.setQuery(queryUpdateProgress);
+        }
     }
 
 }

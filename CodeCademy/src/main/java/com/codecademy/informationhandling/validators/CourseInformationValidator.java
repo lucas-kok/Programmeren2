@@ -2,6 +2,7 @@ package com.codecademy.informationhandling.validators;
 
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.informationhandling.InformationFormatter;
+import com.codecademy.informationhandling.registration.Registration;
 
 import java.util.Map;
 
@@ -54,6 +55,16 @@ public class CourseInformationValidator {
         }
 
         return valid;
+    }
+
+    public boolean courseHasRegistrations(String courseName, Map<String, Registration> registrations) {
+        for (Registration registration : registrations.values()) {
+            if (registration.getCourseName().equals(courseName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
