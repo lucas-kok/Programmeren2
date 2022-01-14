@@ -2,24 +2,20 @@ package com.codecademy.gui.statistics;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
-import com.codecademy.gui.course.OverviewCoursesScene;
-import com.codecademy.gui.registration.OverviewRegistrationsScene;
-import com.codecademy.gui.student.OverviewStudentsScene;
-import javafx.geometry.Pos;
+import com.codecademy.gui.MainScene;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
+import javafx.scene.layout.HBox;
+import javafx.geometry.Pos;
+
 
 public class StatisticsScene extends GUIScene {
     private Scene statisticsScene;
     private final int sceneWidth;
     private final int sceneHeight;
-    private final TableView<String> table = new TableView<>();
 
     public StatisticsScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
@@ -32,44 +28,60 @@ public class StatisticsScene extends GUIScene {
     }
 
     private void createScene() {
-        Scene scene = new Scene(new Group());
         BorderPane mainPane = new BorderPane();
-        BorderPane buttonsPane = new BorderPane();
+        HBox buttonsBox = new HBox(2);
+        HBox listBox = new HBox();
+        HBox header = new HBox();
 
-        // To be initialised into original values
-        String totAppliedVal = "null";
-        String perPassedVal = "null";
-
+        // Database connection to be implemented
+        String totApplied = null;
+        String perPassed = null;
 
         statisticsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         //Nodes
         final Label label = new Label("Gender Filtered");
-
-
-        TableColumn<String, String> totApplied = new TableColumn<>("Total applied");
-        TableColumn<String, String> perPassed = new TableColumn<>("Percentage");
+        ListView<String> totAppliedList = new ListView<>();
+        ListView<String> perPassedList = new ListView<>();
         Button buttonMale = new Button("Male");
         Button buttonFemale = new Button("Female");
         Button buttonOther = new Button("Other");
+        Button buttonHome = new Button("Home");
 
+        // Event Handlers
+        buttonFemale.setOnAction((event) -> {
+            // Filter on Females
+        });
 
-        // Table initialisation
-        final VBox vbox = new VBox(1);
-        table.getColumns().addAll(totApplied, perPassed);
-        vbox.setSpacing(5);
-        vbox.setPadding(new Insets(10,0,0,10));
-        vbox.getChildren().addAll(label, table);
-        ((Group) scene.getRoot()).getChildren().addAll(vbox);
+        buttonMale.setOnAction((event) -> {
+            // Filter on Male
+        });
+
+        buttonOther.setOnAction((event) -> {
+            // Filter on Other
+        });
+
+        buttonHome.setOnAction((event) ->  {
+            ((MainScene)getSceneObject("MainScene")).resetScene();
+            showScene("MainScene");
+        });
+
 
 
         // Appending
-        buttonsPane.setLeft(buttonFemale);
-        buttonsPane.setRight(buttonMale);
-        buttonsPane.setCenter(buttonOther);
+        buttonsBox.setAlignment(Pos.CENTER);
+        header.getChildren().addAll(label, buttonHome);
+        buttonHome.setAlignment(Pos.CENTER_RIGHT);
 
-        mainPane.setTop(vbox);
-        mainPane.setCenter(buttonsPane);
+        totAppliedList.getItems().add(totApplied);
+        perPassedList.getItems().add(perPassed);
+
+        listBox.getChildren().addAll(totAppliedList, perPassedList);
+        buttonsBox.getChildren().addAll(buttonFemale, buttonOther, buttonMale);
+
+        mainPane.setTop(header);
+        mainPane.setCenter(listBox);
+        mainPane.setBottom(buttonsBox);
 
     }
 
