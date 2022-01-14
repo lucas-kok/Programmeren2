@@ -66,8 +66,6 @@ public class StatisticsScene extends GUIScene {
             showScene("MainScene");
         });
 
-
-
         // Appending
         buttonsBox.setAlignment(Pos.CENTER);
         header.getChildren().addAll(label, buttonHome);
