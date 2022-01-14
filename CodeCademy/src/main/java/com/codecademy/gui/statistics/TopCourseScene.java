@@ -9,18 +9,23 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
+import javafx.scene.layout.VBox;
+import com.codecademy.informationhandling.statistics.StatisticsRepository;
+import java.sql.SQLException;
 
 
 public class TopCourseScene extends GUIScene {
     private Scene TopCourseScene;
     private final int sceneWidth;
     private final int sceneHeight;
+    private final StatisticsRepository statisticsRepository;
 
     public TopCourseScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        this.statisticsRepository = new StatisticsRepository();
 
         createScene();
         setScene(TopCourseScene);
@@ -28,32 +33,54 @@ public class TopCourseScene extends GUIScene {
 
     private void createScene() {
         BorderPane mainPane = new BorderPane();
-        HBox header = new HBox();
+        VBox headerPane = new VBox(15);
+        VBox overviewPane = new VBox(15);
+        HBox navigationBox = new HBox(15);
+        VBox topThreeList = new VBox(10);
+
+        headerPane.setAlignment(Pos.CENTER);
+        overviewPane.setAlignment(Pos.CENTER);
+        navigationBox.setAlignment(Pos.CENTER);
+        topThreeList.setAlignment(Pos.CENTER);
 
         TopCourseScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        String numberOne = null;
-        String numberTwo = null;
-        String numberThree = null;
+        // Nodes
+        final Label title = new Label("Statistics Menu");
 
-        //Nodes
-        final Label label = new Label("Top 3 Most certificates per course");
-        ListView<String> certificatesList = new ListView<>();
-        Button buttonHome = new Button("Home");
+        Label topThreeCourses = new Label("Top 3 courses with the most certificates");
+        Label topOne = new Label("1. ");
+        Label topTwo = new Label("2. ");
+        Label topThree = new Label("3. ");
 
-        buttonHome.setOnAction((event) -> showScene("mainScene"));
+        Button home = new Button("Home");
+        Button back = new Button("Back");
+
+        try {
+            String[] topThreeCoursesList = statisticsRepository.getTopThreeCourses();
+            topOne.setText("1. " + topThreeCoursesList[0]);
+            topTwo.setText("2. " + topThreeCoursesList[1]);
+            topThree.setText("3. " + topThreeCoursesList[2]);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        home.setOnAction(event -> {
+            showScene("mainScene");
+        });
+
+        back.setOnAction(event -> {
+            showScene("statisticsMenuScene");
+        });
 
         // Appending
-        certificatesList.getItems().add(numberOne);
-        certificatesList.getItems().add(numberTwo);
-        certificatesList.getItems().add(numberThree);
+        overviewPane.getChildren().addAll(topThreeCourses, topThreeList);
 
-        header.getChildren().addAll(label, buttonHome);
-        buttonHome.setAlignment(Pos.CENTER_RIGHT);
-
-        mainPane.setTop(header);
-        mainPane.setCenter(certificatesList);
-
+        mainPane.setTop(headerPane);
+        mainPane.setCenter(overviewPane);
+        headerPane.getChildren().addAll(title, navigationBox);
+        navigationBox.getChildren().addAll(home, back);
+        topThreeList.getChildren().addAll(topOne,topTwo,topThree);
     }
 
     public void resetScene() {

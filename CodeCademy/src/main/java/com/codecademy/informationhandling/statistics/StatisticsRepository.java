@@ -45,4 +45,45 @@ public class StatisticsRepository {
         return successRate;
     }
 
+    public String[] getTopThreeCourses() throws SQLException {
+        String[] topThreeCourses = new String[3];
+        String getTopThreeCourses = "SELECT Course.CourseName, COUNT(CertificateID) FROM Course " +
+                "LEFT JOIN Register ON Register.CourseName = Course.Coursename " +
+                "LEFT JOIN Certificate ON Certificate.RegisterID = Register.RegisterID " +
+                "GROUP BY Course.Coursename " +
+                "ORDER BY COUNT(CertificateID) DESC";
+        ResultSet rsTopThreeCourses = dbCon.getQuery(getTopThreeCourses);
+        int index = 0;
+        while (rsTopThreeCourses.next()) {
+            if (index <= 2) {
+                String courseAndNumber = rsTopThreeCourses.getString(1) + ": " + rsTopThreeCourses.getString(2);
+                topThreeCourses[index] = courseAndNumber;
+                index++;
+            }
+        }
+        dbCon.CloseResultSet();
+        return topThreeCourses;
+    }
+
+    public String[] getTopThreeWebcasts() throws SQLException {
+        String[] topThreeWebcasts = {"No other webcasts with views", "No other webcasts with views", "No other webcasts with views"};
+        String getTopThreeWebcasts = "SELECT Title, COUNT(Progress) FROM ContentItem " +
+                "INNER JOIN Viewing ON ContentItem.ContentID = Viewing.ContenID " +
+                "WHERE Viewing.ContenID IN (SELECT ContentID FROM Webcast) " +
+                "AND Progress != 0 " +
+                "GROUP BY Title " +
+                "ORDER BY COUNT(StudentEmail)";
+        ResultSet rsTopThreeWebcasts = dbCon.getQuery(getTopThreeWebcasts);
+        int index = 0;
+        while (rsTopThreeWebcasts.next()) {
+            if (index <= 2) {
+                String webCastAndViews = rsTopThreeWebcasts.getString(1) + ": " + rsTopThreeWebcasts.getString(2);
+                topThreeWebcasts[index] = webCastAndViews;
+                index++;
+            }
+        }
+        dbCon.CloseResultSet();
+        return topThreeWebcasts;
+    }
+
 }

@@ -39,7 +39,7 @@ public class StatisticsMenuScene extends GUIScene {
         // Nodes
         final Label title = new Label("Statistics Menu");
         Button statisticsButton = new Button("Gender Statistics");
-        Button topCourseButton = new Button ("Top 3 highest");
+        Button topCourseButton = new Button ("Top 3 Courses");
         Button topWebcastButton = new Button("Top 3 Webcasts");
 
         Button home = new Button("Home");
