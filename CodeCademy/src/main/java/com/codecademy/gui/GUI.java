@@ -1,5 +1,9 @@
 package com.codecademy.gui;
 
+import com.codecademy.gui.certificate.EditCertificateScene;
+import com.codecademy.gui.certificate.NewCertificateScene;
+import com.codecademy.gui.certificate.OverviewCertificateScene;
+import com.codecademy.gui.certificate.ViewCertificateScene;
 import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
@@ -71,6 +75,11 @@ public class GUI extends Application {
         ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneWidth, sceneHeight, null);
         EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneWidth, sceneHeight, null);
 
+        OverviewCertificateScene overviewCertificateScene = new OverviewCertificateScene(this, sceneWidth, sceneHeight);
+        NewCertificateScene newCertificateScene = new NewCertificateScene(this, sceneWidth,sceneHeight);
+        ViewCertificateScene viewCertificateScene = new ViewCertificateScene(this, sceneWidth,sceneHeight,null);
+        EditCertificateScene editCertificateScene = new EditCertificateScene(this,sceneWidth,sceneHeight,null);
+
         StatisticsScene statisticsScene = new StatisticsScene(this, sceneWidth, sceneHeight);
 
         // Adding the GUIScene's to a map that will be used to show the scene's
@@ -87,6 +96,10 @@ public class GUI extends Application {
         scenes.put("newRegistrationScene", newRegistrationScene);
         scenes.put("viewRegistrationScene", viewRegistrationScene);
         scenes.put("editRegistrationScene", editRegistrationScene);
+        scenes.put("overviewCertificateScene", overviewCertificateScene);
+        scenes.put("newCertificateScene", newCertificateScene);
+        scenes.put("viewCertificateScene", viewCertificateScene);
+        scenes.put("editCertificateScene", editCertificateScene);
         scenes.put("statisticsScene", statisticsScene);
 
         showScene("mainScene");

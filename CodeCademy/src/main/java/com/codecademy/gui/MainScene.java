@@ -1,5 +1,6 @@
 package com.codecademy.gui;
 
+import com.codecademy.gui.certificate.OverviewCertificateScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.statistics.StatisticsScene;
@@ -57,9 +58,8 @@ public class MainScene extends GUIScene{
         });
 
         certificationsButton.setOnAction((event) -> {
-            System.out.println("Certifications Clicked");
-            // Reset Scene Certifications
-            // Show Scene Certifications
+            ((OverviewCertificateScene)getSceneObject("overviewCertificateScene")).resetScene();
+            showScene("overviewCertificateScene");
         });
 
         registrationsButton.setOnAction((event) -> {
