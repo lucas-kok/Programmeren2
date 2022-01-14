@@ -5,6 +5,7 @@ import com.codecademy.informationhandling.course.Course;
 import com.codecademy.informationhandling.registration.Registration;
 import com.codecademy.informationhandling.student.Student;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class RegistrationInformationValidator {
@@ -24,12 +25,13 @@ public class RegistrationInformationValidator {
         return message.toString();
     }
 
-    public String validateEditedRegistration(String[] registrationDatePieces) {
-        if (!validateRegistrationDate(registrationDatePieces)) {
-            return "The Registration Date is not valid!";
-        }
+    public String validateEditedRegistration(String[] registrationDatePieces, ArrayList<Integer> progression) {
+        StringBuilder message = new StringBuilder();
 
-        return "";
+        if (!validateRegistrationDate(registrationDatePieces)) message.append("The Registration Date is not valid!");
+        if (!validateProgression(progression)) message.append("Some progression values are not between 0 and 100!");
+
+        return message.toString();
     }
 
     // Registration Date
@@ -67,5 +69,16 @@ public class RegistrationInformationValidator {
 
     private boolean registrationDoesNotExists(String studentEmail, String courseName, Map<String, Registration> registration) {
         return registration.get(studentEmail + "-" + courseName) == null;
+    }
+
+    // Progression
+    private boolean validateProgression(ArrayList<Integer> progression) {
+        for (int progress : progression) {
+            if (progress < 0 || progress > 100) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
