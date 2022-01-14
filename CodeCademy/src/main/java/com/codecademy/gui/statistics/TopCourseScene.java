@@ -41,6 +41,7 @@ public class TopCourseScene extends GUIScene {
         ListView<String> certificatesList = new ListView<>();
         Button buttonHome = new Button("Home");
 
+        buttonHome.setOnAction((event) -> showScene("mainScene"));
 
         // Appending
         certificatesList.getItems().add(numberOne);

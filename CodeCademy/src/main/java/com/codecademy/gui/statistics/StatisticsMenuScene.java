@@ -49,8 +49,8 @@ public class StatisticsMenuScene extends GUIScene {
         });
 
         topWebcastButton.setOnAction((event) -> {
-            ((TopWebcastsScene)getSceneObject("topWebcastsScene")).resetScene();
-            showScene("topWebcastsScene");
+            ((TopWebcastsScene)getSceneObject("topWebcastScene")).resetScene();
+            showScene("topWebcastScene");
         });
 
 

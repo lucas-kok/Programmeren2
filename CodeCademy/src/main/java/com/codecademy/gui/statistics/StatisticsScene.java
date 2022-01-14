@@ -65,11 +65,7 @@ public class StatisticsScene extends GUIScene {
             // Filter on Other
         });
 
-        buttonHome.setOnAction((event) ->  {
-            ((MainScene)getSceneObject("MainScene")).resetScene();
-            showScene("MainScene");
-        });
-
+        buttonHome.setOnAction((event) -> showScene("mainScene"));
         // Appending
         buttonsBox.setAlignment(Pos.CENTER);
         header.getChildren().addAll(label, buttonHome);

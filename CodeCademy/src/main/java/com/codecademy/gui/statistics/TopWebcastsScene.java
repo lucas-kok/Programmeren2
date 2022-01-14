@@ -41,6 +41,7 @@ public class TopWebcastsScene extends GUIScene {
         ListView<String> webcastsList = new ListView<>();
         Button buttonHome = new Button("Home");
 
+        buttonHome.setOnAction((event) -> showScene("mainScene"));
 
         // Appending
         webcastsList.getItems().add(numberOne);

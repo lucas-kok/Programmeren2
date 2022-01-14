@@ -20,7 +20,7 @@ public class CertificateRepository {
     }
 
     public void createCertificate(String studentEmail, String courseName, int score, String StaffName) throws SQLException {
-        String queryGetRegisterID = "SELECT RegisterID FROM Register WHERE StudentEmail = '" + studentEmail + "' AND CourseName = '" + courseName;
+        String queryGetRegisterID = "SELECT RegisterID FROM Register WHERE StudentEmail = '" + studentEmail + "' AND CourseName = '" + courseName + "'";
         int RegisterID = 0;
         ResultSet rs = dbCon.getQuery(queryGetRegisterID);
         while (rs.next()) {
