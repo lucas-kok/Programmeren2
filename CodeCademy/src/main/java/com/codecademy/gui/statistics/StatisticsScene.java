@@ -11,18 +11,23 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
+import com.codecademy.informationhandling.statistics.StatisticsRepository;
+
+import java.sql.SQLException;
 
 
 public class StatisticsScene extends GUIScene {
     private Scene statisticsScene;
     private final int sceneWidth;
     private final int sceneHeight;
+    private final StatisticsRepository statisticsRepository;
 
     public StatisticsScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        this.statisticsRepository = new StatisticsRepository();
 
         createScene();
         setScene(statisticsScene);
@@ -48,6 +53,7 @@ public class StatisticsScene extends GUIScene {
         Label selectedGender = new Label("Selected Gender: ");
         Label totalApplied = new Label("Applicants: ");
         Label totalCertified = new Label("Certificates: ");
+        Label percentageCertified = new Label("Success rate: ");
 
         Button male = new Button("Male");
         Button female = new Button("Female");
@@ -59,14 +65,38 @@ public class StatisticsScene extends GUIScene {
         //Actions
         male.setOnAction(event -> {
             selectedGender.setText("Selected Gender: Male");
+            try {
+                String[] succesRate = statisticsRepository.getCertificatePercentage("m");
+                totalApplied.setText(succesRate[0]);
+                totalCertified.setText(succesRate[1]);
+                percentageCertified.setText(succesRate[2] + "%");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
         female.setOnAction(event -> {
             selectedGender.setText("Selected Gender: Female");
+            try {
+                String[] succesRate = statisticsRepository.getCertificatePercentage("f");
+                totalApplied.setText(succesRate[0]);
+                totalCertified.setText(succesRate[1]);
+                percentageCertified.setText(succesRate[2] + "%");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
         other.setOnAction(event -> {
             selectedGender.setText("Selected Gender: Other");
+            try {
+                String[] succesRate = statisticsRepository.getCertificatePercentage("x");
+                totalApplied.setText(succesRate[0]);
+                totalCertified.setText(succesRate[1]);
+                percentageCertified.setText(succesRate[2] + "%");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
         home.setOnAction(event -> {
@@ -79,7 +109,7 @@ public class StatisticsScene extends GUIScene {
 
         // Appending
         buttonBox.getChildren().addAll(male, female, other);
-        overviewPane.getChildren().addAll(selectedGender, totalApplied, totalCertified, buttonBox);
+        overviewPane.getChildren().addAll(selectedGender, totalApplied, totalCertified, percentageCertified, buttonBox);
 
         mainPane.setTop(headerPane);
         mainPane.setCenter(overviewPane);

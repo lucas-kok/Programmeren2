@@ -75,8 +75,6 @@ public class StatisticsMenuScene extends GUIScene {
 
         buttonsBox.setAlignment(Pos.CENTER);
         title.setAlignment(Pos.CENTER);
-
-
     }
 
     public void resetScene() {
