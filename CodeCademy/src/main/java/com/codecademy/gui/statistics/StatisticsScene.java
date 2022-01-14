@@ -33,9 +33,13 @@ public class StatisticsScene extends GUIScene {
         HBox listBox = new HBox();
         HBox header = new HBox();
 
+
+
         // Database connection to be implemented
         String totApplied = null;
         String perPassed = null;
+
+
 
         statisticsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
