@@ -37,7 +37,6 @@ public class StatisticsScene extends GUIScene {
         String totApplied = null;
         String perPassed = null;
 
-
         statisticsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         //Nodes
