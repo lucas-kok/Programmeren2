@@ -3,6 +3,7 @@ package com.codecademy.gui.registration;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
+import com.codecademy.informationhandling.contentitem.ContentItem;
 import com.codecademy.informationhandling.registration.Registration;
 import com.codecademy.informationhandling.registration.RegistrationRepository;
 import com.codecademy.informationhandling.validators.RegistrationInformationValidator;
@@ -12,6 +13,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.sql.SQLException;
+import java.util.Map;
 
 public class EditRegistrationScene extends GUIScene {
 
@@ -49,6 +53,8 @@ public class EditRegistrationScene extends GUIScene {
         VBox editRegistrationPane = new VBox(15);
         HBox editRegistrationDatePane = new HBox(5);
 
+        ScrollPane selectedRegistrationProgressScroll = new ScrollPane();
+
         editRegistrationScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         header.setAlignment(Pos.CENTER);
@@ -70,6 +76,7 @@ public class EditRegistrationScene extends GUIScene {
 
         Label registrationStudentEmailLabel = new Label("Student email: " + selectedRegistration.getStudentEmail());
         Label registrationCourseNameLabel = new Label("Course name: " + selectedRegistration.getCourseName());
+        Label registrationProgressionLabel = new Label("Progression:");
 
         Button updateSelectedCourseButton = new Button("Update Course");
         Label messageLabel = new Label("");
@@ -126,9 +133,43 @@ public class EditRegistrationScene extends GUIScene {
         navigation.getChildren().addAll(homeButton, backButton, deleteCourseButton);
 
         editRegistrationPane.getChildren().addAll(registrationDateLabel, editRegistrationDatePane, registrationStudentEmailLabel,
-                registrationCourseNameLabel, updateSelectedCourseButton, messageLabel);
+                registrationCourseNameLabel, registrationProgressionLabel, selectedRegistrationProgressScroll, updateSelectedCourseButton, messageLabel);
 
         editRegistrationDatePane.getChildren().addAll(registrationDateDayInput, registrationDateMonthInput, registrationDateYearInput);
+
+        try {
+            selectedRegistrationProgressScroll.setContent(createSelectedRegistrationModulesPane(registrationRepository.getProgressForRegistration(selectedRegistration)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Function that will convert a list of ContentItems connected to the selected Registration into a VBox
+    private VBox createSelectedRegistrationModulesPane(Map<ContentItem, Integer> progression) {
+        VBox modulesListPane = new VBox(5);
+
+        int index = 0;
+        for (ContentItem contentItem : progression.keySet()) {
+            // Panes
+            HBox contentItemInfoRow = new HBox(10);
+
+            // Nodes
+            Label indexLabel = new Label(index + 1 + ". ");
+            Label contentItemNameLabel = new Label(contentItem.getTitle());
+            Label informationDivider = new Label("-");
+            TextField contentItemProgression = new TextField();
+
+            contentItemProgression.setText(String.valueOf(progression.get(contentItem)));
+            contentItemProgression.setPromptText("Progression");
+
+            // Appending
+            contentItemInfoRow.getChildren().addAll(indexLabel, contentItemNameLabel, informationDivider, contentItemProgression);
+            modulesListPane.getChildren().add(contentItemInfoRow);
+
+            index++;
+        }
+
+        return modulesListPane;
     }
 
     public void resetScene(Registration selectedRegistration) {

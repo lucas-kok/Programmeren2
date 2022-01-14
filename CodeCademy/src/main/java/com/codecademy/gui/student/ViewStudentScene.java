@@ -3,12 +3,14 @@ package com.codecademy.gui.student;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
+import com.codecademy.informationhandling.certificate.Certificate;
 import com.codecademy.informationhandling.registration.Registration;
 import com.codecademy.informationhandling.student.Student;
 import com.codecademy.informationhandling.student.StudentRepository;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,6 +54,7 @@ public class ViewStudentScene extends GUIScene {
         VBox viewStudentPane = new VBox(15);
 
         ScrollPane selectedStudentRegistrationsList = new ScrollPane();
+        ScrollPane selectedStudentCertificationsList = new ScrollPane();
 
         viewStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
@@ -73,6 +76,7 @@ public class ViewStudentScene extends GUIScene {
         Label selectedStudentBirthdayLabel = new Label("Birthday: " + selectedStudent.getBirthdayAsString());
 
         Label selectedStudentFollowingCoursesLabel = new Label("Following Courses:");
+        Label selectedStudentCertificationsLabel = new Label("Certifications:");
 
 
         // Event Handlers
@@ -97,10 +101,11 @@ public class ViewStudentScene extends GUIScene {
 
         viewStudentPane.getChildren().addAll(selectedStudentNameLabel, selectedStudentEmailLabel, selectedStudentAddressLabel,
                 selectedStudentCityLabel, selectedStudentCountryLabel, selectedStudentGenderLabel, selectedStudentBirthdayLabel,
-                selectedStudentFollowingCoursesLabel, selectedStudentRegistrationsList);
+                selectedStudentFollowingCoursesLabel, selectedStudentRegistrationsList, selectedStudentCertificationsLabel, selectedStudentCertificationsList);
 
         try {
             selectedStudentRegistrationsList.setContent(createSelectedStudentRegistrationsPane(studentRepository.getAllRegistrationsForStudent(selectedStudent)));
+            selectedStudentCertificationsList.setContent(createSelectedStudentCertificationsPane(studentRepository.getAllCertificatesForStudent(selectedStudent)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -133,6 +138,36 @@ public class ViewStudentScene extends GUIScene {
         }
 
         return studentListPane;
+    }
+
+    // Function that will convert a list of Registrations connected to the selected Student into a VBox
+    private VBox createSelectedStudentCertificationsPane(ArrayList<Certificate> certifications) {
+        VBox certifcationsListPane = new VBox(5);
+
+        int index = 0;
+        for (Certificate certificate : certifications) {
+            // Panes
+            HBox registrationInfoRow = new HBox(10);
+
+            // Nodes
+            Label indexLabel = new Label(index + 1 + ". ");
+            Label certificateCourseLabel = new Label(certificate.getCourseName());
+            Label informationDividerLabel = new Label("-");
+            Label certifcateScoreLabel = new Label(certificate.getScore() + "/10");
+
+            // Event Handlers
+            registrationInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
+                // View Certificate
+            });
+
+            // Appending
+            registrationInfoRow.getChildren().addAll(indexLabel, certificateCourseLabel, informationDividerLabel, certifcateScoreLabel);
+            certifcationsListPane.getChildren().add(registrationInfoRow);
+
+            index++;
+        }
+
+        return certifcationsListPane;
     }
 
     public void resetScene(Student selectedStudent) {

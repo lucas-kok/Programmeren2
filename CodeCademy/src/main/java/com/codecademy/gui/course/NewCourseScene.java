@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class NewCourseScene extends GUIScene {
@@ -142,12 +143,14 @@ public class NewCourseScene extends GUIScene {
                     courseLevelInput.setValue(null);
                     courseRelatedCoursesInput.clear();
                     selectedContentItems = new ArrayList<>();
-                    selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
                     try {
-                        availableModulesScroll.setContent(createAvailableModulesPane(contentItemRepository.getUnusedContentItems()));
+                        availableContentItems = contentItemRepository.getUnusedContentItems();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
+
+                    selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
+                    availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
 
                     messageLabel.setText("The Course '" + name + "' has successfully been created!");
                 }
@@ -174,7 +177,8 @@ public class NewCourseScene extends GUIScene {
 
         selectedModulesScroll.setContent(new VBox(5));
         try {
-            availableModulesScroll.setContent(createAvailableModulesPane(contentItemRepository.getUnusedContentItems()));
+            availableContentItems = contentItemRepository.getUnusedContentItems();
+            availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -234,8 +238,8 @@ public class NewCourseScene extends GUIScene {
                     if (!selectedContentItems.contains(contentItem)) {
                         selectedContentItems.add(contentItem);
 
-                        selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
                         availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
+                        selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
                     }
                 });
 
