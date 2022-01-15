@@ -236,7 +236,7 @@ WHERE Viewing.ContenID IN (	SELECT ContentID
 					FROM Webcast) 
 AND Progress != 0
 GROUP BY Title 
-ORDER BY COUNT(StudentEmail)
+ORDER BY COUNT(StudentEmail) DESC
 
 
 --Query om een nieuwe Student aan te maken aan de hand van een student object
