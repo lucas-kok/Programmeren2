@@ -19,12 +19,26 @@ public class CertificateRepository {
         dbCon.setQuery(queryCreateCertificate);
     }
 
+    public void createCertificate(String studentEmail, String courseName, int score, String StaffName) throws SQLException {
+        String queryGetRegisterID = "SELECT RegisterID FROM Register WHERE StudentEmail = '" + studentEmail + "' AND CourseName = '" + courseName + "'";
+        int RegisterID = 0;
+        ResultSet rs = dbCon.getQuery(queryGetRegisterID);
+        while (rs.next()) {
+            RegisterID = rs.getInt("RegisterID");
+        }
+        dbCon.CloseResultSet();
+        if (!(RegisterID == 0)) {
+            String queryCreateCertificate = "INSERT INTO Certificate VALUES (" + RegisterID + " , " + score + ", '" + StaffName + "')";
+            dbCon.setQuery(queryCreateCertificate);
+        }
+    }
+
     public ArrayList<Certificate> getALlCertificates() throws SQLException {
         ArrayList<Certificate> certificates = new ArrayList<>();
         String queryGetAllCertificates = "SELECT Certificate.*, Register.StudentEmail, Register.CourseName FROM Certificate INNER JOIN Register ON Register.RegisterID = Certificate.RegisterID";
         ResultSet rs = dbCon.getQuery(queryGetAllCertificates);
         while (rs.next()) {
-            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getString("StudentEmail"),rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
+            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getString("StudentEmail"), rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
         }
         dbCon.CloseResultSet();
         return certificates;

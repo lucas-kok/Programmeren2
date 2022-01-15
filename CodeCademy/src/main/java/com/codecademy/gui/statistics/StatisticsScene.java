@@ -10,18 +10,24 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
+import javafx.scene.layout.VBox;
+import com.codecademy.informationhandling.statistics.StatisticsRepository;
+
+import java.sql.SQLException;
 
 
 public class StatisticsScene extends GUIScene {
     private Scene statisticsScene;
     private final int sceneWidth;
     private final int sceneHeight;
+    private final StatisticsRepository statisticsRepository;
 
     public StatisticsScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        this.statisticsRepository = new StatisticsRepository();
 
         createScene();
         setScene(statisticsScene);
@@ -29,58 +35,86 @@ public class StatisticsScene extends GUIScene {
 
     private void createScene() {
         BorderPane mainPane = new BorderPane();
-        HBox buttonsBox = new HBox(2);
-        HBox listBox = new HBox();
-        HBox header = new HBox();
+        VBox headerPane = new VBox(15);
+        VBox overviewPane = new VBox(15);
+        HBox buttonBox = new HBox(15);
+        HBox navigationBox = new HBox(15);
 
-        // Database connection to be implemented
-        String totApplied = null;
-        String perPassed = null;
+        headerPane.setAlignment(Pos.CENTER);
+        buttonBox.setAlignment(Pos.CENTER);
+        overviewPane.setAlignment(Pos.CENTER);
+        navigationBox.setAlignment(Pos.CENTER);
 
         statisticsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        //Nodes
-        final Label label = new Label("Gender Filtered");
-        ListView<String> totAppliedList = new ListView<>();
-        ListView<String> perPassedList = new ListView<>();
-        Button buttonMale = new Button("Male");
-        Button buttonFemale = new Button("Female");
-        Button buttonOther = new Button("Other");
-        Button buttonHome = new Button("Home");
+        // Nodes
+        final Label title = new Label("Statistics Menu");
 
-        // Event Handlers
-        buttonFemale.setOnAction((event) -> {
-            // Filter on Females
+        Label selectedGender = new Label("Selected Gender: ");
+        Label totalApplied = new Label("Applicants: ");
+        Label totalCertified = new Label("Certificates: ");
+        Label percentageCertified = new Label("Success rate: ");
+
+        Button male = new Button("Male");
+        Button female = new Button("Female");
+        Button other = new Button("Other");
+
+        Button home = new Button("Home");
+        Button back = new Button("Back");
+
+        //Actions
+        male.setOnAction(event -> {
+            selectedGender.setText("Selected Gender: Male");
+            try {
+                String[] succesRate = statisticsRepository.getCertificatePercentage("m");
+                totalApplied.setText(succesRate[0]);
+                totalCertified.setText(succesRate[1]);
+                percentageCertified.setText(succesRate[2] + "%");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
-        buttonMale.setOnAction((event) -> {
-            // Filter on Male
+        female.setOnAction(event -> {
+            selectedGender.setText("Selected Gender: Female");
+            try {
+                String[] succesRate = statisticsRepository.getCertificatePercentage("f");
+                totalApplied.setText(succesRate[0]);
+                totalCertified.setText(succesRate[1]);
+                percentageCertified.setText(succesRate[2] + "%");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
-        buttonOther.setOnAction((event) -> {
-            // Filter on Other
+        other.setOnAction(event -> {
+            selectedGender.setText("Selected Gender: Other");
+            try {
+                String[] succesRate = statisticsRepository.getCertificatePercentage("x");
+                totalApplied.setText(succesRate[0]);
+                totalCertified.setText(succesRate[1]);
+                percentageCertified.setText(succesRate[2] + "%");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
 
-        buttonHome.setOnAction((event) ->  {
-            ((MainScene)getSceneObject("MainScene")).resetScene();
-            showScene("MainScene");
+        home.setOnAction(event -> {
+            showScene("mainScene");
+        });
+
+        back.setOnAction(event -> {
+            showScene("statisticsMenuScene");
         });
 
         // Appending
-        buttonsBox.setAlignment(Pos.CENTER);
-        header.getChildren().addAll(label, buttonHome);
-        buttonHome.setAlignment(Pos.CENTER_RIGHT);
+        buttonBox.getChildren().addAll(male, female, other);
+        overviewPane.getChildren().addAll(selectedGender, totalApplied, totalCertified, percentageCertified, buttonBox);
 
-        totAppliedList.getItems().add(totApplied);
-        perPassedList.getItems().add(perPassed);
-
-        listBox.getChildren().addAll(totAppliedList, perPassedList);
-        buttonsBox.getChildren().addAll(buttonFemale, buttonOther, buttonMale);
-
-        mainPane.setTop(header);
-        mainPane.setCenter(listBox);
-        mainPane.setBottom(buttonsBox);
-
+        mainPane.setTop(headerPane);
+        mainPane.setCenter(overviewPane);
+        headerPane.getChildren().addAll(title, navigationBox);
+        navigationBox.getChildren().addAll(home, back);
     }
 
     public void resetScene() {

@@ -1,5 +1,9 @@
 package com.codecademy.gui;
 
+import com.codecademy.gui.certificate.EditCertificateScene;
+import com.codecademy.gui.certificate.NewCertificateScene;
+import com.codecademy.gui.certificate.OverviewCertificateScene;
+import com.codecademy.gui.certificate.ViewCertificateScene;
 import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
@@ -8,7 +12,10 @@ import com.codecademy.gui.registration.EditRegistrationScene;
 import com.codecademy.gui.registration.NewRegistrationScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
+import com.codecademy.gui.statistics.StatisticsMenuScene;
 import com.codecademy.gui.statistics.StatisticsScene;
+import com.codecademy.gui.statistics.TopCourseScene;
+import com.codecademy.gui.statistics.TopWebcastsScene;
 import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
@@ -24,7 +31,6 @@ import com.codecademy.informationhandling.student.StudentRepository;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +77,16 @@ public class GUI extends Application {
         ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneWidth, sceneHeight, null);
         EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneWidth, sceneHeight, null);
 
+        OverviewCertificateScene overviewCertificateScene = new OverviewCertificateScene(this, sceneWidth, sceneHeight);
+        NewCertificateScene newCertificateScene = new NewCertificateScene(this, sceneWidth, sceneHeight);
+        ViewCertificateScene viewCertificateScene = new ViewCertificateScene(this, sceneWidth, sceneHeight, null);
+        EditCertificateScene editCertificateScene = new EditCertificateScene(this, sceneWidth, sceneHeight, null);
+
         StatisticsScene statisticsScene = new StatisticsScene(this, sceneWidth, sceneHeight);
+        StatisticsMenuScene statisticsMenuScene = new StatisticsMenuScene(this, sceneWidth, sceneHeight);
+        TopCourseScene topCourseScene = new TopCourseScene(this, sceneWidth, sceneHeight);
+        TopWebcastsScene topWebcastsScene = new TopWebcastsScene(this, sceneWidth, sceneHeight);
+
 
         // Adding the GUIScene's to a map that will be used to show the scene's
         scenes.put("mainScene", mainScene);
@@ -87,7 +102,14 @@ public class GUI extends Application {
         scenes.put("newRegistrationScene", newRegistrationScene);
         scenes.put("viewRegistrationScene", viewRegistrationScene);
         scenes.put("editRegistrationScene", editRegistrationScene);
+        scenes.put("overviewCertificateScene", overviewCertificateScene);
+        scenes.put("newCertificateScene", newCertificateScene);
+        scenes.put("viewCertificateScene", viewCertificateScene);
+        scenes.put("editCertificateScene", editCertificateScene);
         scenes.put("statisticsScene", statisticsScene);
+        scenes.put("statisticsMenuScene", statisticsMenuScene);
+        scenes.put("topCourseScene", topCourseScene);
+        scenes.put("topWebcastScene", topWebcastsScene);
 
         showScene("mainScene");
 
