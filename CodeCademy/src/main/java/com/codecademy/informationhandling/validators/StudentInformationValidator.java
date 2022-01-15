@@ -87,28 +87,27 @@ public class StudentInformationValidator {
         int month = Integer.parseInt(birthday[1]);
         int year = Integer.parseInt(birthday[2]);
 
+        if (year < 1000) return false;
+
         if ((day < 1 || day > 31) || (month < 1 || month >= 12)) return false;
 
         if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
-            if (day >= 1 && day <= 31) return true;
+            return true;
         } else if (month == 4 || month == 6 || month == 9 || month == 11) {
-            if (day <= 30) return true;
-        } else if (month == 2) {
+            return day <= 30;
+        } else {
             if (year % 4 == 0) {
                 if (!(year % 100 == 0 && year % 400 != 0)) {
                     if (day <= 29) return true;
                 }
             }
-            if (day <= 28) return true;
+            return day <= 28;
         }
-        return false;
     }
 
     public boolean validateAge(String[] birthdayPieces) {
-//        String day = String.format("%02d", birthdayPieces[0]);
-//        String month = String.format("%02d", birthdayPieces[1]);
-        String day = birthdayPieces[0];
-        String month = birthdayPieces[1];
+        String day = Integer.parseInt(birthdayPieces[0]) < 10 ? "0" + birthdayPieces[0] : birthdayPieces[0]; // "0" -> "01"
+        String month = Integer.parseInt(birthdayPieces[1]) < 10 ? "0" + birthdayPieces[1] : birthdayPieces[1];
         String year = birthdayPieces[2];
 
         LocalDate studentBirthday = LocalDate.parse(year + "-" + month + "-" + day);
@@ -118,5 +117,4 @@ public class StudentInformationValidator {
 
         return period.getYears() >= minimumAge;
     }
-
 }

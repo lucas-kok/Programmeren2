@@ -43,7 +43,7 @@ public class Student {
     }
 
     public String[] getBirthdayPieces() {
-        return getBirthday().split("-");
+        return getBirthday().split("/");
     }
 
     public String getGender() {

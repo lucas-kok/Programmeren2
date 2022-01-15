@@ -8,7 +8,7 @@ public class InformationFormatter {
     public InformationFormatter() {
     }
 
-    // Function to format the information of a Student globally
+    // Function to format the information of a Student
     public void formatStudent(Student student) {
         // Name
         String name = student.getName();
@@ -26,7 +26,6 @@ public class InformationFormatter {
         String postalCode = student.getPostalCode();
         postalCode = postalCode.replaceAll(" ", "");
         postalCode = postalCode.substring(0,4) + " " + postalCode.substring(4).toUpperCase();
-
         student.setPostalCode(postalCode);
 
         // City
@@ -39,7 +38,7 @@ public class InformationFormatter {
 
     }
 
-    // Function to format the information of a Course globally
+    // Function to format the information of a Course
     public void formatCourse(Course course) {
         // Name
         String name = course.getName();
@@ -83,6 +82,7 @@ public class InformationFormatter {
                 }
             }
         }
+
         return capitalizedString.toString();
     }
 }

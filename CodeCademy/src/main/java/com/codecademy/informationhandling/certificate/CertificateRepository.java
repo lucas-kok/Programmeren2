@@ -56,5 +56,6 @@ public class CertificateRepository {
     public void deleteCertificate(Certificate certificate) {
         String query = "DELETE From Certificate" +
                 "                       WHERE CertificateID = " + certificate.getCertificateID() + "";
+        dbCon.setQuery(query);
     }
 }

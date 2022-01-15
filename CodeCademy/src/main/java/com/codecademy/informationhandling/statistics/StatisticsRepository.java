@@ -23,6 +23,7 @@ public class StatisticsRepository {
                 "INNER JOIN Student ON Student.Email = Register.StudentEmail " +
                 "WHERE Student.Gender = '" + gender + "'";
         ResultSet rsGetAmountOfCertificates = dbCon.getQuery(queryGetAmountOfCertificates);
+
         while (rsGetAmountOfCertificates.next()) {
             amountOfCertificates = rsGetAmountOfCertificates.getInt(1);
         }
@@ -32,6 +33,7 @@ public class StatisticsRepository {
                 "INNER JOIN Student ON Student.Email = Register.StudentEmail " +
                 "WHERE Student.Gender = '" + gender + "'";
         ResultSet rsGetAmountOfRegistrations = dbCon.getQuery(queryGetAmountOfRegistrations);
+
         while (rsGetAmountOfRegistrations.next()) {
             amountOfRegistrations = rsGetAmountOfRegistrations.getInt(1);
         }
@@ -47,12 +49,14 @@ public class StatisticsRepository {
 
     public String[] getTopThreeCourses() throws SQLException {
         String[] topThreeCourses = new String[3];
-        String getTopThreeCourses = "SELECT Course.CourseName, COUNT(CertificateID) FROM Course " +
+
+        String query = "SELECT Course.CourseName, COUNT(CertificateID) FROM Course " +
                 "LEFT JOIN Register ON Register.CourseName = Course.Coursename " +
                 "LEFT JOIN Certificate ON Certificate.RegisterID = Register.RegisterID " +
                 "GROUP BY Course.Coursename " +
                 "ORDER BY COUNT(CertificateID) DESC";
-        ResultSet rsTopThreeCourses = dbCon.getQuery(getTopThreeCourses);
+        ResultSet rsTopThreeCourses = dbCon.getQuery(query);
+
         int index = 0;
         while (rsTopThreeCourses.next()) {
             if (index <= 2) {
@@ -62,18 +66,21 @@ public class StatisticsRepository {
             }
         }
         dbCon.CloseResultSet();
+
         return topThreeCourses;
     }
 
     public String[] getTopThreeWebcasts() throws SQLException {
         String[] topThreeWebcasts = {"No other webcasts with views", "No other webcasts with views", "No other webcasts with views"};
-        String getTopThreeWebcasts = "SELECT Title, COUNT(Progress) FROM ContentItem " +
+
+        String query = "SELECT Title, COUNT(Progress) FROM ContentItem " +
                 "INNER JOIN Viewing ON ContentItem.ContentID = Viewing.ContenID " +
                 "WHERE Viewing.ContenID IN (SELECT ContentID FROM Webcast) " +
                 "AND Progress != 0 " +
                 "GROUP BY Title " +
                 "ORDER BY COUNT(StudentEmail) DESC";
-        ResultSet rsTopThreeWebcasts = dbCon.getQuery(getTopThreeWebcasts);
+        ResultSet rsTopThreeWebcasts = dbCon.getQuery(query);
+
         int index = 0;
         while (rsTopThreeWebcasts.next()) {
             if (index <= 2) {
@@ -83,7 +90,7 @@ public class StatisticsRepository {
             }
         }
         dbCon.CloseResultSet();
+
         return topThreeWebcasts;
     }
-
 }

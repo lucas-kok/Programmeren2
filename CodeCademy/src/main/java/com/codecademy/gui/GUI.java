@@ -109,19 +109,15 @@ public class GUI extends Application {
 
     // Function that will show the Scene linked to the given String
     public void showScene(String sceneName)  {
-        if (scenes.get(sceneName) != null) {
-            mainStage.setScene(scenes.get(sceneName).getScene());
-        } else {
-            System.out.println(sceneName + " was not found!");
-        }
+        if (scenes.get(sceneName) == null) return;
+
+        mainStage.setScene(scenes.get(sceneName).getScene());
     }
 
     public GUIScene getSceneObject(String sceneName) {
-        if (scenes.get(sceneName) != null) {
-            return scenes.get(sceneName);
-        }
+        if (scenes.get(sceneName) == null) return null;
 
-        return null;
+        return scenes.get(sceneName);
     }
 
     public Map<String, Student> getStudents() throws SQLException {

@@ -67,10 +67,10 @@ public class RegistrationRepository {
     }
 
     public void deleteRegistration(Registration registration) {
-        String queryDeleteRegistration = "DELETE FROM Register WHERE RegisterID = " + registration.getRegisterID() + " " +
+        String query = "DELETE FROM Register WHERE RegisterID = " + registration.getRegisterID() + " " +
                 "                         DELETE FROM Viewing WHERE StudentEmail = '" + registration.getStudentEmail() + "' " +
                 "                         AND ContenID IN (SELECT ContenID FROM ContentItem WHERE CourseName = '" + registration.getCourseName() + "')";
-        dbCon.setQuery(queryDeleteRegistration);
+        dbCon.setQuery(query);
     }
 
     public HashMap<ContentItem, Integer> getProgressForRegistration(Registration registration) throws SQLException {
@@ -102,8 +102,8 @@ public class RegistrationRepository {
         for (ContentItem contentItem : newProgression.keySet()) {
             int progress = newProgression.get(contentItem);
 
-            String queryUpdateProgress = "UPDATE Viewing SET Progress = " + progress + " WHERE StudentEmail = '" + registration.getStudentEmail() + "' AND ContenID = " + contentItem.getId() + " ";
-            dbCon.setQuery(queryUpdateProgress);
+            String query = "UPDATE Viewing SET Progress = " + progress + " WHERE StudentEmail = '" + registration.getStudentEmail() + "' AND ContenID = " + contentItem.getId() + " ";
+            dbCon.setQuery(query);
         }
     }
 }

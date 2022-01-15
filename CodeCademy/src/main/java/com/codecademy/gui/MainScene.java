@@ -84,5 +84,4 @@ public class MainScene extends GUIScene{
         createScene();
         setScene(mainScene);
     }
-
 }

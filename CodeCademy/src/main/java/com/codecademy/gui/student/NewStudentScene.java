@@ -126,8 +126,8 @@ public class NewStudentScene extends GUIScene {
                 assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     // Create new Student
-                    LocalDate BirthDay = LocalDate.parse(birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0]);
-                    studentRepository.createStudent(new Student(email, name, BirthDay, gender, address, city, country, postalCode));
+                    String birthday = birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0];
+                    studentRepository.createStudent(new Student(email, name, birthday, gender, address, city, country, postalCode));
 
                     // Clearing all fields
                     studentNameInput.clear();
