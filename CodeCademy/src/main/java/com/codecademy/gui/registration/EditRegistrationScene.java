@@ -90,8 +90,8 @@ public class EditRegistrationScene extends GUIScene {
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewRegistrationsScene) getSceneObject("overviewRegistrationsScene")).resetScene();
-            showScene("overviewRegistrationsScene");
+            ((ViewRegistrationScene) getSceneObject("viewRegistrationScene")).resetScene(selectedRegistration);
+            showScene("viewRegistrationScene");
         });
 
         deleteCourseButton.setOnAction((event) -> {

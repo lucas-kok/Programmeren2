@@ -61,8 +61,11 @@ public class RegistrationRepository {
     }
 
     public void updateRegistration(Registration registration, String[] datePieces) {
-        String date = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
-        String query = "UPDATE Register SET Registerdate = convert(datetime, '" + date + "', 103) WHERE RegisterID = " + registration.getRegisterID();
+        String registrationDate = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
+        String reversedRegistrationDate = datePieces[0] + "-" + datePieces[1] + "-" + datePieces[2];
+        registration.setRegistrationDate(reversedRegistrationDate);
+
+        String query = "UPDATE Register SET Registerdate = convert(datetime, '" + registrationDate + "', 103) WHERE RegisterID = " + registration.getRegisterID();
         dbCon.setQuery(query);
     }
 

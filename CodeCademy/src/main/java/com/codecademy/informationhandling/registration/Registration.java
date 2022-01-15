@@ -3,13 +3,13 @@ package com.codecademy.informationhandling.registration;
 public class Registration {
     private final int id;
     private final String StudentEmail;
-    private final String registerDate;
+    private String registrationDate;
     private String courseName;
 
-    public Registration(int registerID, String studentEmail, String registerDate, String courseName) {
+    public Registration(int registerID, String studentEmail, String registrationDate, String courseName) {
         this.id = registerID;
         StudentEmail = studentEmail;
-        this.registerDate = registerDate;
+        this.registrationDate = registrationDate;
         this.courseName = courseName;
     }
 
@@ -22,10 +22,14 @@ public class Registration {
     }
 
     public String getRegistrationDate() {
-        return registerDate;
+        return registrationDate;
     }
 
-    public String getRegistrationDateAsString() {
+    public void setRegistrationDate(String registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getRegistrationDateAsString() { // YYYY-MM-dd -> dd-MM-YYYY
         String[] registrationDatePieces = getRegistrationDatePieces();
         return registrationDatePieces[2] + "/" + registrationDatePieces[1] + "/" + registrationDatePieces[0];
     }
