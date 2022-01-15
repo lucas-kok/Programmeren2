@@ -68,7 +68,7 @@ public class CertificateInformationValidator {
 
     private boolean registrationExists(String studentEmail, String courseName) throws SQLException {
         Map<String, Registration> registrations = registrationRepository.getAllRegistrations();
-        return registrations.get(studentEmail + "-" + courseName) != null;
+        return registrations.containsKey(studentEmail + "-" + courseName);
     }
 
     private boolean studentHasCompletedCourse(String studentEmail, String courseName) throws SQLException {
@@ -77,7 +77,6 @@ public class CertificateInformationValidator {
 
         for (Integer progress : contentItems.values()) {
             if (progress < 100) return false;
-            System.out.println(progress);
         }
 
         return true;

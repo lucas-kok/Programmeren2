@@ -31,7 +31,7 @@ public class RegistrationInformationValidator {
 
         if (!emailExists(studentEmail)) message.append("\nThe email: '").append(studentEmail).append("' does not exists!");
         if (!isValidCourseName(courseName)) message.append("\nThe Course: '").append(courseName).append("' does not exists!");
-        if (!registrationExists(studentEmail, courseName)) message.append("The registration already exists!");
+        if (registrationExists(studentEmail, courseName)) message.append("\nThe registration already exists!");
 
         return message.toString();
     }
@@ -54,7 +54,7 @@ public class RegistrationInformationValidator {
 
         if (year < 1000) return false;
 
-        if ((day < 1 || day > 31) || (month < 1 || month >= 12)) return false;
+        if ((day < 1 || day > 31) || (month < 1 || month > 12)) return false;
 
         if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
             return true;
@@ -73,18 +73,18 @@ public class RegistrationInformationValidator {
     // Student Email
     private boolean emailExists(String studentEmail) throws SQLException {
         Map<String, Student> students = studentRepository.getAllStudents();
-        return students.get(studentEmail.toLowerCase()) != null;
+        return students.containsKey(studentEmail.toLowerCase());
     }
 
     // Course Name
     private boolean isValidCourseName(String courseName) throws SQLException {
         Map<String, Course> courses = courseRepository.getAllCourses();
-        return courses.get(informationFormatter.capitalizeString(courseName)) != null;
+        return courses.containsKey(informationFormatter.capitalizeString(courseName));
     }
 
     private boolean registrationExists(String studentEmail, String courseName) throws SQLException {
         Map<String, Registration> registrations = registrationRepository.getAllRegistrations();
-        return registrations.get(studentEmail + "-" + courseName) != null;
+        return registrations.containsKey(studentEmail + "-" + courseName);
     }
 
     // Progression

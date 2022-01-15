@@ -24,7 +24,7 @@ public class CourseInformationValidator {
     public String validateNewCourse(String courseName, String relatedCoursesString) throws SQLException{
         StringBuilder message = new StringBuilder();
 
-        if (!isValidCourseName(courseName)) message.append("\nThe name: ").append(courseName).append(" already exists!");
+        if (courseNameExists(courseName)) message.append("\nThe name: ").append(courseName).append(" already exists!");
         if (!areValidRelatedCourses(relatedCoursesString))
             message.append("\nThe related Course(s) could not be found!");
 
@@ -35,8 +35,8 @@ public class CourseInformationValidator {
     public String validateEditedCourse(String courseName, String relatedCoursesString, Course selectedCourse) throws SQLException{
         StringBuilder message = new StringBuilder();
 
-        if (!courseName.equals(selectedCourse.getName())) {
-            if (!isValidCourseName(courseName)) message.append("\nThe name: ").append(courseName).append(" already exists!");
+        if (!courseName.equals(selectedCourse.getName())) { // Course has his own name (Already exists, but still valid)
+            if (courseNameExists(courseName)) message.append("\nThe name: ").append(courseName).append(" already exists!");
         }
         if (!areValidRelatedCourses(relatedCoursesString))
             message.append("\nThe related Course(s) could not be found!");
@@ -45,26 +45,24 @@ public class CourseInformationValidator {
     }
 
     // Name
-    public boolean isValidCourseName(String courseName) throws SQLException {
+    public boolean courseNameExists(String courseName) throws SQLException {
         Map<String, Course> courses = courseRepository.getAllCourses();
         courseName = informationFormatter.capitalizeString(courseName);
 
-        return courses.get(courseName) == null;
+        return courses.containsKey(courseName);
     }
 
     // Related Courses
     public boolean areValidRelatedCourses(String relatedCoursesString) throws SQLException {
         if (relatedCoursesString.isBlank()) return true; // Course doesn't need to contain related courses
 
-        boolean valid = true;
-
         Map<String, Course> courses = courseRepository.getAllCourses();
         String[] courseNames = relatedCoursesString.split(", ");
         for (String course : courseNames) {
-            if (courses.get(course) == null) valid = false;
+            if (!courses.containsKey(course)) return false;
         }
 
-        return valid;
+        return true;
     }
 
     public boolean courseHasRegistrations(String courseName) throws SQLException {

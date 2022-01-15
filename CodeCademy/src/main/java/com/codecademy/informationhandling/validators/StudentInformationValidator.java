@@ -17,10 +17,10 @@ public class StudentInformationValidator {
     }
 
     // Function to validate all inputs for a new Student and returns an error/empty message
-    public String validateNewStudent(String name, String email, String postalCode, String[] birthday) throws SQLException{
+    public String validateNewStudent(String studentName, String email, String postalCode, String[] birthday) throws SQLException{
         StringBuilder message = new StringBuilder();
 
-        if (!isValidName(name)) message.append("\nPlease fill in the First and Last name!");
+        if (!isValidName(studentName)) message.append("\nPlease fill in the First and Last name!");
         if (!isValidEmail(email)) message.append("\nThe email: '").append(email).append("' is not valid!");
         if (!emailExists(email))
             message.append("\nThe email: ").append(email).append(" already exists!");
@@ -36,13 +36,13 @@ public class StudentInformationValidator {
     }
 
     // Function to validate all inputs for an existing Student and returns an error/empty message
-    public String validateEditedStudent(String name, String email, String postalCode, String[] birthday, Map<String, Student> students, Student selectedStudent) throws SQLException{
+    public String validateEditedStudent(String studentName, String email, String postalCode, String[] birthday, Student selectedStudent) throws SQLException{
         StringBuilder message = new StringBuilder();
 
-        if (!isValidName(name)) message.append("\nPlease fill in both First- and Last name!");
+        if (!isValidName(studentName)) message.append("\nPlease fill in both First- and Last name!");
         if (!isValidEmail(email)) message.append("\nThe email: '").append(email).append("' is not valid!");
-        if (!email.equals(selectedStudent.getEmail())) { // Student already has his own email (Already exists, but still valid)
-            if (!emailExists(email))
+        if (!email.equals(selectedStudent.getEmail())) { // Student has his own email (Already exists, but still valid)
+            if (emailExists(email))
                 message.append("\nThe email: ").append(email).append(" already exists!");
         }
         if (!isValidPostalCode(postalCode))
@@ -57,8 +57,8 @@ public class StudentInformationValidator {
     }
 
     // Name
-    public boolean isValidName(String name) {
-        return name.split(" ").length >= 2;
+    public boolean isValidName(String studentName) {
+        return studentName.split(" ").length >= 2;
     }
 
     // Email
@@ -74,7 +74,7 @@ public class StudentInformationValidator {
 
     public boolean emailExists(String mailAddress) throws SQLException {
         Map<String, Student> students = studentRepository.getAllStudents();
-        return students.get(mailAddress) == null;
+        return students.containsKey(mailAddress);
     }
 
     // PostalCode

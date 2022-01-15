@@ -19,7 +19,6 @@ public class EditStudentScene extends GUIScene {
     private final int sceneWidth;
     private final int sceneHeight;
 
-    private final GUI gui;
     private final StudentInformationValidator informationValidationTools;
     private final StudentRepository studentRepository;
     private Student selectedStudent;
@@ -30,7 +29,6 @@ public class EditStudentScene extends GUIScene {
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
 
-        this.gui = gui;
         informationValidationTools = new StudentInformationValidator();
         studentRepository = new StudentRepository();
         this.selectedStudent = selectedStudent;
@@ -144,7 +142,7 @@ public class EditStudentScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthdayPieces, gui.getStudents(), selectedStudent);
+                    response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthdayPieces, selectedStudent);
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
