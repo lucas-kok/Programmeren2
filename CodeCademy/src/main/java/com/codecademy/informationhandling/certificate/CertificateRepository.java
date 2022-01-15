@@ -54,9 +54,13 @@ public class CertificateRepository {
 
     public void updateCertificate(Certificate certificate, String staffName, int score) {
         staffName = informationFormatter.capitalizeString(staffName);
+
+        certificate.setStaffName(staffName);
+        certificate.setScore(score);
+
         String query = "   UPDATE Certificate " +
-                "                           SET StaffName = '" + staffName + "' " +
-                "                           , Score = " + score + " " +
+                "                           SET StaffName = '" + certificate.getStaffName() + "' " +
+                "                           , Score = " + certificate.getScore() + " " +
                 "                           WHERE CertificateID = " + certificate.getCertificateID() + "";
         dbCon.setQuery(query);
     }

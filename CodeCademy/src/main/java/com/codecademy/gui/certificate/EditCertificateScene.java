@@ -72,8 +72,8 @@ public class EditCertificateScene extends GUIScene {
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewCertificatesScene) getSceneObject("overviewCertificatesScene")).resetScene();
-            showScene("overviewCertificatesScene");
+            ((ViewCertificateScene) getSceneObject("viewCertificateScene")).resetScene(selectedCertificate);
+            showScene("viewCertificateScene");
         });
 
         deleteCertificateButton.setOnAction((event) -> {

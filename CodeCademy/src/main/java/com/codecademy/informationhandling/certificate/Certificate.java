@@ -5,8 +5,8 @@ public class Certificate {
     private final int registrationID;
     private final String studentEmail;
     private String courseName;
-    private final int score;
-    private final String staffName;
+    private int score;
+    private String staffName;
 
     public Certificate(int certificateID, int registerID, String studentEmail, String courseName, int score, String staffName) {
         this.certificateID = certificateID;
@@ -29,8 +29,16 @@ public class Certificate {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public String getStaffName() {
         return staffName;
+    }
+
+    public void setStaffName(String staffName) {
+        this.staffName = staffName;
     }
 
     public String getStudentEmail() {

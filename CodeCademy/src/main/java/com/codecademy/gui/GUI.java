@@ -115,9 +115,7 @@ public class GUI extends Application {
     }
 
     public GUIScene getSceneObject(String sceneName) {
-        if (scenes.get(sceneName) == null) return null;
-
-        return scenes.get(sceneName);
+        return scenes.getOrDefault(sceneName, null);
     }
 
     public Map<String, Student> getStudents() throws SQLException {
