@@ -22,31 +22,38 @@ public class RegistrationRepository {
 
     public Map<String, Registration> getAllRegistrations() throws SQLException {
         Map<String, Registration> registrations = new HashMap<>();
+
         String queryGetAllRegistrations = "SELECT * FROM Register";
         ResultSet rs = dbCon.getQuery(queryGetAllRegistrations);
+
         while (rs.next()) {
             Registration newRegistration = new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail")
                     , rs.getDate("Registerdate").toString(), rs.getString("CourseName"));
             registrations.put(newRegistration.getStudentEmail() + "-" + newRegistration.getCourseName(), newRegistration);
         }
         dbCon.CloseResultSet();
+
         return registrations;
     }
 
     public void createRegistration(String studentEmail, String courseName, String[] datePieces) throws SQLException {
         studentEmail = studentEmail.toLowerCase();
         courseName = informationFormatter.capitalizeString(courseName);
-        String date = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
+        String registrationDate = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
 
-        String queryCreateRegistration = "INSERT INTO Register values (convert(datetime, '" + date + "', 103), '" + studentEmail + "', '" + courseName + "')";
+        String queryCreateRegistration = "INSERT INTO Register values (convert(datetime, '" + registrationDate + "', 103), '" + studentEmail + "', '" + courseName + "')";
         dbCon.setQuery(queryCreateRegistration);
+
         ArrayList<Integer> contentItemIDs = new ArrayList<>();
+
         String querygetAllContentItemsForCourse = "SELECT ContentID FROM ContentItem WHERE CourseName = '" + courseName + "'";
         ResultSet rs = dbCon.getQuery(querygetAllContentItemsForCourse);
+
         while (rs.next()) {
             contentItemIDs.add(rs.getInt("ContentID"));
         }
         dbCon.CloseResultSet();
+
         for (Integer id : contentItemIDs) {
             String queryAddProgressItemForRegistration = "INSERT INTO Viewing values ('" + studentEmail + "', " + id + ", 0)";
             dbCon.setQuery(queryAddProgressItemForRegistration);
@@ -69,19 +76,19 @@ public class RegistrationRepository {
     public HashMap<ContentItem, Integer> getProgressForRegistration(Registration registration) throws SQLException {
         HashMap<ContentItem, Integer> progressPerContentItem = new HashMap<>();
         ArrayList<ContentItem> contentItems = new ArrayList<>();
+
         String queryGetAllContentItems = "SELECT * FROM ContentItem WHERE CourseName = '" + registration.getCourseName() + "'";
         ResultSet rs = dbCon.getQuery(queryGetAllContentItems);
 
         while (rs.next()) {
             contentItems.add(new ContentItem(rs.getInt("ContentID"), rs.getString("Title"), rs.getDate("PublicationDate").toString()));
         }
-
         dbCon.CloseResultSet();
 
         for (ContentItem contentItem : contentItems) {
             String queryGetProgress = "SELECT Progress FROM Viewing WHERE StudentEmail = '" + registration.getStudentEmail() + "' AND ContenID = " + contentItem.getId();
-            System.out.println(queryGetProgress);
             ResultSet rsProgress = dbCon.getQuery(queryGetProgress);
+
             while (rsProgress.next()) {
                 progressPerContentItem.put(contentItem, rsProgress.getInt("Progress"));
             }
@@ -99,5 +106,4 @@ public class RegistrationRepository {
             dbCon.setQuery(queryUpdateProgress);
         }
     }
-
 }

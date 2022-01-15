@@ -7,13 +7,12 @@ import com.codecademy.informationhandling.registration.Registration;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class StudentRepository {
 
-    private DatabaseConnection dbCon = new DatabaseConnection();
+    private final DatabaseConnection dbCon = new DatabaseConnection();
     private final InformationFormatter informationFormatter;
 
     public StudentRepository() {
@@ -24,12 +23,16 @@ public class StudentRepository {
         informationFormatter.formatStudent(student);
 
         String gender = "";
-        if (student.getGender().equals("Male")) {
-            gender = "m";
-        } else if (student.getGender().equals("Female")) {
-            gender = "f";
-        } else if (student.getGender().equals("Other")) {
-            gender = "x";
+        switch (student.getGender()) {
+            case "Male":
+                gender = "m";
+                break;
+            case "Female":
+                gender = "f";
+                break;
+            case "Other":
+                gender = "x";
+                break;
         }
 
         String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday() + "', 103)" +
@@ -38,39 +41,50 @@ public class StudentRepository {
     }
 
     public HashMap<String, Student> getAllStudents() throws SQLException {
-        HashMap<String, Student> studentList = new HashMap<>();
+        HashMap<String, Student> studentsList = new HashMap<>();
+
         String query = "SELECT * FROM Student";
         ResultSet rs = dbCon.getQuery(query);
         while (rs.next()) {
-            String Email = rs.getString("Email");
-            String Name = rs.getString("Name");
+            String email = rs.getString("Email");
+            String name = rs.getString("Name");
             String birthday = rs.getDate("Birthday").toString();
             String gender = rs.getString("Gender");
-            if (gender.equals("m")) {
-                gender = "Male";
-            } else if (gender.equals("f")) {
-                gender = "Female";
-            } else if (gender.equals("x")) {
-                gender = "Other";
+            switch (gender) {
+                case "m":
+                    gender = "Male";
+                    break;
+                case "f":
+                    gender = "Female";
+                    break;
+                case "x":
+                    gender = "Other";
+                    break;
             }
+
             String Address = rs.getString("Address");
             String City = rs.getString("City");
             String Country = rs.getString("Country");
             String PostalCode = rs.getString("PostalCode");
 
-            studentList.put(Email, new Student(Email, Name, birthday, gender, Address, City, Country, PostalCode));
+            studentsList.put(email, new Student(email, name, birthday, gender, Address, City, Country, PostalCode));
         }
         dbCon.CloseResultSet();
-        return studentList;
+
+        return studentsList;
     }
 
     public void updateStudent(Student selectedStudent, String name, String email, String address, String postalCode, String city, String country, String gender, String birthday) {
-        if (gender.equals("Male")) {
-            gender = "m";
-        } else if (gender.equals("Female")) {
-            gender = "f";
-        } else if (gender.equals("Other")) {
-            gender = "x";
+        switch (gender) {
+            case "Male":
+                gender = "m";
+                break;
+            case "Female":
+                gender = "f";
+                break;
+            case "Other":
+                gender = "x";
+                break;
         }
 
         Student newStudent = new Student(email, name, birthday, gender, address, city, country, postalCode);
@@ -97,26 +111,32 @@ public class StudentRepository {
         dbCon.setQuery(query);
     }
 
-    //Get all registrations and get all certificates
+
     public ArrayList<Registration> getAllRegistrationsForStudent(Student student) throws SQLException {
         ArrayList<Registration> registrations = new ArrayList<>();
+
         String query = "SELECT * FROM Register WHERE StudentEmail = '" + student.getEmail() + "'";
         ResultSet rs = dbCon.getQuery(query);
+
         while (rs.next()) {
             registrations.add(new Registration(rs.getInt("RegisterID"), rs.getString("StudentEmail"), rs.getString("RegisterDate"), rs.getString("CourseName")));
         }
         dbCon.CloseResultSet();
+
         return registrations;
     }
 
     public ArrayList<Certificate> getAllCertificatesForStudent(Student student) throws SQLException {
         ArrayList<Certificate> certificates = new ArrayList<>();
+
         String query = "SELECT Certificate.*, Register.StudentEmail, Register.CourseName FROM Certificate INNER JOIN Register ON Register.RegisterID = Certificate.RegisterID WHERE StudentEmail = '" + student.getEmail() + "'";
         ResultSet rs = dbCon.getQuery(query);
+
         while (rs.next()) {
             certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getString("StudentEmail"),rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
         }
         dbCon.CloseResultSet();
+
         return certificates;
     }
 

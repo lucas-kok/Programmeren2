@@ -65,7 +65,7 @@ public class ViewCourseScene extends GUIScene {
         Label selectedCourseModulesLabel = new Label("Modules & Average Progression: ");
 
         try {
-            selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates: " + courseRepository.getAmountOfCertificates(selectedCourse));
+            selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates: " + courseRepository.getAmountOfCertificatesOfCourse(selectedCourse));
         } catch (SQLException e) {
             e.printStackTrace();
         }
