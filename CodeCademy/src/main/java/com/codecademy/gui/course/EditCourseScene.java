@@ -76,14 +76,14 @@ public class EditCourseScene extends GUIScene {
         courseSubjectInput.setText(selectedCourse.getSubject());
         courseIntroductionTextInput.setText(selectedCourse.getIntroductionText());
         courseLevelInput.setValue(selectedCourse.getLevel());
-        courseRelatedCoursesInput.setText(selectedCourse.getRelatedCoursesAsString());
+        courseRelatedCoursesInput.setText(selectedCourse.getRelatedCourses());
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewCoursesScene) getSceneObject("overviewCoursesScene")).resetScene();
-            showScene("overviewCoursesScene");
+            ((ViewCourseScene) getSceneObject("viewCourseScene")).resetScene(selectedCourse);
+            showScene("viewCourseScene");
         });
 
         deleteCourseButton.setOnAction((event) -> {

@@ -4,7 +4,7 @@ public class Course {
     private String name;
     private String subject;
     private String introductionText;
-    private final String level;
+    private String level;
     private String relatedCourses;
 
     public Course(String name, String subject, String introductionText, String level, String relatedCourses) {
@@ -43,7 +43,11 @@ public class Course {
         return level;
     }
 
-    public String getRelatedCoursesAsString() {
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getRelatedCourses() {
         return relatedCourses;
     }
 

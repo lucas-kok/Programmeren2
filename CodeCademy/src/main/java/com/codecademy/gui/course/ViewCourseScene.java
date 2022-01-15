@@ -60,7 +60,7 @@ public class ViewCourseScene extends GUIScene {
         Label selectedCourseSubjectLabel = new Label("Subject: " + selectedCourse.getSubject());
         Label selectedCourseIntroductionTextLabel = new Label("Introduction: " + selectedCourse.getIntroductionText());
         Label selectedCourseLevelLabel = new Label("Level: " + selectedCourse.getLevel());
-        Label selectedCourseRelatedCoursesLabel = new Label("Related Courses: " + selectedCourse.getRelatedCoursesAsString());
+        Label selectedCourseRelatedCoursesLabel = new Label("Related Courses: " + selectedCourse.getRelatedCourses());
         Label selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates: 0");
         Label selectedCourseModulesLabel = new Label("Modules & Average Progression: ");
 

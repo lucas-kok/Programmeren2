@@ -29,7 +29,7 @@ public class CourseRepository {
                 "       ,'" + course.getLevel() + "')";
         dbCon.setQuery(queryCreateCourse);
 
-        for (String courseName : course.getRelatedCoursesAsString().split(",")) {
+        for (String courseName : course.getRelatedCourses().split(",")) {
             if (!courseName.isBlank()) return;
 
             String queryCreateRelatedCourse = "INSERT INTO RelatedCourses VALUES('" + course.getName() + "', '" + courseName.strip() + "')";
@@ -83,20 +83,28 @@ public class CourseRepository {
     }
 
     public void updateCourse(Course selectedCourse, String name, String subject, String introductionText, String level, String relatedCourses) {
+        String oldCourseName = selectedCourse.getName();
+
+        selectedCourse.setName(name);
+        selectedCourse.setSubject(subject);
+        selectedCourse.setIntroductionText(introductionText);
+        selectedCourse.setLevel(level);
+        selectedCourse.setRelatedCourses(relatedCourses);
+
         String query = "UPDATE RelatedCourses " +
-                "                   SET CourseTwoName = '" + name.strip() + "'" +
-                "                   WHERE CourseTwoName = '" + selectedCourse.getName() + "'" +
+                "                   SET CourseTwoName = '" + selectedCourse.getName().strip() + "'" +
+                "                   WHERE CourseTwoName = '" + oldCourseName + "'" +
                 "                   UPDATE Course " +
-                "                   SET Coursename = '" + name.strip() + "'" +
-                "                   , Subject = '" + subject + "'" +
-                "                   , IntroductionText = '" + introductionText + "'" +
-                "                   ,Level = '" + level + "'" +
-                "                   WHERE Coursename = '" + selectedCourse.getName() + "'" +
+                "                   SET Coursename = '" + selectedCourse.getName().strip() + "'" +
+                "                   , Subject = '" + selectedCourse.getSubject() + "'" +
+                "                   , IntroductionText = '" + selectedCourse.getIntroductionText() + "'" +
+                "                   ,Level = '" + selectedCourse.getLevel() + "'" +
+                "                   WHERE Coursename = '" + oldCourseName + "'" +
                 "                   DELETE FROM RelatedCourses \n" +
-                "                   WHERE CourseOneName = '" + name.strip() + "'";
+                "                   WHERE CourseOneName = '" + selectedCourse.getName().strip() + "'";
         dbCon.setQuery(query);
 
-        for (String courseName : relatedCourses.split(",")) {
+        for (String courseName : selectedCourse.getRelatedCourses().split(",")) {
             if (!courseName.isBlank()) return;
 
             String queryCreateRelatedCourse = "INSERT INTO RelatedCourses VALUES('" + name.strip() + "', '" + courseName.strip() + "')";
