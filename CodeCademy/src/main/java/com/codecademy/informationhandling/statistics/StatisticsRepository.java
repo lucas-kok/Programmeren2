@@ -72,7 +72,7 @@ public class StatisticsRepository {
                 "WHERE Viewing.ContenID IN (SELECT ContentID FROM Webcast) " +
                 "AND Progress != 0 " +
                 "GROUP BY Title " +
-                "ORDER BY COUNT(StudentEmail)";
+                "ORDER BY COUNT(StudentEmail) DESC";
         ResultSet rsTopThreeWebcasts = dbCon.getQuery(getTopThreeWebcasts);
         int index = 0;
         while (rsTopThreeWebcasts.next()) {

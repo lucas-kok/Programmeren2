@@ -1,4 +1,202 @@
-BEGIN TRAN
+--CREATE DATABASE CodeCademyDB
+
+USE [CodeCademyDB]
+GO
+/****** Object:  Table [dbo].[Certificate]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Certificate](
+	[CertificateID] [int] IDENTITY(1,1) NOT NULL,
+	[RegisterID] [int] NOT NULL,
+	[Score] [int] NULL,
+	[StaffName] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CertificateID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ContentItem]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ContentItem](
+	[ContentID] [int] IDENTITY(1,1) NOT NULL,
+	[CourseName] [nvarchar](50) NULL,
+	[Title] [nvarchar](50) NULL,
+	[PublicationDate] [date] NULL,
+	[Status] [nvarchar](50) NULL,
+	[FollowNumber] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ContentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Course]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Course](
+	[Coursename] [nvarchar](50) NOT NULL,
+	[Subject] [nvarchar](50) NULL,
+	[IntroductionText] [nvarchar](50) NULL,
+	[Level] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Coursename] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Module]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Module](
+	[ContentID] [int] NOT NULL,
+	[Version] [nvarchar](50) NULL,
+	[Description] [nvarchar](50) NULL,
+	[ContactPersonName] [nvarchar](50) NULL,
+	[ContactPersonEmail] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ContentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Register]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Register](
+	[RegisterID] [int] IDENTITY(1,1) NOT NULL,
+	[Registerdate] [date] NULL,
+	[StudentEmail] [nvarchar](50) NOT NULL,
+	[CourseName] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[RegisterID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[RelatedCourses]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[RelatedCourses](
+	[CourseOneName] [nvarchar](50) NULL,
+	[CourseTwoName] [nvarchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Student]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Student](
+	[Email] [nvarchar](50) NOT NULL,
+	[Name] [nvarchar](50) NULL,
+	[Birthday] [date] NULL,
+	[Gender] [char](1) NULL,
+	[Address] [nvarchar](50) NULL,
+	[City] [nvarchar](50) NULL,
+	[Country] [nvarchar](50) NULL,
+	[PostalCode] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Viewing]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Viewing](
+	[StudentEmail] [nvarchar](50) NOT NULL,
+	[ContenID] [int] NOT NULL,
+	[Progress] [int] NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Webcast]    Script Date: 1/13/2022 7:52:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Webcast](
+	[ContentID] [int] NOT NULL,
+	[Duration] [int] NULL,
+	[URL] [nvarchar](50) NULL,
+	[SpeakerName] [nvarchar](50) NULL,
+	[SpeakerCompany] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ContentID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Certificate]  WITH CHECK ADD  CONSTRAINT [FK__Certifica__Regis__2C3393D0] FOREIGN KEY([RegisterID])
+REFERENCES [dbo].[Register] ([RegisterID])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Certificate] CHECK CONSTRAINT [FK__Certifica__Regis__2C3393D0]
+GO
+ALTER TABLE [dbo].[ContentItem]  WITH CHECK ADD  CONSTRAINT [FK__ContentIt__Cours__2F10007B] FOREIGN KEY([CourseName])
+REFERENCES [dbo].[Course] ([Coursename])
+ON UPDATE CASCADE
+ON DELETE SET NULL
+GO
+ALTER TABLE [dbo].[ContentItem] CHECK CONSTRAINT [FK__ContentIt__Cours__2F10007B]
+GO
+ALTER TABLE [dbo].[Module]  WITH CHECK ADD FOREIGN KEY([ContentID])
+REFERENCES [dbo].[ContentItem] ([ContentID])
+GO
+ALTER TABLE [dbo].[Register]  WITH CHECK ADD  CONSTRAINT [FK__Register__Course__29572725] FOREIGN KEY([CourseName])
+REFERENCES [dbo].[Course] ([Coursename])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Register] CHECK CONSTRAINT [FK__Register__Course__29572725]
+GO
+ALTER TABLE [dbo].[Register]  WITH CHECK ADD  CONSTRAINT [FK__Register__Studen__286302EC] FOREIGN KEY([StudentEmail])
+REFERENCES [dbo].[Student] ([Email])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Register] CHECK CONSTRAINT [FK__Register__Studen__286302EC]
+GO
+ALTER TABLE [dbo].[RelatedCourses]  WITH CHECK ADD  CONSTRAINT [FK__RelatedCo__Cours__534D60F1] FOREIGN KEY([CourseOneName])
+REFERENCES [dbo].[Course] ([Coursename])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[RelatedCourses] CHECK CONSTRAINT [FK__RelatedCo__Cours__534D60F1]
+GO
+ALTER TABLE [dbo].[Viewing]  WITH CHECK ADD FOREIGN KEY([ContenID])
+REFERENCES [dbo].[ContentItem] ([ContentID])
+GO
+ALTER TABLE [dbo].[Viewing]  WITH CHECK ADD  CONSTRAINT [FK__Viewing__Student__30F848ED] FOREIGN KEY([StudentEmail])
+REFERENCES [dbo].[Student] ([Email])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[Viewing] CHECK CONSTRAINT [FK__Viewing__Student__30F848ED]
+GO
+ALTER TABLE [dbo].[Webcast]  WITH CHECK ADD FOREIGN KEY([ContentID])
+REFERENCES [dbo].[ContentItem] ([ContentID])
+GO
+
+
+--BEGIN TRAN
 
 INSERT INTO dbo.Student VALUES
 	 ( 'lucas.kok@hotmail.nl', 'Lucas Kok', CONVERT(datetime, '2005/01/09'), 'm', 'Perenmeet 48', 'Burgh-Haamstede', 'The Netherlands', '4328 CM' ),
@@ -45,8 +243,10 @@ INSERT INTO ContentItem VALUES
 	('Programmeren 1', 'Les 1 Programmeren', GETDATE(), 'Active', (SELECT ContentId FROM ContentItem WHERE Title = 'Les 2 Programmeren'))
 	,('Programmeren 1', 'Les 2 Programmeren',  GETDATE(), 'Active', (SELECT ContentId FROM ContentItem WHERE Title = 'Les 3 Programmeren'))
 	,('Programmeren 1', 'Les 3 Programmeren',  GETDATE(), 'Active', NULL)
+	,('Programmeren 1', 'MOOC Programmeren 1',  GETDATE(), 'Active', NULL)
 	,('Relationele Databases 1', 'Les 1 Relationele Databases',  GETDATE(), 'Active', (SELECT ContentId FROM ContentItem WHERE Title = 'Les 2 Programmeren'))
 	,('Relationele Databases 1', 'Les 2 Relationele Databases',  GETDATE(), 'Active', NULL)
+	,('Relationele Databases 1', 'SQL Beginners Module',  GETDATE(), 'Active', NULL)
 	,('Bedrijfsprocessen', 'Les 1 Bedrijfsprocessen', GETDATE(), 'Active', (SELECT ContentId FROM ContentItem WHERE Title = 'Les 2 Bedrijfsprocessen'))
 	,('Bedrijfsprocessen', 'Les 2 Bedrijfsprocessen',  GETDATE(), 'Active', (SELECT ContentId FROM ContentItem WHERE Title = 'Les 3 Bedrijfsprocessen'))
 	,('Bedrijfsprocessen', 'Les 3 Bedrijfsprocessen',  GETDATE(), 'Active', NULL)
@@ -54,8 +254,6 @@ INSERT INTO ContentItem VALUES
 	,('Programmeren 2', 'Les 2 Programmeren 2',  GETDATE(), 'Active', NULL)
 	,('Relationele Databases 2', 'Les 1 Relationele Databases 2',  GETDATE(), 'Active', (SELECT ContentId FROM ContentItem WHERE Title = 'Les 2 Relationele Databases 2'))
 	,('Relationele Databases 2', 'Les 2 Relationele Databases 2',  GETDATE(), 'Active', NULL)
-	,('Programmeren 1', 'MOOC Programmeren 1',  GETDATE(), 'Active', NULL)
-	,('Relationele Databases 1', 'SQL Beginners Module',  GETDATE(), 'Active', NULL)
 	,('Artificial Intelligence','Artificial Intelligence Beginning', GETDATE(), 'Active', NULL)
 	,('Artificial Intelligence','Artificial Intelligence Advanced', GETDATE(), 'Active', NULL)
 	,('Artificial Intelligence','Artificial Intelligence Expert', GETDATE(), 'Active', NULL)
@@ -133,4 +331,137 @@ INSERT INTO Register VALUES
 	,(getdate(),'pascallewildschut@rhyta.com','Cyber Security')
 	,(getdate(),'mouradhuberts@gmail.com','Cyber Security')
 
-ROLLBACK
+INSERT INTO Viewing VALUES 
+	('lucas.kok@hotmail.nl', 1, 45)
+	,('lucas.kok@hotmail.nl', 2, 0)
+	,('lucas.kok@hotmail.nl', 3, 0)
+	,('lucas.kok@hotmail.nl', 4, 0)
+	,('ditabultman@teleworm.us', 1, 85)
+	,('ditabultman@teleworm.us', 2, 0)
+	,('ditabultman@teleworm.us', 3, 0)
+	,('ditabultman@teleworm.us', 4, 0)
+	,('kovanderbiezen@dayrep.com', 1, 100)
+	,('kovanderbiezen@dayrep.com', 2, 52)
+	,('kovanderbiezen@dayrep.com', 3, 0)
+	,('kovanderbiezen@dayrep.com', 4, 0)
+	,('drieswiersma@dayrep.org', 1, 100) ----
+	,('drieswiersma@dayrep.org', 2, 100)
+	,('drieswiersma@dayrep.org', 3, 100)
+	,('drieswiersma@dayrep.org', 4, 100)
+	,('randolphelders@gmail.com', 1, 100)
+	,('randolphelders@gmail.com', 2, 100)
+	,('randolphelders@gmail.com', 3, 25)
+	,('randolphelders@gmail.com', 4, 0)
+	,('warrengoede@hotmail.com', 1, 100)
+	,('warrengoede@hotmail.com', 2, 99)
+	,('warrengoede@hotmail.com', 3, 0)
+	,('warrengoede@hotmail.com', 4, 0)
+	,('jelcorodermond@outlook.com', 1, 10)
+	,('jelcorodermond@outlook.com', 2, 0)
+	,('jelcorodermond@outlook.com', 3, 0)
+	,('jelcorodermond@outlook.com', 4, 0)
+	,('martikastuit@student.avans.nl', 1, 100)
+	,('martikastuit@student.avans.nl', 2, 100)
+	,('martikastuit@student.avans.nl', 3, 37)
+	,('martikastuit@student.avans.nl', 4, 0)
+	,('pascallewildschut@rhyta.com', 1, 58)
+	,('pascallewildschut@rhyta.com', 2, 0)
+	,('pascallewildschut@rhyta.com', 3, 0)
+	,('pascallewildschut@rhyta.com', 4, 0)
+	,('mouradhuberts@gmail.com', 1, 100)
+	,('mouradhuberts@gmail.com', 2, 63)
+	,('mouradhuberts@gmail.com', 3, 0)
+	,('mouradhuberts@gmail.com', 4, 0)
+
+	,('lucas.kok@hotmail.nl', 5, 100)-----
+	,('lucas.kok@hotmail.nl', 6, 100)
+	,('lucas.kok@hotmail.nl', 7, 100)
+	,('ditabultman@teleworm.us', 5, 100)
+	,('ditabultman@teleworm.us', 6, 55)
+	,('ditabultman@teleworm.us', 7, 0 )
+	,('kovanderbiezen@dayrep.com', 5, 26)
+	,('kovanderbiezen@dayrep.com', 6, 0)
+	,('kovanderbiezen@dayrep.com', 7, 0 )
+	,('drieswiersma@dayrep.org', 5, 100)
+	,('drieswiersma@dayrep.org', 6, 85)
+	,('drieswiersma@dayrep.org', 7, 0 )
+	,('warrengoede@hotmail.com', 5, 68)
+	,('warrengoede@hotmail.com', 6, 0)
+	,('warrengoede@hotmail.com', 7, 0 )
+	,('jelcorodermond@outlook.com', 5, 100)
+	,('jelcorodermond@outlook.com', 6, 100)
+	,('jelcorodermond@outlook.com', 7, 59)
+	,('martikastuit@student.avans.nl', 5, 89)
+	,('martikastuit@student.avans.nl', 6, 0)
+	,('martikastuit@student.avans.nl', 7, 0)
+	,('mouradhuberts@gmail.com', 5, 100) --------
+	,('mouradhuberts@gmail.com', 6, 100)
+	,('mouradhuberts@gmail.com', 7, 100)
+
+	,('lucas.kok@hotmail.nl', 8, 100)
+	,('lucas.kok@hotmail.nl', 9, 100)
+	,('lucas.kok@hotmail.nl', 10, 2)
+	,('kovanderbiezen@dayrep.com', 8, 12)
+	,('kovanderbiezen@dayrep.com', 9, 0)
+	,('kovanderbiezen@dayrep.com', 10, 0)
+	,('drieswiersma@dayrep.org', 8, 98)
+	,('drieswiersma@dayrep.org', 9, 0)
+	,('drieswiersma@dayrep.org', 10, 0)
+	,('jelcorodermond@outlook.com', 8, 100) ------
+	,('jelcorodermond@outlook.com', 9, 100)
+	,('jelcorodermond@outlook.com', 10, 100)
+	,('martikastuit@student.avans.nl', 8, 100)
+	,('martikastuit@student.avans.nl', 9, 35)
+	,('martikastuit@student.avans.nl', 10, 0)
+	,('pascallewildschut@rhyta.com', 8, 10)
+	,('pascallewildschut@rhyta.com', 9, 0)
+	,('pascallewildschut@rhyta.com', 10, 0)
+
+	,('randolphelders@gmail.com', 11, 100) -------
+	,('randolphelders@gmail.com', 12, 100)
+	,('warrengoede@hotmail.com', 11, 100)
+	,('warrengoede@hotmail.com', 12, 87)
+	,('jelcorodermond@outlook.com', 11, 74)
+	,('jelcorodermond@outlook.com', 12, 0)
+	,('martikastuit@student.avans.nl', 11, 52)
+	,('martikastuit@student.avans.nl', 12, 0)
+
+	,('ditabultman@teleworm.us', 13, 58)
+	,('ditabultman@teleworm.us', 14, 0)
+	,('kovanderbiezen@dayrep.com', 13, 100)
+	,('kovanderbiezen@dayrep.com', 14, 41)
+	,('drieswiersma@dayrep.org', 13, 98)
+	,('drieswiersma@dayrep.org', 14, 0)
+	,('randolphelders@gmail.com', 13, 100)
+	,('randolphelders@gmail.com', 14, 28)
+	,('warrengoede@hotmail.com', 13, 100)
+	,('warrengoede@hotmail.com', 14, 78)
+	,('jelcorodermond@outlook.com', 13, 100) -------
+	,('jelcorodermond@outlook.com', 14, 100)
+
+	,('drieswiersma@dayrep.org', 15, 100) -------
+	,('drieswiersma@dayrep.org', 16, 100)
+	,('drieswiersma@dayrep.org', 17, 100)
+	,('randolphelders@gmail.com', 15, 100)
+	,('randolphelders@gmail.com', 16, 42)
+	,('randolphelders@gmail.com', 17, 0)
+	,('warrengoede@hotmail.com', 15, 100)
+	,('warrengoede@hotmail.com', 16, 65)
+	,('warrengoede@hotmail.com', 17, 0)
+
+	,('martikastuit@student.avans.nl', 18, 67)
+	,('martikastuit@student.avans.nl', 19, 0)
+	,('pascallewildschut@rhyta.com', 18, 100)
+	,('pascallewildschut@rhyta.com', 19, 25)
+	,('mouradhuberts@gmail.com', 18, 20)
+	,('mouradhuberts@gmail.com', 19, 0);
+
+INSERT INTO Certificate VALUES
+	(4, 8, 'Fred Van Gardingen')
+	,(11, 9, 'Yascino Hubbers')
+	,(18, 16, 'Fred van Gardigen')
+	,(16, 6, 'Yascino Hubbers')
+	,(25, 10, 'Ayrianna Schot')
+	,(34, 6, 'Ronald Pols')
+	,(35, 10, 'Ronald Pols');
+--ROLLBACK

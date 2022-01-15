@@ -1,8 +1,8 @@
 package com.codecademy.informationhandling.student;
 
+import com.codecademy.informationhandling.InformationFormatter;
 import com.codecademy.informationhandling.certificate.Certificate;
 import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
-import com.codecademy.informationhandling.InformationFormatter;
 import com.codecademy.informationhandling.registration.Registration;
 
 import java.sql.ResultSet;
@@ -86,7 +86,8 @@ public class StudentRepository {
                 "       , Gender = '" + gender + "'" +
                 "       , Birthday = (convert(datetime, '" + newStudent.getBirthdayAsString() + "', 103)) " +
                 "       WHERE Email = '" + selectedStudent.getEmail() + "'" +
-                "       UPDATE Viewing SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'";
+                "       UPDATE Viewing SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'" +
+                "       UPDATE Register SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'";
         dbCon.setQuery(query);
     }
 
