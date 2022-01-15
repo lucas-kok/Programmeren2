@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class DatabaseConnection {
 
-    private String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCademyDB;user=sa;password=LucasKokSQL";
+    private final String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCademyDB;user=sa;password=LucasKokSQL";
     private Connection con;
     private Statement stmt;
     private ResultSet rs;
@@ -18,15 +18,15 @@ public class DatabaseConnection {
     public void CloseResultSet() {
         if (rs != null) try {
             rs.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (stmt != null) try {
             stmt.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         if (con != null) try {
             con.close();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -51,17 +51,21 @@ public class DatabaseConnection {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (rs != null) try {
-                rs.close();
-            } catch (Exception e) {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (Exception ignored) {
+                }
             }
-            if (stmt != null) try {
-                stmt.close();
-            } catch (Exception e) {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (Exception ignored) {
+                }
             }
             if (con != null) try {
                 con.close();
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
     }

@@ -151,8 +151,8 @@ public class CourseRepository {
     public int getAmountOfCertificatesOfCourse (Course course) throws SQLException {
         int certificatesCount = 0;
 
-        String queryGetAmountOfCertificates = "SELECT COUNT(CertificateID) as 'amount' FROM Certificate WHERE RegisterID IN (SELECT RegisterID FROM Register WHERE CourseName = '" + course.getName() + "')";
-        ResultSet rs = dbCon.getQuery(queryGetAmountOfCertificates);
+        String query = "SELECT COUNT(CertificateID) as 'amount' FROM Certificate WHERE RegisterID IN (SELECT RegisterID FROM Register WHERE CourseName = '" + course.getName() + "')";
+        ResultSet rs = dbCon.getQuery(query);
 
         while (rs.next()) {
             certificatesCount = rs.getInt("amount");

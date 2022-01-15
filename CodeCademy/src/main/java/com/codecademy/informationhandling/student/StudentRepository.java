@@ -74,7 +74,7 @@ public class StudentRepository {
         return studentsList;
     }
 
-    public void updateStudent(Student selectedStudent, String name, String email, String address, String postalCode, String city, String country, String gender, String birthday) {
+    public void updateStudent(Student student, String name, String email, String address, String postalCode, String city, String country, String gender, String birthday) {
         switch (gender) {
             case "Male":
                 gender = "m";
@@ -87,30 +87,30 @@ public class StudentRepository {
                 break;
         }
 
-        String oldEmail = selectedStudent.getEmail();
+        String oldEmail = student.getEmail();
 
-        selectedStudent.setEmail(email);
-        selectedStudent.setName(name);
-        selectedStudent.setAddress(address);
-        selectedStudent.setPostalCode(postalCode);
-        selectedStudent.setCity(city);
-        selectedStudent.setCountry(country);
-        selectedStudent.setGender(gender);
-        selectedStudent.setBirthday(birthday);
-        informationFormatter.formatStudent(selectedStudent);
+        student.setEmail(email);
+        student.setName(name);
+        student.setAddress(address);
+        student.setPostalCode(postalCode);
+        student.setCity(city);
+        student.setCountry(country);
+        student.setGender(gender);
+        student.setBirthday(birthday);
+        informationFormatter.formatStudent(student);
 
         String query = "UPDATE Student " +
-                "       SET Email = '" + selectedStudent.getEmail() + "'" +
-                "       , Name = '" + selectedStudent.getName() + "'" +
-                "       , Address = '" + selectedStudent.getAddress() + "'" +
-                "       , PostalCode = '" + selectedStudent.getPostalCode() + "'" +
-                "       , City = '" + selectedStudent.getCity() + "'" +
-                "       , Country = '" + selectedStudent.getCountry() + "'" +
+                "       SET Email = '" + student.getEmail() + "'" +
+                "       , Name = '" + student.getName() + "'" +
+                "       , Address = '" + student.getAddress() + "'" +
+                "       , PostalCode = '" + student.getPostalCode() + "'" +
+                "       , City = '" + student.getCity() + "'" +
+                "       , Country = '" + student.getCountry() + "'" +
                 "       , Gender = '" + gender + "'" +
-                "       , Birthday = (convert(datetime, '" + selectedStudent.getBirthday() + "', 103)) " +
+                "       , Birthday = (convert(datetime, '" + student.getBirthday() + "', 103)) " +
                 "       WHERE Email = '" + oldEmail + "'" +
-                "       UPDATE Viewing SET StudentEmail = '" + selectedStudent.getEmail() + "' WHERE StudentEmail = '" + oldEmail + "'" +
-                "       UPDATE Register SET StudentEmail = '" + selectedStudent.getEmail() + "' WHERE StudentEmail = '" + oldEmail + "'";
+                "       UPDATE Viewing SET StudentEmail = '" + student.getEmail() + "' WHERE StudentEmail = '" + oldEmail + "'" +
+                "       UPDATE Register SET StudentEmail = '" + student.getEmail() + "' WHERE StudentEmail = '" + oldEmail + "'";
         dbCon.setQuery(query);
     }
 
