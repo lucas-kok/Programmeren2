@@ -38,6 +38,7 @@ public class GUI extends Application {
     private final CourseRepository courseRepository;
     private final RegistrationRepository registrationRepository;
     private final CertificateRepository certificateRepository;
+
     private Map<String, GUIScene> scenes = new HashMap<>();
     private Stage mainStage;
 
@@ -51,12 +52,12 @@ public class GUI extends Application {
     @Override
     public void start(Stage mainStage) {
         this.mainStage = mainStage;
-        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217...), Daan van der Meulen(...) & Anne van den Bosch(...)");
+        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217...), Daan van der Meulen(...) & Anne van den Bosch(2191799)");
 
-        // Creating all the scenes
         int sceneWidth = 500;
         int sceneHeight = 750;
 
+        // Creating all the scenes
         MainScene mainScene = new MainScene(this, 500, 750);
 
         OverviewStudentsScene overviewStudentScene = new OverviewStudentsScene(this, sceneWidth, sceneHeight);
@@ -106,7 +107,7 @@ public class GUI extends Application {
         mainStage.show();
     }
 
-    // Function that will show the Scene connected to the given String
+    // Function that will show the Scene linked to the given String
     public void showScene(String sceneName)  {
         if (scenes.get(sceneName) != null) {
             mainStage.setScene(scenes.get(sceneName).getScene());
@@ -127,7 +128,9 @@ public class GUI extends Application {
         return studentRepository.getAllStudents();
     }
 
-    public Map<String, Course> getCourses() throws SQLException { return courseRepository.getAllCourses(); }
+    public Map<String, Course> getCourses() throws SQLException {
+        return courseRepository.getAllCourses();
+    }
 
     public Map<String, Registration> getRegistrations() throws SQLException {
         return registrationRepository.getAllRegistrations();
@@ -136,5 +139,4 @@ public class GUI extends Application {
     public ArrayList<Certificate> getCertificates() throws SQLException {
         return certificateRepository.getALlCertificates();
     }
-
 }

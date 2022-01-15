@@ -32,7 +32,7 @@ public class StudentRepository {
             gender = "x";
         }
 
-        String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthdayAsString() + "', 103)" +
+        String query = "INSERT INTO Student VALUES ('" + student.getEmail() + "', '" + student.getName() + "', convert(datetime, '" + student.getBirthday() + "', 103)" +
                 ", '" + gender + "', '" + student.getAddress() + "', '" + student.getCity() + "', '" + student.getCountry() + "', '" + student.getPostalCode() + "')";
         dbCon.setQuery(query);
     }
@@ -44,7 +44,7 @@ public class StudentRepository {
         while (rs.next()) {
             String Email = rs.getString("Email");
             String Name = rs.getString("Name");
-            LocalDate Birthday = LocalDate.parse(rs.getDate("Birthday").toString());
+            String birthday = rs.getDate("Birthday").toString();
             String gender = rs.getString("Gender");
             if (gender.equals("m")) {
                 gender = "Male";
@@ -58,13 +58,13 @@ public class StudentRepository {
             String Country = rs.getString("Country");
             String PostalCode = rs.getString("PostalCode");
 
-            studentList.put(Email, new Student(Email, Name, Birthday, gender, Address, City, Country, PostalCode));
+            studentList.put(Email, new Student(Email, Name, birthday, gender, Address, City, Country, PostalCode));
         }
         dbCon.CloseResultSet();
         return studentList;
     }
 
-    public void updateStudent(Student selectedStudent, String name, String email, String address, String postalCode, String city, String country, String gender, LocalDate birthday) {
+    public void updateStudent(Student selectedStudent, String name, String email, String address, String postalCode, String city, String country, String gender, String birthday) {
         if (gender.equals("Male")) {
             gender = "m";
         } else if (gender.equals("Female")) {
@@ -84,7 +84,7 @@ public class StudentRepository {
                 "       , City = '" + newStudent.getCity() + "'" +
                 "       , Country = '" + newStudent.getCountry() + "'" +
                 "       , Gender = '" + gender + "'" +
-                "       , Birthday = (convert(datetime, '" + newStudent.getBirthdayAsString() + "', 103)) " +
+                "       , Birthday = (convert(datetime, '" + newStudent.getBirthday() + "', 103)) " +
                 "       WHERE Email = '" + selectedStudent.getEmail() + "'" +
                 "       UPDATE Viewing SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'" +
                 "       UPDATE Register SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'";

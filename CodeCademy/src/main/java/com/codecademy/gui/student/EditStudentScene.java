@@ -154,8 +154,8 @@ public class EditStudentScene extends GUIScene {
                 assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     // Update Student
-                    LocalDate BirthDay = LocalDate.parse(birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0]);
-                    studentRepository.updateStudent(selectedStudent, name, email, address, postalCode, city, country, gender, BirthDay);
+                    String birthday = birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0];
+                    studentRepository.updateStudent(selectedStudent, name, email, address, postalCode, city, country, gender, birthday);
 
                     messageLabel.setText("The Student '" + name + "' has successfully been updated!");
                 }

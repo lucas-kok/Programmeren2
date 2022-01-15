@@ -1,50 +1,49 @@
 package com.codecademy.informationhandling.student;
 
-import java.time.LocalDate;
-
 public class Student {
+    private String email;
+    private String name;
+    private final String birthday;
+    private final String gender;
+    private String address;
+    private String city;
+    private String country;
+    private String postalCode;
 
-    private String Email;
-    private String Name;
-    private LocalDate Birthday;
-    private String gender;
-    private String Address;
-    private String City;
-    private String Country;
-    private String PostalCode;
-
-    public String getPostalCode() {
-        return PostalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        PostalCode = postalCode;
-    }
-
-    public Student(String email, String name, LocalDate birthday, String gender, String address, String city, String country, String postalCode) {
-        Email = email;
-        Name = name;
-        Birthday = birthday;
+    public Student(String email, String name, String birthday, String gender, String address, String city, String country, String postalCode) {
+        this.email = email;
+        this.name = name;
+        this.birthday = birthday;
         this.gender = gender;
-        Address = address;
-        City = city;
-        Country = country;
-        PostalCode = postalCode;
+        this.address = address;
+        this.city = city;
+        this.country = country;
+        this.postalCode = postalCode;
     }
 
-    //Getters and Setters
     public String getEmail() {
-        return Email;
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public String getBirthdayAsString() {
-        String[] pieces = this.Birthday.toString().split("-");
-        String answer = pieces[2] + "/" + pieces[1] + "/" + pieces[0];
-        return answer;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBirthday() {
+        String[] birthdayPieces = birthday.split("-");
+        return birthdayPieces[2] + "/" + birthdayPieces[1] + "/" + birthdayPieces[0];
+    }
+
+    public String[] getBirthdayPieces() {
+        return getBirthday().split("-");
     }
 
     public String getGender() {
@@ -52,64 +51,48 @@ public class Student {
     }
 
     public String getAddress() {
-        return Address;
-    }
-
-    public String getCity() {
-        return City;
-    }
-
-    public String getCountry() {
-        return Country;
-    }
-
-    public void setEmail(String email) {
-        Email = email;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        Birthday = birthday;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
+        return address;
     }
 
     public void setAddress(String address) {
-        Address = address;
+        this.address = address;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     public void setCountry(String country) {
-        Country = country;
+        this.country = country;
     }
 
-    public String[] getBirthdayPieces() {
-        String[] pieces  = new String[3];
-        pieces[0] = this.Birthday.toString().split("-")[2];
-        pieces[1] = this.Birthday.toString().split("-")[1];
-        pieces[2] = this.Birthday.toString().split("-")[0];
-        return pieces;
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "Email='" + Email + '\'' +
-                ", Name='" + Name + '\'' +
-                ", Birthday=" + Birthday +
+                "Email='" + email + '\'' +
+                ", Name='" + name + '\'' +
+                ", Birthday=" + birthday +
                 ", gender='" + gender + '\'' +
-                ", Address='" + Address + '\'' +
-                ", City='" + City + '\'' +
-                ", Country='" + Country + '\'' +
-                ", PostalCode='" + PostalCode + '\'' +
+                ", Address='" + address + '\'' +
+                ", City='" + city + '\'' +
+                ", Country='" + country + '\'' +
+                ", PostalCode='" + postalCode + '\'' +
                 '}';
     }
 }
