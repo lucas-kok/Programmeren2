@@ -34,6 +34,7 @@ public class StatisticsScene extends GUIScene {
     }
 
     private void createScene() {
+        // Panes & Scene
         BorderPane mainPane = new BorderPane();
         VBox headerPane = new VBox(15);
         VBox overviewPane = new VBox(15);
@@ -48,73 +49,96 @@ public class StatisticsScene extends GUIScene {
         statisticsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
-        final Label title = new Label("Statistics Menu");
+        Label title = new Label("Statistics Menu");
+        Button homeButton = new Button("Home");
 
-        Label selectedGender = new Label("Selected Gender: ");
-        Label totalApplied = new Label("Applicants: ");
-        Label totalCertified = new Label("Certificates: ");
-        Label percentageCertified = new Label("Success rate: ");
+        Label selectedGenderLabel = new Label("Selected Gender:");
+        Label applicantsStatisticLabel = new Label("Applicants:");
+        Label certificationsStatisticLabel = new Label("Certificates:");
+        Label successRateStatisticLabel = new Label("Success rate:");
 
-        Button male = new Button("Male");
-        Button female = new Button("Female");
-        Button other = new Button("Other");
+        Button maleButton = new Button("Male");
+        Button femaleButton = new Button("Female");
+        Button otherButton = new Button("Other");
 
-        Button home = new Button("Home");
-        Button back = new Button("Back");
+        Label topThreeCoursesLabel = new Label("Top 3 courses with the most certificates");
+        Label firstCourseLabel = new Label("1. ");
+        Label secondCourseLabel = new Label("2. ");
+        Label thirdCourseLabel = new Label("3. ");
 
-        //Actions
-        male.setOnAction(event -> {
-            selectedGender.setText("Selected Gender: Male");
+        Label topThreeWebcastsLabel = new Label("Top 3 most viewed webcasts");
+        Label firstWebcastLabel = new Label("1. ");
+        Label secondWebcastLabel = new Label("2. ");
+        Label thirdWebcastLabel = new Label("3. ");
+
+        try {
+            String[] topThreeCoursesList = statisticsRepository.getTopThreeCourses();
+            setTopLabels(firstCourseLabel, secondCourseLabel, thirdCourseLabel, topThreeCoursesList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            String[] topThreeWebcastsList = statisticsRepository.getTopThreeWebcasts();
+            setTopLabels(firstWebcastLabel, secondWebcastLabel, thirdWebcastLabel, topThreeWebcastsList);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Event Handlers
+        maleButton.setOnAction((event) -> {
+            selectedGenderLabel.setText("Selected Gender: Male");
             try {
-                String[] succesRate = statisticsRepository.getCertificatePercentage("m");
-                totalApplied.setText(succesRate[0]);
-                totalCertified.setText(succesRate[1]);
-                percentageCertified.setText(succesRate[2] + "%");
+                String[] genderStatisticPieces = statisticsRepository.getCertificatePercentage("m");
+                updateStatistics(applicantsStatisticLabel, certificationsStatisticLabel, successRateStatisticLabel, genderStatisticPieces);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
 
-        female.setOnAction(event -> {
-            selectedGender.setText("Selected Gender: Female");
+        femaleButton.setOnAction((event) -> {
+            selectedGenderLabel.setText("Selected Gender: Female");
             try {
-                String[] succesRate = statisticsRepository.getCertificatePercentage("f");
-                totalApplied.setText(succesRate[0]);
-                totalCertified.setText(succesRate[1]);
-                percentageCertified.setText(succesRate[2] + "%");
+                String[] genderStatisticPieces = statisticsRepository.getCertificatePercentage("f");
+                updateStatistics(applicantsStatisticLabel, certificationsStatisticLabel, successRateStatisticLabel, genderStatisticPieces);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
 
-        other.setOnAction(event -> {
-            selectedGender.setText("Selected Gender: Other");
+        otherButton.setOnAction((event) -> {
+            selectedGenderLabel.setText("Selected Gender: Other");
             try {
-                String[] succesRate = statisticsRepository.getCertificatePercentage("x");
-                totalApplied.setText(succesRate[0]);
-                totalCertified.setText(succesRate[1]);
-                percentageCertified.setText(succesRate[2] + "%");
+                String[] genderStatisticPieces = statisticsRepository.getCertificatePercentage("x");
+                updateStatistics(applicantsStatisticLabel, certificationsStatisticLabel, successRateStatisticLabel, genderStatisticPieces);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
 
-        home.setOnAction(event -> {
-            showScene("mainScene");
-        });
-
-        back.setOnAction(event -> {
-            showScene("statisticsMenuScene");
-        });
+        homeButton.setOnAction((event) -> showScene("mainScene"));
 
         // Appending
-        buttonBox.getChildren().addAll(male, female, other);
-        overviewPane.getChildren().addAll(selectedGender, totalApplied, totalCertified, percentageCertified, buttonBox);
+        buttonBox.getChildren().addAll(maleButton, femaleButton, otherButton);
+        overviewPane.getChildren().addAll(selectedGenderLabel, applicantsStatisticLabel, certificationsStatisticLabel, successRateStatisticLabel, buttonBox,
+                topThreeCoursesLabel, firstCourseLabel, secondCourseLabel, thirdCourseLabel, topThreeWebcastsLabel, firstWebcastLabel, secondWebcastLabel, thirdWebcastLabel);
 
         mainPane.setTop(headerPane);
         mainPane.setCenter(overviewPane);
         headerPane.getChildren().addAll(title, navigationBox);
-        navigationBox.getChildren().addAll(home, back);
+        navigationBox.getChildren().add(homeButton);
+    }
+
+    private void setTopLabels(Label firstLabel, Label secondLabel, Label thirdLabel, String[] topPieces) {
+        firstLabel.setText("1. " + topPieces[0]);
+        secondLabel.setText("2. " +  topPieces[1]);
+        thirdLabel.setText("3. " + topPieces[2]);
+    }
+
+    private void updateStatistics(Label applicantsLabel, Label certificationsLabel, Label successRateLabel, String[] genderStatisticPieces) {
+        applicantsLabel.setText("Applicants: " +  genderStatisticPieces[0]);
+        certificationsLabel.setText("Certifications: " + genderStatisticPieces[1]);
+        successRateLabel.setText("Success rate: " + genderStatisticPieces[2] + "%");
     }
 
     public void resetScene() {
