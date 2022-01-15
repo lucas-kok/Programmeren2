@@ -19,27 +19,26 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class OverviewCertificateScene extends GUIScene {
+public class OverviewCertificatesScene extends GUIScene {
 
-    private Scene overviewCertificateScene;
+    private Scene overviewCertificatesScene;
     private final int sceneWidth;
     private final int sceneHeight;
 
     private final GUI gui;
     private final SearchBar searchBar;
 
-    public OverviewCertificateScene(GUI gui, int sceneWidth, int sceneHeight) {
+    public OverviewCertificatesScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
-        this.gui = gui;
-        this.searchBar = new SearchBar();
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        this.gui = gui;
+        this.searchBar = new SearchBar();
 
         createScene();
-        setScene(overviewCertificateScene);
+        setScene(overviewCertificatesScene);
     }
 
     private void createScene() {
@@ -48,17 +47,16 @@ public class OverviewCertificateScene extends GUIScene {
         VBox headerPane = new VBox(15);
         HBox navigationPane = new HBox(15);
 
-        VBox courseOverviewWrapper = new VBox(15);
+        VBox overviewCertificatesPane = new VBox(15);
         HBox searchBarPane = new HBox(5);
         ScrollPane certificatesListScroll = new ScrollPane();
-        AtomicReference<VBox> certificatesListPane = new AtomicReference<>(new VBox(5));
 
         headerPane.setAlignment(Pos.CENTER);
 
-        overviewCertificateScene = new Scene(mainPane, sceneWidth, sceneHeight);
+        overviewCertificatesScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
-        Label title = new Label("Certificates Overview");
+        Label titleLabel = new Label("Certificates Overview");
         Button homeButton = new Button("Home");
         Button newCertificateButton = new Button("New Certificate");
 
@@ -75,37 +73,36 @@ public class OverviewCertificateScene extends GUIScene {
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Certificate> result = null;
+
             try {
-                result = searchBar.searchCertificates(searchInput, gui.getCertificates());
+                ArrayList<Certificate> searchResult = searchBar.searchCertificates(searchInput, gui.getCertificates());
+                certificatesListScroll.setContent(createCertificatesListPane(searchResult));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            certificatesListPane.get().getChildren().clear();
-            certificatesListScroll.setContent(createCertificateListPane(result));
         });
 
         // Appending
         mainPane.setTop(headerPane);
-        mainPane.setCenter(courseOverviewWrapper);
+        mainPane.setCenter(overviewCertificatesPane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, newCertificateButton);
 
-        courseOverviewWrapper.getChildren().addAll(searchBarPane, certificatesListScroll);
+        overviewCertificatesPane.getChildren().addAll(searchBarPane, certificatesListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
+
         try {
-            certificatesListScroll.setContent(createCertificateListPane(gui.getCertificates()));
+            certificatesListScroll.setContent(createCertificatesListPane(gui.getCertificates()));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     // Function that will convert a list of Courses to a vertical Pane containing a row for each Course
-    private VBox createCertificateListPane(ArrayList<Certificate> certificates) {
+    private VBox createCertificatesListPane(ArrayList<Certificate> certificates) {
         // Panes
-        VBox certificateListPane = new VBox(5);
+        VBox certificatesListPane = new VBox(5);
 
         int index = 0;
         for (Certificate certificate : certificates) {
@@ -114,9 +111,10 @@ public class OverviewCertificateScene extends GUIScene {
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
             Label studentEmailLabel = new Label(certificate.getStudentEmail());
-            Label informationDivider = new Label("-");
+            Label informationDividerLabel = new Label("-");
             Label courseNameLabel = new Label(certificate.getCourseName());
-            Label certificateScoreLabel = new Label(String.valueOf(certificate.getScore()));
+            Label secondInformationDividerLabel = new Label("-");
+            Label certificateScoreLabel = new Label(certificate.getScore() + "/10");
 
             // Event Handlers
             certificateInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
@@ -125,18 +123,18 @@ public class OverviewCertificateScene extends GUIScene {
             });
 
             // Appending
-            certificateInfoRow.getChildren().addAll(indexLabel, studentEmailLabel, informationDivider, courseNameLabel, certificateScoreLabel);
-            certificateListPane.getChildren().add(certificateInfoRow);
+            certificateInfoRow.getChildren().addAll(indexLabel, studentEmailLabel, informationDividerLabel, courseNameLabel,
+                    secondInformationDividerLabel, certificateScoreLabel);
+            certificatesListPane.getChildren().add(certificateInfoRow);
 
             index++;
         }
 
-        return certificateListPane;
+        return certificatesListPane;
     }
 
     public void resetScene() {
         createScene();
-        setScene(overviewCertificateScene);
+        setScene(overviewCertificatesScene);
     }
-
 }

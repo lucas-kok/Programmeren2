@@ -41,17 +41,17 @@ public class NewStudentScene extends GUIScene {
     private void createScene() {
         // Panes & Scene
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        HBox navigation = new HBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationPane = new HBox(15);
         VBox newStudentPane = new VBox(15);
         HBox studentBirthdayPane = new HBox(5);
 
         newStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Create new Student");
+        Label titleLabel = new Label("Create new Student");
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
 
@@ -118,11 +118,12 @@ public class NewStudentScene extends GUIScene {
                 String response = null;
                 try {
                     response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthdayPieces, gui.getStudents());
+                    messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                messageLabel.setText(response);
 
+                assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     // Create new Student
                     LocalDate BirthDay = LocalDate.parse(birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0]);
@@ -149,11 +150,11 @@ public class NewStudentScene extends GUIScene {
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(newStudentPane);
 
-        header.getChildren().addAll(title, navigation);
-        navigation.getChildren().addAll(homeButton, backButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, backButton);
 
         newStudentPane.getChildren().addAll(studentNameLabel, studentNameInput, studentEmailLabel, studentEmailInput,
                 studentAddressLabel, studentAddressInput, studentPostalCodeLabel, studentPostalCodeInput, studentCityLabel,
@@ -167,5 +168,4 @@ public class NewStudentScene extends GUIScene {
         createScene();
         setScene(newStudentScene);
     }
-
 }

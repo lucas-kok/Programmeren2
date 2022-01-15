@@ -27,7 +27,7 @@ public class EditCourseScene extends GUIScene {
 
     private Course selectedCourse;
 
-    public EditCourseScene(GUI gui, int sceneWidth, int sceneHeight, Course selectedCourse) {
+    public EditCourseScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
@@ -37,28 +37,23 @@ public class EditCourseScene extends GUIScene {
         courseInformationValidationTools = new CourseInformationValidator();
         courseRepository = new CourseRepository();
         registrationRepository = new RegistrationRepository();
-        
-        this.selectedCourse = selectedCourse;
 
-        if (selectedCourse != null) {
-            createScene();
-            setScene(editCourseScene);
-        }
+        // Not creating a scene, because when initializing the GUI no Course has been selected
     }
 
     private void createScene() {
         // Panes & Scene
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        HBox navigation = new HBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationPane = new HBox(15);
         VBox editStudentPane = new VBox(15);
 
         editCourseScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Edit Course");
+        Label titleLabel = new Label("Edit Course: " + selectedCourse.getName());
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
         Button deleteCourseButton = new Button("Delete");
@@ -82,7 +77,7 @@ public class EditCourseScene extends GUIScene {
         Button updateSelectedCourseButton = new Button("Update Course");
         Label messageLabel = new Label("");
 
-        // Setting the TextFields to the students current info
+        // Setting the TextFields to the info of the selected Course
         courseNameInput.setText(selectedCourse.getName());
         courseSubjectInput.setText(selectedCourse.getSubject());
         courseIntroductionTextInput.setText(selectedCourse.getIntroductionText());
@@ -126,11 +121,12 @@ public class EditCourseScene extends GUIScene {
                 String response = null;
                 try {
                     response = courseInformationValidationTools.validateEditedCourse(name, relatedCourses, gui.getCourses(), selectedCourse);
+                    messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                messageLabel.setText(response);
 
+                assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     courseRepository.updateCourse(selectedCourse, name, subject, introductionText, level, relatedCourses);
                     messageLabel.setText("The Course '" + name + "' has successfully been updated!");
@@ -142,11 +138,11 @@ public class EditCourseScene extends GUIScene {
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(editStudentPane);
 
-        header.getChildren().addAll(title, navigation);
-        navigation.getChildren().addAll(homeButton, backButton, deleteCourseButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, backButton, deleteCourseButton);
 
         editStudentPane.getChildren().addAll(courseNameLabel, courseNameInput, courseSubjectLabel, courseSubjectInput,
                 courseIntroductionTextLabel, courseIntroductionTextInput, courseLevelLabel, courseLevelInput,
@@ -157,8 +153,8 @@ public class EditCourseScene extends GUIScene {
         if (selectedCourse == null) return;
 
         this.selectedCourse = selectedCourse;
+
         createScene();
         setScene(editCourseScene);
     }
-
 }

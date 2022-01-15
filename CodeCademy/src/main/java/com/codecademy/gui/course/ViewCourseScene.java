@@ -1,26 +1,20 @@
 package com.codecademy.gui.course;
 
-import com.codecademy.gui.registration.ViewRegistrationScene;
 import com.codecademy.informationhandling.contentitem.ContentItem;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
 import com.codecademy.informationhandling.course.CourseRepository;
-import com.codecademy.informationhandling.registration.Registration;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class ViewCourseScene extends GUIScene {
@@ -32,18 +26,14 @@ public class ViewCourseScene extends GUIScene {
     private Course selectedCourse;
     private final CourseRepository courseRepository;
 
-    public ViewCourseScene(GUI gui, int sceneWidth, int sceneHeight, Course selectedCourse) {
+    public ViewCourseScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-        this.selectedCourse = selectedCourse;
         courseRepository = new CourseRepository();
 
-        if (selectedCourse != null) {
-            createScene();
-            setScene(viewCourseScene);
-        }
+        // Not creating a scene, because when initializing the GUI no Course has been selected
     }
 
     private void createScene() {
@@ -53,14 +43,14 @@ public class ViewCourseScene extends GUIScene {
         HBox navigationPane = new HBox(15);
         VBox viewCoursePane = new VBox(15);
 
-        ScrollPane selectedCourseModulesScroll = new ScrollPane();
+        ScrollPane selectedCourseContentItemsScroll = new ScrollPane();
 
         viewCourseScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Viewing Course: " + selectedCourse.getName());
+        Label titleLabel = new Label("Viewing Course: " + selectedCourse.getName());
 
         Button homeButton = new Button("Home");
         Button coursesButton = new Button("Courses");
@@ -71,10 +61,11 @@ public class ViewCourseScene extends GUIScene {
         Label selectedCourseIntroductionTextLabel = new Label("Introduction: " + selectedCourse.getIntroductionText());
         Label selectedCourseLevelLabel = new Label("Level: " + selectedCourse.getLevel());
         Label selectedCourseRelatedCoursesLabel = new Label("Related Courses: " + selectedCourse.getRelatedCoursesAsString());
-        Label selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates:");
+        Label selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates: 0");
         Label selectedCourseModulesLabel = new Label("Modules & Average Progression: ");
+
         try {
-            selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates: " + courseRepository.getAmountOfCertificates(selectedCourse));
+            selectedCourseNumberOfCertificatesLabel = new Label("Number of Certificates: " + courseRepository.getAmountOfCertificatesOfCourse(selectedCourse));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -96,43 +87,43 @@ public class ViewCourseScene extends GUIScene {
         mainPane.setTop(headerPane);
         mainPane.setCenter(viewCoursePane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, coursesButton, editSelectedCourseButton);
 
         viewCoursePane.getChildren().addAll(selectedCourseNameLabel, selectedCourseSubjectLabel,
                 selectedCourseIntroductionTextLabel, selectedCourseLevelLabel, selectedCourseRelatedCoursesLabel,
-                selectedCourseNumberOfCertificatesLabel, selectedCourseModulesLabel, selectedCourseModulesScroll);
+                selectedCourseNumberOfCertificatesLabel, selectedCourseModulesLabel, selectedCourseContentItemsScroll);
 
         try {
-            selectedCourseModulesScroll.setContent(createSelectedCourseModulesPane(courseRepository.getAverageProgressPerContentItem(selectedCourse)));
+            selectedCourseContentItemsScroll.setContent(createSelectedCourseModulesPane(courseRepository.getAverageProgressPerContentItem(selectedCourse)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Function that will convert a list of ContentItems connected to the selected Course into a VBox
-    private VBox createSelectedCourseModulesPane(Map<ContentItem, Integer> contentItems) {
-        VBox modulesListPane = new VBox(5);
+    // Function that will convert a list of Content Items linked to a selected Course into a VBox
+    private VBox createSelectedCourseModulesPane(Map<ContentItem, Integer> contentItemsOfCourse) {
+        VBox contentItemsListPane = new VBox(5);
 
         int index = 0;
-        for (ContentItem contentItem : contentItems.keySet()) {
+        for (ContentItem contentItem : contentItemsOfCourse.keySet()) {
             // Panes
             HBox contentItemInfoRow = new HBox(10);
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
             Label contentItemNameLabel = new Label(contentItem.getTitle());
-            Label informationDivider = new Label("-");
-            Label contentItemAverageProgressLabel = new Label(contentItems.get(contentItem) + "%");
+            Label informationDividerLabel = new Label("-");
+            Label contentItemAverageProgressLabel = new Label(contentItemsOfCourse.get(contentItem) + "%");
 
             // Appending
-            contentItemInfoRow.getChildren().addAll(indexLabel, contentItemNameLabel, informationDivider, contentItemAverageProgressLabel);
-            modulesListPane.getChildren().add(contentItemInfoRow);
+            contentItemInfoRow.getChildren().addAll(indexLabel, contentItemNameLabel, informationDividerLabel, contentItemAverageProgressLabel);
+            contentItemsListPane.getChildren().add(contentItemInfoRow);
 
             index++;
         }
 
-        return modulesListPane;
+        return contentItemsListPane;
     }
 
     public void resetScene(Course selectedCourse) {
@@ -143,5 +134,4 @@ public class ViewCourseScene extends GUIScene {
         createScene();
         setScene(viewCourseScene);
     }
-
 }

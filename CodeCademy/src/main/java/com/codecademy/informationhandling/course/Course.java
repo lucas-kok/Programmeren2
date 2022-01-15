@@ -1,11 +1,10 @@
 package com.codecademy.informationhandling.course;
 
 public class Course {
-
     private String name;
     private String subject;
     private String introductionText;
-    private String level;
+    private final String level;
     private String relatedCourses;
 
     public Course(String name, String subject, String introductionText, String level, String relatedCourses) {
@@ -44,10 +43,6 @@ public class Course {
         return level;
     }
 
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
     public String getRelatedCoursesAsString() {
         return relatedCourses;
     }
@@ -55,5 +50,4 @@ public class Course {
     public void setRelatedCourses(String relatedCourses) {
         this.relatedCourses = relatedCourses;
     }
-
 }

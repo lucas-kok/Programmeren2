@@ -26,12 +26,15 @@ public class ContentItemRepository {
 
     public ArrayList<ContentItem> getUnusedContentItems() throws SQLException {
         ArrayList<ContentItem> contentItems = new ArrayList<>();
+
         String query = "SELECT * FROM ContentItem WHERE CourseName IS NULL";
         ResultSet rs = dbCon.getQuery(query);
+
         while (rs.next()) {
             contentItems.add(new ContentItem(rs.getInt("ContentiD"), rs.getString("Title"), rs.getString("PublicationDate")));
         }
         dbCon.CloseResultSet();
+
         return contentItems;
     }
 
@@ -40,7 +43,7 @@ public class ContentItemRepository {
         ResultSet rs = dbCon.getQuery(query);
 
         ContentItem newContentItem;
-        while (rs.next()) {
+        if (rs.next()) {
             newContentItem = new ContentItem(rs.getInt("ContentiD"), rs.getString("Title"), rs.getString("PublicationDate"));
             return newContentItem;
         }
@@ -48,5 +51,4 @@ public class ContentItemRepository {
 
         return null;
     }
-
 }

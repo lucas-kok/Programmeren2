@@ -17,12 +17,10 @@ import javafx.scene.layout.VBox;
 import java.sql.SQLException;
 
 public class NewCertificateScene extends GUIScene {
-
     private Scene newCertificateScene;
     private final int sceneWidth;
     private final int sceneHeight;
 
-    private final GUI gui;
     private final CertificateInformationValidator certificateInformationValidator;
     private final CertificateRepository certificateRepository;
 
@@ -31,8 +29,6 @@ public class NewCertificateScene extends GUIScene {
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-
-        this.gui = gui;
         certificateInformationValidator = new CertificateInformationValidator();
         certificateRepository = new CertificateRepository();
 
@@ -43,16 +39,16 @@ public class NewCertificateScene extends GUIScene {
     private void createScene() {
         // Panes & Scene
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        HBox navigation = new HBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationPane = new HBox(15);
         VBox newCertificatePane = new VBox(15);
 
         newCertificateScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Create new Certificate");
+        Label titleLabel = new Label("Create new Certificate");
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
 
@@ -75,14 +71,13 @@ public class NewCertificateScene extends GUIScene {
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewCertificateScene) getSceneObject("overviewCertificateScene")).resetScene();
+            ((OverviewCertificatesScene) getSceneObject("overviewCertificateScene")).resetScene();
             showScene("overviewCertificateScene");
         });
 
         createCertificateButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
             if (!studentEmailInput.getText().isEmpty() && !courseNameInput.getText().isEmpty() && !scoreInput.getText().isEmpty() && !staffNameInput.getText().isEmpty()) {
-
                 InformationFormatter informationFormatter = new InformationFormatter();
                 String studentEmail = studentEmailInput.getText().toLowerCase().strip();
                 String courseName = informationFormatter.capitalizeString(courseNameInput.getText().toLowerCase());
@@ -92,11 +87,12 @@ public class NewCertificateScene extends GUIScene {
                 String response = null;
                 try {
                     response = certificateInformationValidator.validateNewCertificate(studentEmail, courseName, score);
+                    messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                messageLabel.setText(response);
 
+                assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     try {
                         certificateRepository.createCertificate(studentEmail, courseName, score, staffName);
@@ -119,11 +115,11 @@ public class NewCertificateScene extends GUIScene {
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(newCertificatePane);
 
-        header.getChildren().addAll(title, navigation);
-        navigation.getChildren().addAll(homeButton, backButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, backButton);
 
         newCertificatePane.getChildren().addAll(studentEmailLabel, studentEmailInput, courseNameLabel, courseNameInput, scoreLabel, scoreInput, staffNameLabel, staffNameInput, createCertificateButton, messageLabel);
     }
@@ -132,5 +128,4 @@ public class NewCertificateScene extends GUIScene {
         createScene();
         setScene(newCertificateScene);
     }
-
 }

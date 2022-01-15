@@ -1,11 +1,9 @@
 package com.codecademy.informationhandling.contentitem;
 
 public class ContentItem {
-
-    //ID, Title, PublicationDate en mis of het een Module of Webcast is
-    private int id;
-    private String title;
-    private String publicationDate;
+    private final int id;
+    private final String title;
+    private final String publicationDate;
 
     public ContentItem(int id, String title, String publicationDate) {
         this.id = id;
@@ -17,16 +15,12 @@ public class ContentItem {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getPublicationDate() {
+        return publicationDate;
     }
 
     @Override
@@ -37,13 +31,4 @@ public class ContentItem {
                 ", publicationDate='" + publicationDate + '\'' +
                 '}';
     }
-
-    public String getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(String publicationDate) {
-        this.publicationDate = publicationDate;
-    }
-
 }

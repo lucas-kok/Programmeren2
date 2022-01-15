@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class OverviewRegistrationsScene extends GUIScene {
     private Scene overviewRegistrationsScene;
@@ -32,10 +31,10 @@ public class OverviewRegistrationsScene extends GUIScene {
     public OverviewRegistrationsScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
-        this.gui = gui;
-        this.searchBar = new SearchBar();
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        this.gui = gui;
+        this.searchBar = new SearchBar();
 
         createScene();
         setScene(overviewRegistrationsScene);
@@ -47,17 +46,16 @@ public class OverviewRegistrationsScene extends GUIScene {
         VBox headerPane = new VBox(15);
         HBox navigationPane = new HBox(15);
 
-        VBox registrationOverviewWrapper = new VBox(15);
+        VBox overviewRegistrationsPane = new VBox(15);
         HBox searchBarPane = new HBox(5);
-        ScrollPane registrationListScroll = new ScrollPane();
-        AtomicReference<VBox> registrationListPane = new AtomicReference<>(new VBox(5));
+        ScrollPane registrationsListScroll = new ScrollPane();
 
         headerPane.setAlignment(Pos.CENTER);
 
         overviewRegistrationsScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
-        Label title = new Label("Registrations Overview");
+        Label titleLabel = new Label("Registrations Overview");
         Button homeButton = new Button("Home");
         Button newRegistrationButton = new Button("New Registration");
 
@@ -74,64 +72,63 @@ public class OverviewRegistrationsScene extends GUIScene {
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Registration> searchResult = null;
+
             try {
-                searchResult = searchBar.searchRegistrations(searchInput, gui.getRegistrations());
+                ArrayList<Registration> searchResult = searchBar.searchRegistrations(searchInput, gui.getRegistrations());
+                registrationsListScroll.setContent(createRegistrationsListPane(searchResult));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            registrationListPane.get().getChildren().clear();
-            registrationListScroll.setContent(createRegistrationListPane(searchResult));
         });
 
         // Appending
         mainPane.setTop(headerPane);
-        mainPane.setCenter(registrationOverviewWrapper);
+        mainPane.setCenter(overviewRegistrationsPane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, newRegistrationButton);
 
-        registrationOverviewWrapper.getChildren().addAll(searchBarPane, registrationListScroll);
+        overviewRegistrationsPane.getChildren().addAll(searchBarPane, registrationsListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
+
         try {
-            registrationListScroll.setContent(createRegistrationListPane(new ArrayList<>(gui.getRegistrations().values())));
+            registrationsListScroll.setContent(createRegistrationsListPane(new ArrayList<>(gui.getRegistrations().values())));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Function that will convert a list of Students to a vertical Pane containing a row for each Student
-    private VBox createRegistrationListPane(ArrayList<Registration> registrations) {
-        VBox studentListPane = new VBox(5);
+    // Function that will convert a list of Registrations to a vertical Pane containing a row for each Registration
+    private VBox createRegistrationsListPane(ArrayList<Registration> registrations) {
+        VBox registrationsListPane = new VBox(5);
 
         int index = 0;
         for (Registration registration : registrations) {
             // Panes
-            HBox studentInfoRow = new HBox(10);
+            HBox registrationInfoRow = new HBox(10);
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ".");
             Label registrationDateLabel = new Label(registration.getRegistrationDateAsString());
             Label registrationStudentEmailLabel = new Label(registration.getStudentEmail());
-            Label informationDivider = new Label("-");
+            Label informationDividerLabel = new Label("-");
             Label registrationCourseNameLabel = new Label(registration.getCourseName());
 
             // Event Handlers
-            studentInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
+            registrationInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
                 ((ViewRegistrationScene) getSceneObject("viewRegistrationScene")).resetScene(registration);
                 showScene("viewRegistrationScene");
             });
 
             // Appending
-            studentInfoRow.getChildren().addAll(indexLabel, registrationDateLabel,
-                    registrationStudentEmailLabel, informationDivider, registrationCourseNameLabel);
-            studentListPane.getChildren().add(studentInfoRow);
+            registrationInfoRow.getChildren().addAll(indexLabel, registrationDateLabel,
+                    registrationStudentEmailLabel, informationDividerLabel, registrationCourseNameLabel);
+            registrationsListPane.getChildren().add(registrationInfoRow);
 
             index++;
         }
 
-        return studentListPane;
+        return registrationsListPane;
     }
 
     public void resetScene() {

@@ -1,68 +1,47 @@
 package com.codecademy.informationhandling.certificate;
 
 public class Certificate {
-
-    private int CertificateID;
-    private int RegisterID;
-    private String StudentEmail;
-    private String CourseName;
-    private int score;
-    private String StaffName;
+    private final int certificateID;
+    private final int registrationID;
+    private final String studentEmail;
+    private String courseName;
+    private final int score;
+    private final String staffName;
 
     public Certificate(int certificateID, int registerID, String studentEmail, String courseName, int score, String staffName) {
-        this.CertificateID = certificateID;
-        this.RegisterID = registerID;
+        this.certificateID = certificateID;
+        this.registrationID = registerID;
         this.score = score;
-        this.StaffName = staffName;
-        this.StudentEmail = studentEmail;
-        this.CourseName = courseName;
-    }
-
-    public String getStudentEmail() {
-        return StudentEmail;
-    }
-
-    public void setStudentEmail(String studentEmail) {
-        StudentEmail = studentEmail;
-    }
-
-    public String getCourseName() {
-        return CourseName;
-    }
-
-    public void setCourseName(String courseName) {
-        CourseName = courseName;
+        this.staffName = staffName;
+        this.studentEmail = studentEmail;
+        this.courseName = courseName;
     }
 
     public int getCertificateID() {
-        return CertificateID;
-    }
-
-    public void setCertificateID(int certificateID) {
-        CertificateID = certificateID;
+        return certificateID;
     }
 
     public int getRegisterID() {
-        return RegisterID;
-    }
-
-    public void setRegisterID(int registerID) {
-        RegisterID = registerID;
+        return registrationID;
     }
 
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
-
     public String getStaffName() {
-        return StaffName;
+        return staffName;
     }
 
-    public void setStaffName(String staffName) {
-        StaffName = staffName;
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

@@ -55,7 +55,7 @@ public class EditStudentScene extends GUIScene {
         header.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Edit Student");
+        Label titleLabel = new Label("Edit Student: " + selectedStudent.getEmail());
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
         Button deleteStudentButton = new Button("Delete");
@@ -92,7 +92,7 @@ public class EditStudentScene extends GUIScene {
         Button updateSelectedStudentButton = new Button("Update Student");
         Label messageLabel = new Label();
 
-        // Setting the TextFields to the students current info
+        // Setting the TextFields to the info of the selected Student
         studentNameInput.setText(selectedStudent.getName());
         studentEmailInput.setText(selectedStudent.getEmail());
         studentAddressInput.setText(selectedStudent.getAddress());
@@ -146,15 +146,16 @@ public class EditStudentScene extends GUIScene {
                 String response = null;
                 try {
                     response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthdayPieces, gui.getStudents(), selectedStudent);
+                    messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                messageLabel.setText(response);
 
+                assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     // Update Student
-                    LocalDate BirthDay = LocalDate.parse(birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0]);
-                    studentRepository.updateStudent(selectedStudent, name, email, address, postalCode, city, country, gender, BirthDay);
+                    String birthday = birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0];
+                    studentRepository.updateStudent(selectedStudent, name, email, address, postalCode, city, country, gender, birthday);
 
                     messageLabel.setText("The Student '" + name + "' has successfully been updated!");
                 }
@@ -168,7 +169,7 @@ public class EditStudentScene extends GUIScene {
         mainPane.setTop(header);
         mainPane.setCenter(editStudentPane);
 
-        header.getChildren().addAll(title, navigation);
+        header.getChildren().addAll(titleLabel, navigation);
         navigation.getChildren().addAll(homeButton, backButton, deleteStudentButton);
 
         editStudentPane.getChildren().addAll(studentNameLabel, studentNameInput, studentEmailLabel, studentEmailInput,
@@ -183,8 +184,8 @@ public class EditStudentScene extends GUIScene {
         if (selectedStudent == null) return;
 
         this.selectedStudent = selectedStudent;
+
         createScene();
         setScene(editStudentScene);
     }
-
 }

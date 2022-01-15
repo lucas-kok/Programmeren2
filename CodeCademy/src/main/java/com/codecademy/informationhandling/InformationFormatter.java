@@ -6,7 +6,6 @@ import com.codecademy.informationhandling.student.Student;
 public class InformationFormatter {
 
     public InformationFormatter() {
-
     }
 
     // Function to format the information of a Student globally

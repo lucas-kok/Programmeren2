@@ -2,7 +2,7 @@ package com.codecademy.gui;
 
 import com.codecademy.gui.certificate.EditCertificateScene;
 import com.codecademy.gui.certificate.NewCertificateScene;
-import com.codecademy.gui.certificate.OverviewCertificateScene;
+import com.codecademy.gui.certificate.OverviewCertificatesScene;
 import com.codecademy.gui.certificate.ViewCertificateScene;
 import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
@@ -12,7 +12,7 @@ import com.codecademy.gui.registration.EditRegistrationScene;
 import com.codecademy.gui.registration.NewRegistrationScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
-import com.codecademy.gui.statistics.StatisticsScene;
+import com.codecademy.gui.statistics.OverviewStatisticsScene;
 import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
@@ -38,6 +38,7 @@ public class GUI extends Application {
     private final CourseRepository courseRepository;
     private final RegistrationRepository registrationRepository;
     private final CertificateRepository certificateRepository;
+
     private Map<String, GUIScene> scenes = new HashMap<>();
     private Stage mainStage;
 
@@ -51,35 +52,35 @@ public class GUI extends Application {
     @Override
     public void start(Stage mainStage) {
         this.mainStage = mainStage;
-        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217...), Daan van der Meulen(...) & Anne van den Bosch(...)");
+        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217...), Daan van der Meulen(...) & Anne van den Bosch(2191799)");
 
-        // Creating all the scenes
         int sceneWidth = 500;
         int sceneHeight = 750;
 
+        // Creating all the scenes
         MainScene mainScene = new MainScene(this, 500, 750);
 
         OverviewStudentsScene overviewStudentScene = new OverviewStudentsScene(this, sceneWidth, sceneHeight);
         NewStudentScene newStudentScene = new NewStudentScene(this, sceneWidth, sceneHeight);
-        ViewStudentScene viewStudentScene = new ViewStudentScene(this, sceneWidth, sceneHeight, null);
+        ViewStudentScene viewStudentScene = new ViewStudentScene(this, sceneWidth, sceneHeight);
         EditStudentScene editStudentScene = new EditStudentScene(this, sceneWidth, sceneHeight, null);
 
         OverviewCoursesScene overviewCoursesScene = new OverviewCoursesScene(this, sceneWidth, sceneHeight);
-        ViewCourseScene viewCourseScene = new ViewCourseScene(this, sceneWidth, sceneHeight, null);
+        ViewCourseScene viewCourseScene = new ViewCourseScene(this, sceneWidth, sceneHeight);
         NewCourseScene newCourseScene = new NewCourseScene(this, sceneWidth, sceneHeight);
-        EditCourseScene editCourseScene = new EditCourseScene(this, sceneWidth, sceneHeight, null);
+        EditCourseScene editCourseScene = new EditCourseScene(this, sceneWidth, sceneHeight);
 
         OverviewRegistrationsScene overviewRegistrationsScene = new OverviewRegistrationsScene(this, sceneWidth, sceneHeight);
         NewRegistrationScene newRegistrationScene = new NewRegistrationScene(this, sceneWidth, sceneHeight);
-        ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneWidth, sceneHeight, null);
-        EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneWidth, sceneHeight, null);
+        ViewRegistrationScene viewRegistrationScene = new ViewRegistrationScene(this, sceneWidth, sceneHeight);
+        EditRegistrationScene editRegistrationScene = new EditRegistrationScene(this, sceneWidth, sceneHeight);
 
-        OverviewCertificateScene overviewCertificateScene = new OverviewCertificateScene(this, sceneWidth, sceneHeight);
+        OverviewCertificatesScene overviewCertificateScene = new OverviewCertificatesScene(this, sceneWidth, sceneHeight);
         NewCertificateScene newCertificateScene = new NewCertificateScene(this, sceneWidth, sceneHeight);
-        ViewCertificateScene viewCertificateScene = new ViewCertificateScene(this, sceneWidth, sceneHeight, null);
-        EditCertificateScene editCertificateScene = new EditCertificateScene(this, sceneWidth, sceneHeight, null);
+        ViewCertificateScene viewCertificateScene = new ViewCertificateScene(this, sceneWidth, sceneHeight);
+        EditCertificateScene editCertificateScene = new EditCertificateScene(this, sceneWidth, sceneHeight);
 
-        StatisticsScene statisticsScene = new StatisticsScene(this, sceneWidth, sceneHeight);
+        OverviewStatisticsScene statisticsScene = new OverviewStatisticsScene(this, sceneWidth, sceneHeight);
 
         // Adding the GUIScene's to a map that will be used to show the scene's
         scenes.put("mainScene", mainScene);
@@ -95,7 +96,7 @@ public class GUI extends Application {
         scenes.put("newRegistrationScene", newRegistrationScene);
         scenes.put("viewRegistrationScene", viewRegistrationScene);
         scenes.put("editRegistrationScene", editRegistrationScene);
-        scenes.put("overviewCertificateScene", overviewCertificateScene);
+        scenes.put("overviewCertificatesScene", overviewCertificateScene);
         scenes.put("newCertificateScene", newCertificateScene);
         scenes.put("viewCertificateScene", viewCertificateScene);
         scenes.put("editCertificateScene", editCertificateScene);
@@ -106,7 +107,7 @@ public class GUI extends Application {
         mainStage.show();
     }
 
-    // Function that will show the Scene connected to the given String
+    // Function that will show the Scene linked to the given String
     public void showScene(String sceneName)  {
         if (scenes.get(sceneName) != null) {
             mainStage.setScene(scenes.get(sceneName).getScene());
@@ -127,7 +128,9 @@ public class GUI extends Application {
         return studentRepository.getAllStudents();
     }
 
-    public Map<String, Course> getCourses() throws SQLException { return courseRepository.getAllCourses(); }
+    public Map<String, Course> getCourses() throws SQLException {
+        return courseRepository.getAllCourses();
+    }
 
     public Map<String, Registration> getRegistrations() throws SQLException {
         return registrationRepository.getAllRegistrations();
@@ -136,5 +139,4 @@ public class GUI extends Application {
     public ArrayList<Certificate> getCertificates() throws SQLException {
         return certificateRepository.getALlCertificates();
     }
-
 }
