@@ -25,6 +25,7 @@ public class RegistrationInformationValidator {
         courseRepository = new CourseRepository();
     }
 
+    // Function to validate all inputs for a Registration and returns an error/empty message
     public String validateNewRegistration(String studentEmail, String courseName) throws SQLException {
         StringBuilder message = new StringBuilder();
 
@@ -35,6 +36,7 @@ public class RegistrationInformationValidator {
         return message.toString();
     }
 
+    // Function to validate all inputs for an existing Registration and returns an error/empty message
     public String validateEditedRegistration(String[] registrationDatePieces, ArrayList<Integer> progression) {
         StringBuilder message = new StringBuilder();
 

@@ -28,10 +28,11 @@ public class CertificateInformationValidator {
         registrationRepository = new RegistrationRepository();
     }
 
+    // Function to validate all inputs for a new Certificate and returns an error/empty message
     public String validateNewCertificate(String studentEmail, String courseName, int score) throws SQLException {
         StringBuilder message = new StringBuilder();
 
-        if (!(score >= 1 && score <= 10)) message.append("\nThe grade must be between 1 and 10!");
+        if (isValidScore(score)) message.append("\nThe grade must be between 1 and 10!");
         if (!studentExists(studentEmail)) message.append("\nStudent does not exist!");
         if (!courseExists(courseName)) message.append("\nCourse does not exist!");
         if (registrationExists(studentEmail, courseName)) {
@@ -44,12 +45,15 @@ public class CertificateInformationValidator {
         return message.toString();
     }
 
+    // Function to validate all inputs for an existing Certificate and returns an error/empty message
     public String validateEditedCertificate(int score) {
-        if (score >= 1 && score <= 10) {
-            return "";
-        } else {
-            return "Grade must be between 1 and 10!";
-        }
+        if(!isValidScore(score)) return "The grade must be between 1 and 10!";
+
+        return "";
+    }
+
+    private boolean isValidScore(int score) {
+        return score >= 1 && score <= 10;
     }
 
     private boolean studentExists(String studentEmail) throws SQLException {
