@@ -7,10 +7,10 @@ import java.sql.Statement;
 
 public class DatabaseConnection {
 
-    private String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCadamyDB;user=sa;password=TurboSjaantjeFTW!";
-    Connection con = null;
-    Statement stmt = null;
-    ResultSet rs = null;
+    private String connectionUrl = "jdbc:sqlserver://localhost\\MSSQLSERVER;databaseName=CodeCademyDB;user=sa;password=LucasKokSQL";
+    private Connection con;
+    private Statement stmt;
+    private ResultSet rs;
 
     public DatabaseConnection() {
     }

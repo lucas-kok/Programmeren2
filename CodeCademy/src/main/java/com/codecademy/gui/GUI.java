@@ -12,10 +12,7 @@ import com.codecademy.gui.registration.EditRegistrationScene;
 import com.codecademy.gui.registration.NewRegistrationScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
-import com.codecademy.gui.statistics.StatisticsMenuScene;
 import com.codecademy.gui.statistics.StatisticsScene;
-import com.codecademy.gui.statistics.TopCourseScene;
-import com.codecademy.gui.statistics.TopWebcastsScene;
 import com.codecademy.gui.student.EditStudentScene;
 import com.codecademy.gui.student.NewStudentScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
@@ -83,10 +80,6 @@ public class GUI extends Application {
         EditCertificateScene editCertificateScene = new EditCertificateScene(this, sceneWidth, sceneHeight, null);
 
         StatisticsScene statisticsScene = new StatisticsScene(this, sceneWidth, sceneHeight);
-        StatisticsMenuScene statisticsMenuScene = new StatisticsMenuScene(this, sceneWidth, sceneHeight);
-        TopCourseScene topCourseScene = new TopCourseScene(this, sceneWidth, sceneHeight);
-        TopWebcastsScene topWebcastsScene = new TopWebcastsScene(this, sceneWidth, sceneHeight);
-
 
         // Adding the GUIScene's to a map that will be used to show the scene's
         scenes.put("mainScene", mainScene);
@@ -107,9 +100,6 @@ public class GUI extends Application {
         scenes.put("viewCertificateScene", viewCertificateScene);
         scenes.put("editCertificateScene", editCertificateScene);
         scenes.put("statisticsScene", statisticsScene);
-        scenes.put("statisticsMenuScene", statisticsMenuScene);
-        scenes.put("topCourseScene", topCourseScene);
-        scenes.put("topWebcastScene", topWebcastsScene);
 
         showScene("mainScene");
 

@@ -3,7 +3,6 @@ package com.codecademy.gui;
 import com.codecademy.gui.certificate.OverviewCertificateScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
-import com.codecademy.gui.statistics.StatisticsMenuScene;
 import com.codecademy.gui.statistics.StatisticsScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
 import javafx.geometry.Pos;
@@ -69,8 +68,8 @@ public class MainScene extends GUIScene{
         });
 
         statisticsButton.setOnAction((event) -> {
-            ((StatisticsMenuScene)getSceneObject("statisticsMenuScene")).resetScene();
-            showScene("statisticsMenuScene");
+            ((StatisticsScene)getSceneObject("statisticsScene")).resetScene();
+            showScene("statisticsScene");
         });
 
         // Appending

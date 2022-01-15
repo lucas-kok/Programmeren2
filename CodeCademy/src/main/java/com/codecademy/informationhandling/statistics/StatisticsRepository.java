@@ -56,7 +56,7 @@ public class StatisticsRepository {
         int index = 0;
         while (rsTopThreeCourses.next()) {
             if (index <= 2) {
-                String courseAndNumber = rsTopThreeCourses.getString(1) + ": " + rsTopThreeCourses.getString(2);
+                String courseAndNumber = rsTopThreeCourses.getString(1) + " (" + rsTopThreeCourses.getString(2) + ")";
                 topThreeCourses[index] = courseAndNumber;
                 index++;
             }
@@ -77,7 +77,7 @@ public class StatisticsRepository {
         int index = 0;
         while (rsTopThreeWebcasts.next()) {
             if (index <= 2) {
-                String webCastAndViews = rsTopThreeWebcasts.getString(1) + ": " + rsTopThreeWebcasts.getString(2);
+                String webCastAndViews = rsTopThreeWebcasts.getString(1) + " (" + rsTopThreeWebcasts.getString(2) + ")";
                 topThreeWebcasts[index] = webCastAndViews;
                 index++;
             }
