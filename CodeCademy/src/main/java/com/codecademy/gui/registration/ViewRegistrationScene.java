@@ -25,18 +25,14 @@ public class ViewRegistrationScene extends GUIScene {
     private Registration selectedRegistration;
     private final RegistrationRepository registrationRepository;
 
-    public ViewRegistrationScene(GUI gui, int sceneWidth, int sceneHeight, Registration selectedRegistration) {
+    public ViewRegistrationScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-        this.selectedRegistration = selectedRegistration;
         registrationRepository = new RegistrationRepository();
 
-        if (selectedRegistration != null) {
-            createScene();
-            setScene(viewRegistrationScene);
-        }
+        // Not creating a scene, because when initializing the GUI no Registration has been selected
     }
 
     private void createScene() {
@@ -44,7 +40,7 @@ public class ViewRegistrationScene extends GUIScene {
         BorderPane mainPane = new BorderPane();
         VBox headerPane = new VBox(15);
         HBox navigationPane = new HBox(15);
-        VBox viewStudentPane = new VBox(15);
+        VBox viewRegistrationPane = new VBox(15);
 
         ScrollPane selectedRegistrationProgressScroll = new ScrollPane();
 
@@ -53,11 +49,11 @@ public class ViewRegistrationScene extends GUIScene {
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Viewing Registration: " + selectedRegistration.getStudentEmail() + ", " + selectedRegistration.getCourseName());
+        Label titleLabel = new Label("Viewing Registration: #" + selectedRegistration.getRegisterID());
 
         Button homeButton = new Button("Home");
         Button registrationsButton = new Button("Registrations");
-        Button editSelectedRegistration = new Button("Edit Registration");
+        Button editSelectedRegistrationButton = new Button("Edit Registration");
 
         Label selectedRegistrationDateLabel = new Label("Registration Date: " + selectedRegistration.getRegistrationDateAsString());
         Label selectedRegistrationStudentEmailLabel = new Label("Student email: " + selectedRegistration.getStudentEmail());
@@ -72,51 +68,51 @@ public class ViewRegistrationScene extends GUIScene {
             showScene("overviewRegistrationsScene");
         });
 
-        editSelectedRegistration.setOnAction((event) -> {
+        editSelectedRegistrationButton.setOnAction((event) -> {
             ((EditRegistrationScene)getSceneObject("editRegistrationScene")).resetScene(selectedRegistration);
             showScene("editRegistrationScene");
         });
 
         // Appending
         mainPane.setTop(headerPane);
-        mainPane.setCenter(viewStudentPane);
+        mainPane.setCenter(viewRegistrationPane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
-        navigationPane.getChildren().addAll(homeButton, registrationsButton, editSelectedRegistration);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, registrationsButton, editSelectedRegistrationButton);
 
-        viewStudentPane.getChildren().addAll(selectedRegistrationDateLabel, selectedRegistrationStudentEmailLabel, selectedRegistrationCourseNameLabel,
+        viewRegistrationPane.getChildren().addAll(selectedRegistrationDateLabel, selectedRegistrationStudentEmailLabel, selectedRegistrationCourseNameLabel,
                 selectedRegistrationModulesLabel, selectedRegistrationProgressScroll);
 
         try {
-            selectedRegistrationProgressScroll.setContent(createSelectedRegistrationModulesPane(registrationRepository.getProgressForRegistration(selectedRegistration)));
+            selectedRegistrationProgressScroll.setContent(createSelectedRegistrationContentItemsPane(registrationRepository.getProgressForRegistration(selectedRegistration)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Function that will convert a list of ContentItems connected to the selected Registration into a VBox
-    private VBox createSelectedRegistrationModulesPane(Map<ContentItem, Integer> contentItems) {
-        VBox modulesListPane = new VBox(5);
+    // Function that will convert a list of Content Items linked to a selected Registration into a VBox
+    private VBox createSelectedRegistrationContentItemsPane(Map<ContentItem, Integer> contentItemsOfRegistration) {
+        VBox contentItemsListPane = new VBox(5);
 
         int index = 0;
-        for (ContentItem contentItem : contentItems.keySet()) {
+        for (ContentItem contentItem : contentItemsOfRegistration.keySet()) {
             // Panes
             HBox contentItemInfoRow = new HBox(10);
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
             Label contentItemNameLabel = new Label(contentItem.getTitle());
-            Label informationDivider = new Label("-");
-            Label contentItemAverageProgressLabel = new Label(contentItems.get(contentItem) + "%");
+            Label informationDividerLabel = new Label("-");
+            Label contentItemProgressLabel = new Label(contentItemsOfRegistration.get(contentItem) + "%");
 
             // Appending
-            contentItemInfoRow.getChildren().addAll(indexLabel, contentItemNameLabel, informationDivider, contentItemAverageProgressLabel);
-            modulesListPane.getChildren().add(contentItemInfoRow);
+            contentItemInfoRow.getChildren().addAll(indexLabel, contentItemNameLabel, informationDividerLabel, contentItemProgressLabel);
+            contentItemsListPane.getChildren().add(contentItemInfoRow);
 
             index++;
         }
 
-        return modulesListPane;
+        return contentItemsListPane;
     }
 
     public void resetScene(Registration selectedRegistration) {
@@ -127,5 +123,4 @@ public class ViewRegistrationScene extends GUIScene {
         createScene();
         setScene(viewRegistrationScene);
     }
-
 }

@@ -25,35 +25,29 @@ public class EditRegistrationScene extends GUIScene {
     private final int sceneWidth;
     private final int sceneHeight;
 
-    private final GUI gui;
     private final RegistrationInformationValidator registrationInformationValidationTools;
     private final ContentItemRepository contentItemRepository;
     private final RegistrationRepository registrationRepository;
     private Registration selectedRegistration;
 
-    public EditRegistrationScene(GUI gui, int sceneWidth, int sceneHeight, Registration selectedRegistration) {
+    public EditRegistrationScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
 
-        this.gui = gui;
         registrationInformationValidationTools = new RegistrationInformationValidator();
         contentItemRepository = new ContentItemRepository();
         registrationRepository = new RegistrationRepository();
-        this.selectedRegistration = selectedRegistration;
 
-        if (selectedRegistration != null) {
-            createScene();
-            setScene(editRegistrationScene);
-        }
+        // Not creating a scene, because when initializing the GUI no Registration has been selected
     }
 
     private void createScene() {
         // Panes & Scene
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        HBox navigation = new HBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationPane = new HBox(15);
         VBox editRegistrationPane = new VBox(15);
         HBox editRegistrationDatePane = new HBox(5);
 
@@ -61,10 +55,10 @@ public class EditRegistrationScene extends GUIScene {
 
         editRegistrationScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Edit Registration");
+        Label titleLabel = new Label("Edit Registration: " + selectedRegistration.getRegisterID());
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
         Button deleteCourseButton = new Button("Delete");
@@ -82,10 +76,10 @@ public class EditRegistrationScene extends GUIScene {
         Label registrationCourseNameLabel = new Label("Course name: " + selectedRegistration.getCourseName());
         Label registrationProgressionLabel = new Label("Progression:");
 
-        Button updateSelectedCourseButton = new Button("Update Course");
+        Button updateSelectedRegistrationButton = new Button("Update Course");
         Label messageLabel = new Label("");
 
-        // Setting the TextFields to the registration current info
+        // Setting the TextFields to the info of the selected Registration
         String[] registrationDatePieces = selectedRegistration.getRegistrationDatePieces();
         registrationDateDayInput.setText(registrationDatePieces[2]);
         registrationDateMonthInput.setText(registrationDatePieces[1]);
@@ -107,7 +101,7 @@ public class EditRegistrationScene extends GUIScene {
             showScene("overviewRegistrationsScene");
         });
 
-        updateSelectedCourseButton.setOnAction((event) -> {
+        updateSelectedRegistrationButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
             if (!registrationDateDayInput.getText().isBlank() && !registrationDateMonthInput.getText().isBlank() &&
                     !registrationDateYearInput.getText().isBlank() && progressionIsEmpty(selectedRegistrationProgressScroll)) {
@@ -117,7 +111,7 @@ public class EditRegistrationScene extends GUIScene {
                 String[] newRegistrationDatePieces = new String[] { year, month, day };
                 ArrayList<Integer> newProgression = new ArrayList<>(getNewProgressionInput(selectedRegistrationProgressScroll).values());
 
-                String response = null;
+                String response;
                 response = registrationInformationValidationTools.validateEditedRegistration(newRegistrationDatePieces, newProgression);
                 messageLabel.setText(response);
 
@@ -133,14 +127,14 @@ public class EditRegistrationScene extends GUIScene {
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(editRegistrationPane);
 
-        header.getChildren().addAll(title, navigation);
-        navigation.getChildren().addAll(homeButton, backButton, deleteCourseButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, backButton, deleteCourseButton);
 
         editRegistrationPane.getChildren().addAll(registrationDateLabel, editRegistrationDatePane, registrationStudentEmailLabel,
-                registrationCourseNameLabel, registrationProgressionLabel, selectedRegistrationProgressScroll, updateSelectedCourseButton, messageLabel);
+                registrationCourseNameLabel, registrationProgressionLabel, selectedRegistrationProgressScroll, updateSelectedRegistrationButton, messageLabel);
 
         editRegistrationDatePane.getChildren().addAll(registrationDateDayInput, registrationDateMonthInput, registrationDateYearInput);
 
@@ -162,7 +156,7 @@ public class EditRegistrationScene extends GUIScene {
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
-            Label contentIDLabel = new Label(String.valueOf("#" + contentItem.getId()));
+            Label contentIDLabel = new Label("#" + contentItem.getId());
             Label contentItemNameLabel = new Label(contentItem.getTitle());
             Label informationDivider = new Label("-");
             TextField contentItemProgression = new TextField();
@@ -193,7 +187,7 @@ public class EditRegistrationScene extends GUIScene {
     }
 
     private Map<ContentItem, Integer> getNewProgressionInput(ScrollPane progressionInputScroll) {
-        Map<ContentItem, Integer> newProgression = new HashMap();
+        Map<ContentItem, Integer> newProgression = new HashMap<>();
 
         VBox progressionInputPane = (VBox) progressionInputScroll.getContent();
         HBox[] inputRows = progressionInputPane.getChildren().toArray(new HBox[0]);

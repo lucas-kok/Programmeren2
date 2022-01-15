@@ -18,7 +18,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class NewCourseScene extends GUIScene {
@@ -29,8 +28,8 @@ public class NewCourseScene extends GUIScene {
     private ArrayList<ContentItem> selectedContentItems;
     private ArrayList<ContentItem> availableContentItems;
 
-    private ScrollPane selectedModulesScroll;
-    private ScrollPane availableModulesScroll;
+    private ScrollPane selectedContentItemsScroll;
+    private ScrollPane availableContentItemsScroll;
 
     private final GUI gui;
     private final CourseInformationValidator courseInformationValidator;
@@ -43,7 +42,6 @@ public class NewCourseScene extends GUIScene {
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
         selectedContentItems = new ArrayList<>();
-
         this.gui = gui;
         courseInformationValidator = new CourseInformationValidator();
         courseRepository = new CourseRepository();
@@ -62,24 +60,24 @@ public class NewCourseScene extends GUIScene {
     private void createScene() {
         // Panes & Scene
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        HBox navigation = new HBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationPane = new HBox(15);
         VBox newCoursePane = new VBox(15);
 
-        HBox modulesSelectionWrapper = new HBox(5);
+        HBox contentItemsSelectionWrapperPane = new HBox(5);
 
-        VBox newCourseSelectedModulesWrapper = new VBox(5);
-        selectedModulesScroll = new ScrollPane();
+        VBox newCourseSelectedContentItemsWrapper = new VBox(5);
+        selectedContentItemsScroll = new ScrollPane();
 
         VBox availableModulesWrapper = new VBox(5);
-        availableModulesScroll = new ScrollPane();
+        availableContentItemsScroll = new ScrollPane();
 
         newCourseScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Create new Course");
+        Label titleLabel = new Label("Create new Course");
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
 
@@ -126,11 +124,12 @@ public class NewCourseScene extends GUIScene {
                 String response = null;
                 try {
                     response = courseInformationValidator.validateNewCourse(name, relatedCoursesString, gui.getCourses());
+                    messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                messageLabel.setText(response);
 
+                assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     Course newCourse = new Course(name, subject, introductionText, level, relatedCoursesString);
                     courseRepository.createCourse(newCourse);
@@ -143,14 +142,15 @@ public class NewCourseScene extends GUIScene {
                     courseLevelInput.setValue(null);
                     courseRelatedCoursesInput.clear();
                     selectedContentItems = new ArrayList<>();
+
                     try {
                         availableContentItems = contentItemRepository.getUnusedContentItems();
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
 
-                    selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
-                    availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
+                    selectedContentItemsScroll.setContent(createSelectedContentItemsPane(selectedContentItems));
+                    availableContentItemsScroll.setContent(createAvailableContentItemsPane(availableContentItems));
 
                     messageLabel.setText("The Course '" + name + "' has successfully been created!");
                 }
@@ -161,68 +161,69 @@ public class NewCourseScene extends GUIScene {
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(newCoursePane);
 
-        header.getChildren().addAll(title, navigation);
-        navigation.getChildren().addAll(homeButton, backButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, backButton);
 
         newCoursePane.getChildren().addAll(courseNameLabel, courseNameInput, courseSubjectLabel, courseSubjectInput,
                 courseIntroductionTextLabel, courseIntroductionTextInput, courseLevelLabel, courseLevelInput,
-                courseRelatedCoursesLabel, courseRelatedCoursesInput, modulesSelectionWrapper, createCourseButton, messageLabel);
+                courseRelatedCoursesLabel, courseRelatedCoursesInput, contentItemsSelectionWrapperPane, createCourseButton, messageLabel);
 
-        modulesSelectionWrapper.getChildren().addAll(newCourseSelectedModulesWrapper, availableModulesWrapper);
-        newCourseSelectedModulesWrapper.getChildren().addAll(selectedModulesLabel, selectedModulesScroll);
-        availableModulesWrapper.getChildren().addAll(availableModulesLabel, availableModulesScroll);
+        contentItemsSelectionWrapperPane.getChildren().addAll(newCourseSelectedContentItemsWrapper, availableModulesWrapper);
+        newCourseSelectedContentItemsWrapper.getChildren().addAll(selectedModulesLabel, selectedContentItemsScroll);
+        availableModulesWrapper.getChildren().addAll(availableModulesLabel, availableContentItemsScroll);
 
-        selectedModulesScroll.setContent(new VBox(5));
+        selectedContentItemsScroll.setContent(new VBox(5));
+
         try {
             availableContentItems = contentItemRepository.getUnusedContentItems();
-            availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
+            availableContentItemsScroll.setContent(createAvailableContentItemsPane(availableContentItems));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Function that will convert a list of the selected Modules into a VBox
-    private VBox createSelectedModulesPane(ArrayList<ContentItem> contentItems) {
-        VBox studentListPane = new VBox(5);
+    // Function that will convert a list of the selected Content Items into a VBox
+    private VBox createSelectedContentItemsPane(ArrayList<ContentItem> selectedContentItems) {
+        VBox contentItemsListPane = new VBox(5);
 
         int index = 0;
-        for (ContentItem contentItem : contentItems) {
+        for (ContentItem contentItem : selectedContentItems) {
             // Panes
             HBox contentItemInformationRow = new HBox(10);
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
             Label contentItemPublicationDateLabel = new Label(contentItem.getPublicationDate());
-            Label informationDivider = new Label("-");
+            Label informationDividerLabel = new Label("-");
             Label contentItemTitleLabel = new Label(contentItem.getTitle());
 
             // Event Handlers
             contentItemInformationRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
                 selectedContentItems.remove(contentItem);
 
-                selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
-                availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
+                selectedContentItemsScroll.setContent(createSelectedContentItemsPane(selectedContentItems));
+                availableContentItemsScroll.setContent(createAvailableContentItemsPane(availableContentItems));
             });
 
             // Appending
-            contentItemInformationRow.getChildren().addAll(indexLabel, contentItemPublicationDateLabel, informationDivider, contentItemTitleLabel);
-            studentListPane.getChildren().add(contentItemInformationRow);
+            contentItemInformationRow.getChildren().addAll(indexLabel, contentItemPublicationDateLabel, informationDividerLabel, contentItemTitleLabel);
+            contentItemsListPane.getChildren().add(contentItemInformationRow);
 
             index++;
         }
 
-        return studentListPane;
+        return contentItemsListPane;
     }
 
-    // Function that will convert a list of the available Modules into a VBox
-    private VBox createAvailableModulesPane(ArrayList<ContentItem> contentItems) {
-        VBox studentListPane = new VBox(5);
+    // Function that will convert a list of the available Content Items into a VBox
+    private VBox createAvailableContentItemsPane(ArrayList<ContentItem> availableContentItems) {
+        VBox contentItemsListPane = new VBox(5);
 
         int index = 0;
-        for (ContentItem contentItem : contentItems) {
+        for (ContentItem contentItem : availableContentItems) {
             if (!selectedContentItems.contains(contentItem)) {
                 // Panes
                 HBox contentItemInformationRow = new HBox(10);
@@ -230,28 +231,28 @@ public class NewCourseScene extends GUIScene {
                 // Nodes
                 Label indexLabel = new Label(index + 1 + ". ");
                 Label contentItemPublicationDateLabel = new Label(contentItem.getPublicationDate());
-                Label informationDivider = new Label("-");
+                Label informationDividerLabel = new Label("-");
                 Label contentItemTitleLabel = new Label(contentItem.getTitle());
 
                 // Event Handlers
                 contentItemInformationRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
-                    if (!selectedContentItems.contains(contentItem)) {
+                    if (!selectedContentItems.contains(contentItem)) { // Could be removed
                         selectedContentItems.add(contentItem);
 
-                        availableModulesScroll.setContent(createAvailableModulesPane(availableContentItems));
-                        selectedModulesScroll.setContent(createSelectedModulesPane(selectedContentItems));
+                        availableContentItemsScroll.setContent(createAvailableContentItemsPane(availableContentItems));
+                        selectedContentItemsScroll.setContent(createSelectedContentItemsPane(selectedContentItems));
                     }
                 });
 
                 // Appending
-                contentItemInformationRow.getChildren().addAll(indexLabel, contentItemPublicationDateLabel, informationDivider, contentItemTitleLabel);
-                studentListPane.getChildren().add(contentItemInformationRow);
+                contentItemInformationRow.getChildren().addAll(indexLabel, contentItemPublicationDateLabel, informationDividerLabel, contentItemTitleLabel);
+                contentItemsListPane.getChildren().add(contentItemInformationRow);
 
                 index++;
             }
         }
 
-        return studentListPane;
+        return contentItemsListPane;
     }
 
     public void resetScene() {
@@ -259,5 +260,4 @@ public class NewCourseScene extends GUIScene {
         createScene();
         setScene(newCourseScene);
     }
-
 }

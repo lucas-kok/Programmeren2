@@ -1,9 +1,9 @@
 package com.codecademy.gui;
 
-import com.codecademy.gui.certificate.OverviewCertificateScene;
+import com.codecademy.gui.certificate.OverviewCertificatesScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
-import com.codecademy.gui.statistics.StatisticsScene;
+import com.codecademy.gui.statistics.OverviewStatisticsScene;
 import com.codecademy.gui.student.OverviewStudentsScene;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -29,12 +29,12 @@ public class MainScene extends GUIScene{
 
     private void createScene() {
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
+        VBox headerPane = new VBox(15);
         VBox homePageButtonsPane = new VBox(15);
 
         mainScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
         homePageButtonsPane.setAlignment(Pos.CENTER);
 
         // Nodes
@@ -42,7 +42,7 @@ public class MainScene extends GUIScene{
 
         Button studentsButton = new Button("Students");
         Button coursesButton = new Button("Courses");
-        Button certificationsButton = new Button("Certifications");
+        Button certificatesButton = new Button("Certificates");
         Button registrationsButton = new Button("Registrations");
         Button statisticsButton = new Button("Statistics");
 
@@ -57,9 +57,9 @@ public class MainScene extends GUIScene{
             showScene("overviewCoursesScene");
         });
 
-        certificationsButton.setOnAction((event) -> {
-            ((OverviewCertificateScene)getSceneObject("overviewCertificateScene")).resetScene();
-            showScene("overviewCertificateScene");
+        certificatesButton.setOnAction((event) -> {
+            ((OverviewCertificatesScene)getSceneObject("overviewCertificatesScene")).resetScene();
+            showScene("overviewCertificatesScene");
         });
 
         registrationsButton.setOnAction((event) -> {
@@ -68,16 +68,16 @@ public class MainScene extends GUIScene{
         });
 
         statisticsButton.setOnAction((event) -> {
-            ((StatisticsScene)getSceneObject("statisticsScene")).resetScene();
+            ((OverviewStatisticsScene)getSceneObject("statisticsScene")).resetScene();
             showScene("statisticsScene");
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(homePageButtonsPane);
 
-        header.getChildren().add(title);
-        homePageButtonsPane.getChildren().addAll(studentsButton, coursesButton, certificationsButton, registrationsButton, statisticsButton);
+        headerPane.getChildren().add(title);
+        homePageButtonsPane.getChildren().addAll(studentsButton, coursesButton, certificatesButton, registrationsButton, statisticsButton);
     }
 
     public void resetScene() {

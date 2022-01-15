@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class OverviewCoursesScene extends GUIScene {
 
@@ -33,10 +32,10 @@ public class OverviewCoursesScene extends GUIScene {
     public OverviewCoursesScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
-        this.gui = gui;
-        this.searchBar = new SearchBar();
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        this.gui = gui;
+        this.searchBar = new SearchBar();
 
         createScene();
         setScene(overviewCoursesScene);
@@ -48,17 +47,16 @@ public class OverviewCoursesScene extends GUIScene {
         VBox headerPane = new VBox(15);
         HBox navigationPane = new HBox(15);
 
-        VBox courseOverviewWrapper = new VBox(15);
+        VBox overviewCoursePane = new VBox(15);
         HBox searchBarPane = new HBox(5);
         ScrollPane coursesListScroll = new ScrollPane();
-        AtomicReference<VBox> coursesListPane = new AtomicReference<>(new VBox(5));
 
         headerPane.setAlignment(Pos.CENTER);
 
         overviewCoursesScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
-        Label title = new Label("Courses Overview");
+        Label titleLabel = new Label("Courses Overview");
         Button homeButton = new Button("Home");
         Button newCourseButton = new Button("New Course");
 
@@ -75,37 +73,35 @@ public class OverviewCoursesScene extends GUIScene {
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Course> result = null;
+
             try {
-                result = searchBar.searchCourses(searchInput, gui.getCourses());
+                ArrayList<Course> searchResult = searchBar.searchCourses(searchInput, gui.getCourses());
+                coursesListScroll.setContent(createCoursesListPane(searchResult));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            coursesListPane.get().getChildren().clear();
-            coursesListScroll.setContent(createCourseListPane(result));
         });
 
         // Appending
         mainPane.setTop(headerPane);
-        mainPane.setCenter(courseOverviewWrapper);
+        mainPane.setCenter(overviewCoursePane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, newCourseButton);
 
-        courseOverviewWrapper.getChildren().addAll(searchBarPane, coursesListScroll);
+        overviewCoursePane.getChildren().addAll(searchBarPane, coursesListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
         try {
-            coursesListScroll.setContent(createCourseListPane(new ArrayList<>(gui.getCourses().values())));
+            coursesListScroll.setContent(createCoursesListPane(new ArrayList<>(gui.getCourses().values())));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     // Function that will convert a list of Courses to a vertical Pane containing a row for each Course
-    private VBox createCourseListPane(ArrayList<Course> courses) {
+    private VBox createCoursesListPane(ArrayList<Course> courses) {
         // Panes
-        VBox courseListPane = new VBox(5);
+        VBox coursesListPane = new VBox(5);
 
         int index = 0;
         for (Course course : courses) {
@@ -113,9 +109,9 @@ public class OverviewCoursesScene extends GUIScene {
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
-            Label courseName = new Label(course.getName());
-            Label informationDivider = new Label("-");
-            Label courseSubject = new Label(course.getSubject());
+            Label courseNameLabel = new Label(course.getName());
+            Label informationDividerLabel = new Label("-");
+            Label courseSubjectLabel = new Label(course.getSubject());
 
             // Event Handlers
             courseInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
@@ -124,18 +120,17 @@ public class OverviewCoursesScene extends GUIScene {
             });
 
             // Appending
-            courseInfoRow.getChildren().addAll(indexLabel, courseName, informationDivider, courseSubject);
-            courseListPane.getChildren().add(courseInfoRow);
+            courseInfoRow.getChildren().addAll(indexLabel, courseNameLabel, informationDividerLabel, courseSubjectLabel);
+            coursesListPane.getChildren().add(courseInfoRow);
 
             index++;
         }
 
-        return courseListPane;
+        return coursesListPane;
     }
 
     public void resetScene() {
         createScene();
         setScene(overviewCoursesScene);
     }
-
 }

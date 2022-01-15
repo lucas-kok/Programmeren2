@@ -19,17 +19,13 @@ public class ViewCertificateScene extends GUIScene {
 
     private Certificate selectedCertificate;
 
-    public ViewCertificateScene(GUI gui, int sceneWidth, int sceneHeight, Certificate selectedCertificate) {
+    public ViewCertificateScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-        this.selectedCertificate = selectedCertificate;
 
-        if (selectedCertificate != null) {
-            createScene();
-            setScene(viewCertificateScene);
-        }
+        // Not creating a scene, because when initializing the GUI no Certificate has been selected
     }
 
     private void createScene() {
@@ -37,28 +33,28 @@ public class ViewCertificateScene extends GUIScene {
         BorderPane mainPane = new BorderPane();
         VBox headerPane = new VBox(15);
         HBox navigationPane = new HBox(15);
-        VBox viewCoursePane = new VBox(15);
+        VBox viewCertificatePane = new VBox(15);
 
         viewCertificateScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Certificate for course: " + selectedCertificate.getCourseName());
+        Label titleLabel = new Label("Viewing Certificate: #" + selectedCertificate.getCertificateID());
 
         Button homeButton = new Button("Home");
         Button certificatesButton = new Button("Certificates");
         Button editSelectedCertificateButton = new Button("Edit Certificate");
 
-        Label selectedCertificateNameLabel = new Label("Certificate for course: " + selectedCertificate.getCourseName());
-        Label selectedCertificateStudentEmailLabel = new Label("Student email: " + selectedCertificate.getStudentEmail());
-        Label selectedCertificateScoreLabel = new Label("Grade: " + selectedCertificate.getScore());
+        Label selectedCertificateCourseNameLabel = new Label("Course: " + selectedCertificate.getCourseName());
+        Label selectedCertificateStudentEmailLabel = new Label("Student: " + selectedCertificate.getStudentEmail());
+        Label selectedCertificateScoreLabel = new Label("Grade: " + selectedCertificate.getScore() + "/10");
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         certificatesButton.setOnAction((event) -> {
-            ((OverviewCertificateScene) getSceneObject("overviewCertificatesScene")).resetScene();
+            ((OverviewCertificatesScene) getSceneObject("overviewCertificatesScene")).resetScene();
             showScene("overviewCertificatesScene");
         });
 
@@ -69,12 +65,12 @@ public class ViewCertificateScene extends GUIScene {
 
         // Appending
         mainPane.setTop(headerPane);
-        mainPane.setCenter(viewCoursePane);
+        mainPane.setCenter(viewCertificatePane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, certificatesButton, editSelectedCertificateButton);
 
-        viewCoursePane.getChildren().addAll(selectedCertificateNameLabel, selectedCertificateStudentEmailLabel, selectedCertificateScoreLabel);
+        viewCertificatePane.getChildren().addAll(selectedCertificateCourseNameLabel, selectedCertificateStudentEmailLabel, selectedCertificateScoreLabel);
     }
 
     public void resetScene(Certificate selectedCertificate) {
@@ -85,5 +81,4 @@ public class ViewCertificateScene extends GUIScene {
         createScene();
         setScene(viewCertificateScene);
     }
-
 }

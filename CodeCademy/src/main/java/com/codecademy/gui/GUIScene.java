@@ -27,5 +27,4 @@ public class GUIScene {
     public GUIScene getSceneObject(String sceneName) {
         return gui.getSceneObject(sceneName);
     }
-
 }

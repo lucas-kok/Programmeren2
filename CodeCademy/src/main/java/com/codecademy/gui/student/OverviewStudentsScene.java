@@ -19,7 +19,6 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class OverviewStudentsScene extends GUIScene {
     private Scene overviewStudentScene;
@@ -32,10 +31,10 @@ public class OverviewStudentsScene extends GUIScene {
     public OverviewStudentsScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
-        this.gui = gui;
-        this.searchBar = new SearchBar();
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
+        this.gui = gui;
+        this.searchBar = new SearchBar();
 
         createScene();
         setScene(overviewStudentScene);
@@ -47,16 +46,16 @@ public class OverviewStudentsScene extends GUIScene {
         VBox headerPane = new VBox(15);
         HBox navigationPane = new HBox(15);
 
-        VBox studentOverviewWrapper = new VBox(15);
+        VBox studentsOverviewWrapperPane = new VBox(15);
         HBox searchBarPane = new HBox(5);
-        ScrollPane studentListScroll = new ScrollPane();
+        ScrollPane studentsListScroll = new ScrollPane();
 
         headerPane.setAlignment(Pos.CENTER);
 
         overviewStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
-        Label title = new Label("Students Overview");
+        Label titleLabel = new Label("Students Overview");
         Button homeButton = new Button("Home");
         Button newStudentButton = new Button("New Student");
 
@@ -73,35 +72,35 @@ public class OverviewStudentsScene extends GUIScene {
 
         searchButton.setOnAction((event) -> {
             String searchInput = searchBarInput.getText();
-            ArrayList<Student> searchResult = null;
+
             try {
-                searchResult = searchBar.searchStudents(searchInput, gui.getStudents());
+                ArrayList<Student> searchResult = searchBar.searchStudents(searchInput, gui.getStudents());
+                studentsListScroll.setContent(createStudentsListPane(searchResult));
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            studentListScroll.setContent(createStudentListPane(searchResult));
         });
 
         // Appending
         mainPane.setTop(headerPane);
-        mainPane.setCenter(studentOverviewWrapper);
+        mainPane.setCenter(studentsOverviewWrapperPane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, newStudentButton);
 
-        studentOverviewWrapper.getChildren().addAll(searchBarPane, studentListScroll);
+        studentsOverviewWrapperPane.getChildren().addAll(searchBarPane, studentsListScroll);
         searchBarPane.getChildren().addAll(searchBarInput, searchButton);
+
         try {
-            studentListScroll.setContent(createStudentListPane(new ArrayList<>(gui.getStudents().values())));
+            studentsListScroll.setContent(createStudentsListPane(new ArrayList<>(gui.getStudents().values())));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     // Function that will convert a list of Students to a vertical Pane containing a row for each Student
-    private VBox createStudentListPane(ArrayList<Student> students) {
-        VBox studentListPane = new VBox(5);
+    private VBox createStudentsListPane(ArrayList<Student> students) {
+        VBox studentsListPane = new VBox(5);
 
         int index = 0;
         for (Student student : students) {
@@ -110,9 +109,9 @@ public class OverviewStudentsScene extends GUIScene {
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
-            Label studentName = new Label(student.getName());
-            Label informationDivider = new Label("-");
-            Label studentEmail = new Label(student.getEmail());
+            Label studentNameLabel = new Label(student.getName());
+            Label informationDividerLabel = new Label("-");
+            Label studentEmailLabel = new Label(student.getEmail());
 
             // Event Handlers
             studentInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
@@ -121,13 +120,13 @@ public class OverviewStudentsScene extends GUIScene {
             });
 
             // Appending
-            studentInfoRow.getChildren().addAll(indexLabel, studentName, informationDivider, studentEmail);
-            studentListPane.getChildren().add(studentInfoRow);
+            studentInfoRow.getChildren().addAll(indexLabel, studentNameLabel, informationDividerLabel, studentEmailLabel);
+            studentsListPane.getChildren().add(studentInfoRow);
 
             index++;
         }
 
-        return studentListPane;
+        return studentsListPane;
     }
 
     public void resetScene() {

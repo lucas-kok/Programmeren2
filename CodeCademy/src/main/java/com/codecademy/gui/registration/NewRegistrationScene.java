@@ -28,7 +28,6 @@ public class NewRegistrationScene extends GUIScene {
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-
         this.gui = gui;
         registrationInformationValidator = new RegistrationInformationValidator();
         registrationRepository = new RegistrationRepository();
@@ -40,16 +39,16 @@ public class NewRegistrationScene extends GUIScene {
     private void createScene() {
         // Panes & Scene
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        HBox navigation = new HBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationPane = new HBox(15);
         VBox newRegistrationPane = new VBox(15);
 
         newRegistrationScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Create new Registration");
+        Label titleLabel = new Label("Create new Registration");
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
 
@@ -80,11 +79,12 @@ public class NewRegistrationScene extends GUIScene {
                 String response = null;
                 try {
                     response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName, gui.getStudents(), gui.getCourses(), gui.getRegistrations());
+                    messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                messageLabel.setText(response);
 
+                assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     // Create new Registration
                     try {
@@ -109,11 +109,11 @@ public class NewRegistrationScene extends GUIScene {
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(newRegistrationPane);
 
-        header.getChildren().addAll(title, navigation);
-        navigation.getChildren().addAll(homeButton, backButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, backButton);
 
         newRegistrationPane.getChildren().addAll(registrationStudentEmailLabel, registrationStudentEmailInput,
                 registrationCourseNameLabel, registrationCourseNameInput, createRegistrationButton, messageLabel);
@@ -124,5 +124,4 @@ public class NewRegistrationScene extends GUIScene {
         createScene();
         setScene(newRegistrationScene);
     }
-
 }

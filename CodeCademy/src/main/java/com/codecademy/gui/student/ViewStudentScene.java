@@ -2,6 +2,7 @@ package com.codecademy.gui.student;
 
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
+import com.codecademy.gui.certificate.ViewCertificateScene;
 import com.codecademy.gui.registration.ViewRegistrationScene;
 import com.codecademy.informationhandling.certificate.Certificate;
 import com.codecademy.informationhandling.registration.Registration;
@@ -10,7 +11,6 @@ import com.codecademy.informationhandling.student.StudentRepository;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.LightBase;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -22,7 +22,6 @@ import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ViewStudentScene extends GUIScene {
     private Scene viewStudentScene;
@@ -32,18 +31,14 @@ public class ViewStudentScene extends GUIScene {
     private Student selectedStudent;
     private final StudentRepository studentRepository;
 
-    public ViewStudentScene(GUI gui, int sceneWidth, int sceneHeight, Student selectedStudent) {
+    public ViewStudentScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-        this.selectedStudent = selectedStudent;
         studentRepository = new StudentRepository();
 
-        if (selectedStudent != null) {
-            createScene();
-            setScene(viewStudentScene);
-        }
+        // Not creating a scene, because when initializing the GUI no Student has been selected
     }
 
     private void createScene() {
@@ -54,18 +49,18 @@ public class ViewStudentScene extends GUIScene {
         VBox viewStudentPane = new VBox(15);
 
         ScrollPane selectedStudentRegistrationsList = new ScrollPane();
-        ScrollPane selectedStudentCertificationsList = new ScrollPane();
+        ScrollPane selectedStudentCertificatesList = new ScrollPane();
 
         viewStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label title = new Label("Viewing Student: " + selectedStudent.getName());
+        Label titleLabel = new Label("Viewing Student: " + selectedStudent.getName());
 
         Button homeButton = new Button("Home");
         Button usersButton = new Button("Students");
-        Button editSelectedUserButton = new Button("Edit Student");
+        Button editSelectedStudentButton = new Button("Edit Student");
 
         Label selectedStudentNameLabel = new Label("Name: " + selectedStudent.getName());
         Label selectedStudentEmailLabel = new Label("Email: " + selectedStudent.getEmail());
@@ -76,8 +71,7 @@ public class ViewStudentScene extends GUIScene {
         Label selectedStudentBirthdayLabel = new Label("Birthday: " + selectedStudent.getBirthdayAsString());
 
         Label selectedStudentFollowingCoursesLabel = new Label("Following Courses:");
-        Label selectedStudentCertificationsLabel = new Label("Certifications:");
-
+        Label selectedStudentCertificatesLabel = new Label("Certificates:");
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
@@ -87,7 +81,7 @@ public class ViewStudentScene extends GUIScene {
             showScene("overviewStudentsScene");
         });
 
-        editSelectedUserButton.setOnAction((event) -> {
+        editSelectedStudentButton.setOnAction((event) -> {
             ((EditStudentScene) getSceneObject("editStudentScene")).resetScene(selectedStudent);
             showScene("editStudentScene");
         });
@@ -96,27 +90,27 @@ public class ViewStudentScene extends GUIScene {
         mainPane.setTop(headerPane);
         mainPane.setCenter(viewStudentPane);
 
-        headerPane.getChildren().addAll(title, navigationPane);
-        navigationPane.getChildren().addAll(homeButton, usersButton, editSelectedUserButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, usersButton, editSelectedStudentButton);
 
         viewStudentPane.getChildren().addAll(selectedStudentNameLabel, selectedStudentEmailLabel, selectedStudentAddressLabel,
                 selectedStudentCityLabel, selectedStudentCountryLabel, selectedStudentGenderLabel, selectedStudentBirthdayLabel,
-                selectedStudentFollowingCoursesLabel, selectedStudentRegistrationsList, selectedStudentCertificationsLabel, selectedStudentCertificationsList);
+                selectedStudentFollowingCoursesLabel, selectedStudentRegistrationsList, selectedStudentCertificatesLabel, selectedStudentCertificatesList);
 
         try {
             selectedStudentRegistrationsList.setContent(createSelectedStudentRegistrationsPane(studentRepository.getAllRegistrationsForStudent(selectedStudent)));
-            selectedStudentCertificationsList.setContent(createSelectedStudentCertificationsPane(studentRepository.getAllCertificatesForStudent(selectedStudent)));
+            selectedStudentCertificatesList.setContent(createSelectedStudentCertificationsPane(studentRepository.getAllCertificatesForStudent(selectedStudent)));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // Function that will convert a list of Registrations connected to the selected Student into a VBox
-    private VBox createSelectedStudentRegistrationsPane(ArrayList<Registration> registrations) {
-        VBox studentListPane = new VBox(5);
+    // Function that will convert a list of Registrations linked to a selected Student into a VBox
+    private VBox createSelectedStudentRegistrationsPane(ArrayList<Registration> registrationsOfStudent) {
+        VBox registrationsListPane = new VBox(5);
 
         int index = 0;
-        for (Registration registration : registrations) {
+        for (Registration registration : registrationsOfStudent) {
             // Panes
             HBox registrationInfoRow = new HBox(10);
 
@@ -132,42 +126,43 @@ public class ViewStudentScene extends GUIScene {
 
             // Appending
             registrationInfoRow.getChildren().addAll(indexLabel, registrationCourseNameLabel);
-            studentListPane.getChildren().add(registrationInfoRow);
+            registrationsListPane.getChildren().add(registrationInfoRow);
 
             index++;
         }
 
-        return studentListPane;
+        return registrationsListPane;
     }
 
-    // Function that will convert a list of Registrations connected to the selected Student into a VBox
-    private VBox createSelectedStudentCertificationsPane(ArrayList<Certificate> certifications) {
-        VBox certifcationsListPane = new VBox(5);
+    // Function that will convert a list of Certificates liked to a selected Student into a VBox
+    private VBox createSelectedStudentCertificationsPane(ArrayList<Certificate> certificatesOfStudent) {
+        VBox certificatesListPane = new VBox(5);
 
         int index = 0;
-        for (Certificate certificate : certifications) {
+        for (Certificate certificate : certificatesOfStudent) {
             // Panes
-            HBox registrationInfoRow = new HBox(10);
+            HBox certificateInfoRow = new HBox(10);
 
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
-            Label certificateCourseLabel = new Label(certificate.getCourseName());
+            Label certificateCourseNameLabel = new Label(certificate.getCourseName());
             Label informationDividerLabel = new Label("-");
-            Label certifcateScoreLabel = new Label(certificate.getScore() + "/10");
+            Label certificateScoreLabel = new Label(certificate.getScore() + "/10");
 
             // Event Handlers
-            registrationInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
-                // View Certificate
+            certificateInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
+                ((ViewCertificateScene) getSceneObject("viewCertificateScene")).resetScene(certificate);
+                showScene("viewCertificateScene");
             });
 
             // Appending
-            registrationInfoRow.getChildren().addAll(indexLabel, certificateCourseLabel, informationDividerLabel, certifcateScoreLabel);
-            certifcationsListPane.getChildren().add(registrationInfoRow);
+            certificateInfoRow.getChildren().addAll(indexLabel, certificateCourseNameLabel, informationDividerLabel, certificateScoreLabel);
+            certificatesListPane.getChildren().add(certificateInfoRow);
 
             index++;
         }
 
-        return certifcationsListPane;
+        return certificatesListPane;
     }
 
     public void resetScene(Student selectedStudent) {
