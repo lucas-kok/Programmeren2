@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CertificateInformationValidator {
-
     private final StudentRepository studentRepository;
     private final CourseRepository courseRepository;
     private final CertificateRepository certificateRepository;
@@ -68,7 +67,7 @@ public class CertificateInformationValidator {
         return registrations.get(studentEmail + "-" + courseName) != null;
     }
 
-    private boolean studentHasCompletedCourse(String studentEmail, String courseName) throws SQLException{
+    private boolean studentHasCompletedCourse(String studentEmail, String courseName) throws SQLException {
         Map<String, Registration> registrations = registrationRepository.getAllRegistrations();
         Map<ContentItem, Integer> contentItems = registrationRepository.getProgressForRegistration(registrations.get(studentEmail + "-" + courseName));
 
@@ -80,7 +79,7 @@ public class CertificateInformationValidator {
         return true;
     }
 
-    private boolean certificateExists(String studentEmail, String courseName) throws SQLException{
+    private boolean certificateExists(String studentEmail, String courseName) throws SQLException {
         ArrayList<Certificate> certificates = certificateRepository.getALlCertificates();
 
         for (Certificate certificate : certificates) {

@@ -19,7 +19,6 @@ public class NewRegistrationScene extends GUIScene {
     private final int sceneWidth;
     private final int sceneHeight;
 
-    private final GUI gui;
     private final RegistrationInformationValidator registrationInformationValidator;
     private final RegistrationRepository registrationRepository;
 
@@ -28,7 +27,6 @@ public class NewRegistrationScene extends GUIScene {
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-        this.gui = gui;
         registrationInformationValidator = new RegistrationInformationValidator();
         registrationRepository = new RegistrationRepository();
 
@@ -78,11 +76,11 @@ public class NewRegistrationScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName, gui.getStudents(), gui.getCourses(), gui.getRegistrations());
-                    messageLabel.setText(response);
+                    response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                messageLabel.setText(response);
 
                 assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid

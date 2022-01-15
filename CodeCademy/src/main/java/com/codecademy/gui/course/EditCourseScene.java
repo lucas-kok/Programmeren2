@@ -4,7 +4,6 @@ import com.codecademy.informationhandling.course.CourseRepository;
 import com.codecademy.informationhandling.course.Course;
 import com.codecademy.gui.GUI;
 import com.codecademy.gui.GUIScene;
-import com.codecademy.informationhandling.registration.RegistrationRepository;
 import com.codecademy.informationhandling.validators.CourseInformationValidator;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,10 +19,8 @@ public class EditCourseScene extends GUIScene {
     private final int sceneWidth;
     private final int sceneHeight;
 
-    private final GUI gui;
     private final CourseInformationValidator courseInformationValidationTools;
     private final CourseRepository courseRepository;
-    private final RegistrationRepository registrationRepository;
 
     private Course selectedCourse;
 
@@ -32,11 +29,8 @@ public class EditCourseScene extends GUIScene {
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-
-        this.gui = gui;
         courseInformationValidationTools = new CourseInformationValidator();
         courseRepository = new CourseRepository();
-        registrationRepository = new RegistrationRepository();
 
         // Not creating a scene, because when initializing the GUI no Course has been selected
     }
@@ -95,7 +89,7 @@ public class EditCourseScene extends GUIScene {
         deleteCourseButton.setOnAction((event) -> {
             // Prevent the Course from getting deleted when it has Registrations for the Course
             try {
-                if (!courseInformationValidationTools.courseHasRegistrations(selectedCourse.getName(), registrationRepository.getAllRegistrations())) {
+                if (!courseInformationValidationTools.courseHasRegistrations(selectedCourse.getName())) {
                     courseRepository.deleteCourse(selectedCourse);
 
                     ((OverviewCoursesScene) getSceneObject("overviewCoursesScene")).resetScene();
@@ -120,7 +114,7 @@ public class EditCourseScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = courseInformationValidationTools.validateEditedCourse(name, relatedCourses, gui.getCourses(), selectedCourse);
+                    response = courseInformationValidationTools.validateEditedCourse(name, relatedCourses, selectedCourse);
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();

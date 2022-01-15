@@ -13,14 +13,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 public class NewStudentScene extends GUIScene {
     private Scene newStudentScene;
     private final int sceneWidth;
     private final int sceneHeight;
 
-    private final GUI gui;
     private final StudentInformationValidator studentInformationValidator;
     private final StudentRepository studentRepository;
 
@@ -29,8 +27,6 @@ public class NewStudentScene extends GUIScene {
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
-
-        this.gui = gui;
         studentInformationValidator = new StudentInformationValidator();
         studentRepository = new StudentRepository();
 
@@ -117,7 +113,7 @@ public class NewStudentScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthdayPieces, gui.getStudents());
+                    response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthdayPieces);
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();

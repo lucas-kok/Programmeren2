@@ -31,27 +31,21 @@ public class NewCourseScene extends GUIScene {
     private ScrollPane selectedContentItemsScroll;
     private ScrollPane availableContentItemsScroll;
 
-    private final GUI gui;
     private final CourseInformationValidator courseInformationValidator;
     private final CourseRepository courseRepository;
     private final ContentItemRepository contentItemRepository;
 
-    public NewCourseScene(GUI gui, int sceneWidth, int sceneHeight) {
+    public NewCourseScene(GUI gui, int sceneWidth, int sceneHeight) throws SQLException{
         super(gui);
 
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
         selectedContentItems = new ArrayList<>();
-        this.gui = gui;
         courseInformationValidator = new CourseInformationValidator();
         courseRepository = new CourseRepository();
         contentItemRepository = new ContentItemRepository();
 
-        try {
-            availableContentItems = contentItemRepository.getUnusedContentItems();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        availableContentItems = contentItemRepository.getUnusedContentItems();
 
         createScene();
         setScene(newCourseScene);
@@ -123,7 +117,7 @@ public class NewCourseScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = courseInformationValidator.validateNewCourse(name, relatedCoursesString, gui.getCourses());
+                    response = courseInformationValidator.validateNewCourse(name, relatedCoursesString);
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -179,10 +173,10 @@ public class NewCourseScene extends GUIScene {
 
         try {
             availableContentItems = contentItemRepository.getUnusedContentItems();
-            availableContentItemsScroll.setContent(createAvailableContentItemsPane(availableContentItems));
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        availableContentItemsScroll.setContent(createAvailableContentItemsPane(availableContentItems));
     }
 
     // Function that will convert a list of the selected Content Items into a VBox
