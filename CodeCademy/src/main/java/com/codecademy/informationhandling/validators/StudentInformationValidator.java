@@ -22,7 +22,7 @@ public class StudentInformationValidator {
 
         if (!isValidName(studentName)) message.append("\nPlease fill in the First and Last name!");
         if (!isValidEmail(email)) message.append("\nThe email: '").append(email).append("' is not valid!");
-        if (!emailExists(email))
+        if (emailExists(email))
             message.append("\nThe email: ").append(email).append(" already exists!");
         if (!isValidPostalCode(postalCode))
             message.append("\nThe postal-code: '").append(postalCode).append("' is not valid!");

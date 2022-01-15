@@ -111,8 +111,8 @@ public class EditStudentScene extends GUIScene {
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewStudentsScene) getSceneObject("overviewStudentsScene")).resetScene();
-            showScene("overviewStudentsScene");
+            ((ViewStudentScene) getSceneObject("viewStudentScene")).resetScene(selectedStudent);
+            showScene("viewStudentScene");
         });
 
         deleteStudentButton.setOnAction((event) -> {

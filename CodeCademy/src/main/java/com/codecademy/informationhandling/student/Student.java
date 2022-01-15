@@ -3,8 +3,8 @@ package com.codecademy.informationhandling.student;
 public class Student {
     private String email;
     private String name;
-    private final String birthday;
-    private final String gender;
+    private String birthday;
+    private String gender;
     private String address;
     private String city;
     private String country;
@@ -46,8 +46,26 @@ public class Student {
         return getBirthday().split("/");
     }
 
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
     public String getGender() {
         return gender;
+    }
+
+    public void setGender(String gender) {
+        switch (gender) {
+            case "m":
+                this.gender = "Male";
+                break;
+            case "f":
+                this.gender = "Female";
+                break;
+            case "x":
+                this.gender = "Other";
+                break;
+        }
     }
 
     public String getAddress() {

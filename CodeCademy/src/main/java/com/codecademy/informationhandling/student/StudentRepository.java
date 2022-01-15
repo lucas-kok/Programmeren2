@@ -87,21 +87,30 @@ public class StudentRepository {
                 break;
         }
 
-        Student newStudent = new Student(email, name, birthday, gender, address, city, country, postalCode);
-        informationFormatter.formatStudent(newStudent);
+        String oldEmail = selectedStudent.getEmail();
+
+        selectedStudent.setEmail(email);
+        selectedStudent.setName(name);
+        selectedStudent.setAddress(address);
+        selectedStudent.setPostalCode(postalCode);
+        selectedStudent.setCity(city);
+        selectedStudent.setCountry(country);
+        selectedStudent.setGender(gender);
+        selectedStudent.setBirthday(birthday);
+        informationFormatter.formatStudent(selectedStudent);
 
         String query = "UPDATE Student " +
-                "       SET Email = '" + newStudent.getEmail() + "'" +
-                "       , Name = '" + newStudent.getName() + "'" +
-                "       , Address = '" + newStudent.getAddress() + "'" +
-                "       , PostalCode = '" + newStudent.getPostalCode() + "'" +
-                "       , City = '" + newStudent.getCity() + "'" +
-                "       , Country = '" + newStudent.getCountry() + "'" +
+                "       SET Email = '" + selectedStudent.getEmail() + "'" +
+                "       , Name = '" + selectedStudent.getName() + "'" +
+                "       , Address = '" + selectedStudent.getAddress() + "'" +
+                "       , PostalCode = '" + selectedStudent.getPostalCode() + "'" +
+                "       , City = '" + selectedStudent.getCity() + "'" +
+                "       , Country = '" + selectedStudent.getCountry() + "'" +
                 "       , Gender = '" + gender + "'" +
-                "       , Birthday = (convert(datetime, '" + newStudent.getBirthday() + "', 103)) " +
-                "       WHERE Email = '" + selectedStudent.getEmail() + "'" +
-                "       UPDATE Viewing SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'" +
-                "       UPDATE Register SET StudentEmail = '" + newStudent.getEmail() + "' WHERE StudentEmail = '" + selectedStudent.getEmail() + "'";
+                "       , Birthday = (convert(datetime, '" + selectedStudent.getBirthday() + "', 103)) " +
+                "       WHERE Email = '" + oldEmail + "'" +
+                "       UPDATE Viewing SET StudentEmail = '" + selectedStudent.getEmail() + "' WHERE StudentEmail = '" + oldEmail + "'" +
+                "       UPDATE Register SET StudentEmail = '" + selectedStudent.getEmail() + "' WHERE StudentEmail = '" + oldEmail + "'";
         dbCon.setQuery(query);
     }
 
