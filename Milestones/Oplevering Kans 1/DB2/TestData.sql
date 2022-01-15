@@ -259,6 +259,10 @@ INSERT INTO ContentItem VALUES
 	,('Artificial Intelligence','Artificial Intelligence Expert', GETDATE(), 'Active', NULL)
 	,('Cyber Security','Cyber Security deel 1', GETDATE(), 'Active', NULL)
 	,('Cyber Security','Cyber Security deel 2', GETDATE(), 'Active', NULL)
+	,(NULL,'Python deel 1', GETDATE(), 'Active', NULL)
+	,(NULL,'Python deel 2', GETDATE(), 'Active', NULL)
+	,(NULL,'C# deel 1', GETDATE(), 'Active', NULL)
+	,(NULL,'C# deel 2', GETDATE(), 'Active', NULL)
 
 INSERT INTO Webcast VALUES
 	((SELECT ContentId FROM ContentItem WHERE Title = 'Les 1 Programmeren'),30,'https://www.youtube.com/Les1Programmeren', 'Arno Broeders', 'Avans Hogeschool Breda')
@@ -282,6 +286,10 @@ INSERT INTO Module VALUES
 	,((SELECT ContentId FROM ContentItem WHERE Title = 'Artificial Intelligence Expert'),'3.5','Artificial Intelligence Expert','Henri Kluit','henri.kluit@tudelft.nl')
 	,((SELECT ContentId FROM ContentItem WHERE Title = 'Cyber Security deel 1'),'3.5','Cyber Security deel 1','Dirk-Jan Lommers','djl@tudelft.nl')
 	,((SELECT ContentId FROM ContentItem WHERE Title = 'Cyber Security deel 2'),'3.5','Cyber Security deel 2','Dirk-Jan Lommers','djl@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'Python deel 1'),'3.5','Python deel 1','Dirk-Jan Lommers','djl@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'Python deel 2'),'3.5','Python deel 1','Dirk-Jan Lommers','djl@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'C# deel 1'),'3.5','C# deel 1','Henri Kluit','henri.kluit@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'C# deel 2'),'3.5','C# deel 2','Henri Kluit','henri.kluit@tudelft.nl')
 
 INSERT INTO Register VALUES
 	(getdate(),'lucas.kok@hotmail.nl','Programmeren 1')
