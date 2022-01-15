@@ -91,7 +91,7 @@ public class StudentInformationValidator {
 
         if (year < 1000) return false;
 
-        if ((day < 1 || day > 31) || (month < 1 || month >= 12)) return false;
+        if (day < 1 || day > 31 || month < 1 || month > 12) return false;
 
         if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
             return true;
@@ -108,9 +108,12 @@ public class StudentInformationValidator {
     }
 
     public boolean isValidAge(String[] birthdayPieces) {
-        String day = Integer.parseInt(birthdayPieces[0]) < 10 ? "0" + birthdayPieces[0] : birthdayPieces[0]; // "0" -> "01"
-        String month = Integer.parseInt(birthdayPieces[1]) < 10 ? "0" + birthdayPieces[1] : birthdayPieces[1];
+        String day = birthdayPieces[0];
+        String month = birthdayPieces[1];
         String year = birthdayPieces[2];
+
+        if (day.length() < 2) day = Integer.parseInt(birthdayPieces[0]) < 10 ? "0" + birthdayPieces[0] : birthdayPieces[0]; // "0" -> "01"
+        if (month.length() < 2) month = Integer.parseInt(birthdayPieces[1]) < 10 ? "0" + birthdayPieces[1] : birthdayPieces[1];
 
         LocalDate studentBirthday = LocalDate.parse(year + "-" + month + "-" + day);
         LocalDate today = LocalDate.now();
