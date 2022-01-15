@@ -111,7 +111,6 @@ public class StudentRepository {
         dbCon.setQuery(query);
     }
 
-
     public ArrayList<Registration> getAllRegistrationsForStudent(Student student) throws SQLException {
         ArrayList<Registration> registrations = new ArrayList<>();
 
@@ -139,5 +138,4 @@ public class StudentRepository {
 
         return certificates;
     }
-
 }

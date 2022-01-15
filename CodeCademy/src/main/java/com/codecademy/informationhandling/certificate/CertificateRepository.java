@@ -1,20 +1,27 @@
 package com.codecademy.informationhandling.certificate;
 
+import com.codecademy.informationhandling.InformationFormatter;
 import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CertificateRepository {
 
     private final DatabaseConnection dbCon;
+    private final InformationFormatter informationFormatter;
 
     public CertificateRepository() {
         dbCon = new DatabaseConnection();
+        informationFormatter = new InformationFormatter();
     }
 
-    public void createCertificate(String studentEmail, String courseName, int score, String StaffName) throws SQLException {
+    public void createCertificate(String studentEmail, String courseName, int score, String staffName) throws SQLException {
+        studentEmail = studentEmail.toLowerCase();
+        courseName = informationFormatter.capitalizeString(courseName);
+        staffName = informationFormatter.capitalizeString(staffName);
         int RegisterID = 0;
 
         String query = "SELECT RegisterID FROM Register WHERE StudentEmail = '" + studentEmail + "' AND CourseName = '" + courseName + "'";
@@ -27,7 +34,7 @@ public class CertificateRepository {
 
         if (RegisterID == 0) return;
 
-        String queryCreateCertificate = "INSERT INTO Certificate VALUES (" + RegisterID + " , " + score + ", '" + StaffName + "')";
+        String queryCreateCertificate = "INSERT INTO Certificate VALUES (" + RegisterID + " , " + score + ", '" + staffName + "')";
         dbCon.setQuery(queryCreateCertificate);
     }
 
@@ -46,6 +53,7 @@ public class CertificateRepository {
     }
 
     public void updateCertificate(Certificate certificate, String staffName, int score) {
+        staffName = informationFormatter.capitalizeString(staffName);
         String query = "   UPDATE Certificate " +
                 "                           SET StaffName = '" + staffName + "' " +
                 "                           , Score = " + score + " " +

@@ -48,6 +48,7 @@ public class ViewCertificateScene extends GUIScene {
 
         Label selectedCertificateCourseNameLabel = new Label("Course: " + selectedCertificate.getCourseName());
         Label selectedCertificateStudentEmailLabel = new Label("Student: " + selectedCertificate.getStudentEmail());
+        Label selectedCertificateStaffName = new Label("Staff: " + selectedCertificate.getStaffName());
         Label selectedCertificateScoreLabel = new Label("Grade: " + selectedCertificate.getScore() + "/10");
 
         // Event Handlers
@@ -70,7 +71,7 @@ public class ViewCertificateScene extends GUIScene {
         headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, certificatesButton, editSelectedCertificateButton);
 
-        viewCertificatePane.getChildren().addAll(selectedCertificateCourseNameLabel, selectedCertificateStudentEmailLabel, selectedCertificateScoreLabel);
+        viewCertificatePane.getChildren().addAll(selectedCertificateCourseNameLabel, selectedCertificateStudentEmailLabel, selectedCertificateStaffName, selectedCertificateScoreLabel);
     }
 
     public void resetScene(Certificate selectedCertificate) {

@@ -58,7 +58,7 @@ public class EditRegistrationScene extends GUIScene {
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label titleLabel = new Label("Edit Registration: " + selectedRegistration.getRegisterID());
+        Label titleLabel = new Label("Edit Registration: #" + selectedRegistration.getRegisterID());
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
         Button deleteCourseButton = new Button("Delete");

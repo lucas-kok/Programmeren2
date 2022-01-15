@@ -53,7 +53,9 @@ public class EditCertificateScene extends GUIScene {
         Button backButton = new Button("Back");
         Button deleteCertificateButton = new Button("Delete");
 
-        Label editStaffNameLabel = new Label("Score:");
+        Label studentEmail = new Label("Student: " + selectedCertificate.getStudentEmail());
+
+        Label editStaffNameLabel = new Label("Staff Name:");
         TextField editStaffNameInput = new TextField();
 
         Label editScoreLabel = new Label("Score:");
@@ -107,7 +109,7 @@ public class EditCertificateScene extends GUIScene {
         headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, backButton, deleteCertificateButton);
 
-        editStudentPane.getChildren().addAll(editStaffNameLabel, editStaffNameInput, editScoreLabel, editScoreTextInput, updateSelectedCertificateButton, messageLabel);
+        editStudentPane.getChildren().addAll(studentEmail, editStaffNameLabel, editStaffNameInput, editScoreLabel, editScoreTextInput, updateSelectedCertificateButton, messageLabel);
     }
 
     public void resetScene(Certificate selectedCertificate) {

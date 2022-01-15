@@ -104,7 +104,6 @@ public class CourseRepository {
         }
     }
 
-
     public HashMap<ContentItem, Integer> getAverageProgressPerContentItem(Course course) throws SQLException {
         HashMap<ContentItem, Integer> averageProgressPerContentItem = new HashMap<>();
         ArrayList<ContentItem> contentItems = new ArrayList<>();

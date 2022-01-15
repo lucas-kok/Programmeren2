@@ -52,16 +52,16 @@ public class NewCertificateScene extends GUIScene {
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
 
-        Label studentEmailLabel = new Label("Email student:");
+        Label studentEmailLabel = new Label("Email Student:");
         TextField studentEmailInput = new TextField();
 
-        Label courseNameLabel = new Label("Course name:");
+        Label courseNameLabel = new Label("Course Name:");
         TextField courseNameInput = new TextField();
 
-        Label scoreLabel = new Label("Grade: ");
+        Label scoreLabel = new Label("Grade:");
         TextField scoreInput = new TextField();
 
-        Label staffNameLabel = new Label("Staff name: ");
+        Label staffNameLabel = new Label("Staff Name:");
         TextField staffNameInput = new TextField();
 
         Button createCertificateButton = new Button("Create new Certificate");
@@ -71,8 +71,8 @@ public class NewCertificateScene extends GUIScene {
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
         backButton.setOnAction((event) -> {
-            ((OverviewCertificatesScene) getSceneObject("overviewCertificateScene")).resetScene();
-            showScene("overviewCertificateScene");
+            ((OverviewCertificatesScene) getSceneObject("overviewCertificatesScene")).resetScene();
+            showScene("overviewCertificatesScene");
         });
 
         createCertificateButton.setOnAction((event) -> {
@@ -106,7 +106,7 @@ public class NewCertificateScene extends GUIScene {
                     scoreInput.clear();
                     staffNameInput.clear();
 
-                    messageLabel.setText("The Certificate has been created!");
+                    messageLabel.setText("The Certificate has successfully been created!");
                 }
 
             } else {
