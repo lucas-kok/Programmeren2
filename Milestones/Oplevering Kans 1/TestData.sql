@@ -199,36 +199,36 @@ GO
 --BEGIN TRAN
 
 INSERT INTO dbo.Student VALUES
-	 ( 'lucas.kok@hotmail.nl', 'Lucas Kok', CONVERT(datetime, '2005/01/09'), 'm', 'Perenmeet 48', 'Burgh-Haamstede', 'The Netherlands', '4328 CM' ),
-	 ( 'ditabultman@teleworm.us', 'Dita Bultman', CONVERT(datetime, '1984/10/08'), 'f', 'Waterleliestraat 152', 'Almere', 'The Netherlands', '1338 TK' ),
-	 ( 'kovanderbiezen@dayrep.com', 'Ko Van Der Biezen', CONVERT(datetime, '1962/09/30'), 'm', 'Sint LiduinaStraat 160', 'Schiedam', 'The Netherlands', '3117CV' ),
-	 ( 'drieswiersma@dayrep.org', 'Dries Wiersma', CONVERT(datetime, '1995/02/14'), 'm', 'Du Meelaan 124', 'Zoetermeer', 'The Netherlands', '2722 ZC' ),
-	 ( 'randolphelders@gmail.com', 'Randolph Elders', CONVERT(datetime, '1983/11/27'), 'm', 'Sweelinckstraat 56', 'Nijverdal', 'The Netherlands', '7442 JS' ),
-	 ( 'warrengoede@hotmail.com', 'Warren Goede', CONVERT(datetime, '1998/04/10'), 'm', 'Prins Bernhardlaan 196', 'Voorburg', 'The Netherlands', '2274 JC' ),
-	 ( 'jelcorodermond@outlook.com', 'Jelco Rodermond', CONVERT(datetime, '1939/09/10'), 'm', 'Oranjelaan 129', 'Groenekan', 'The Netherlands', '3737 AS' ),
-	 ( 'martikastuit@student.avans.nl', 'Martika Stuit', CONVERT(datetime, '1999/02/01'), 'f', 'Amperestraat 56', 'Alblasserdam', 'The Netherlands', '2952 AA' ),
-	 ( 'pascallewildschut@rhyta.com', 'Pascalle Wildschut', CONVERT(datetime, '1996/04/17'), 'x', 'Herenstraat 73', 'Amersfoort', 'The Netherlands', '3811 HG' ),
-	 ( 'mouradhuberts@gmail.com', 'Mourad Huberts', CONVERT(datetime, '1985/02/08'), 'm', 'Magnolialaan 65', 'Doesburg', 'The Netherlands', '6982 DR' ),
-	 ( 'charellevanderholst@armyspy.com', 'Charelle Van Der Horst', CONVERT(datetime, '1984/06/20'), 'f', 'Schuilenburg 178', 'Hoofddorp', 'The Netherlands', '2135 GN' ),
-	 ( 'diyar.van.dartel@hotmail.nl', 'Diyar Van Dartel', CONVERT(datetime, '2002/04/11'), 'x', 'Lindeboomsweg 129', 'Lochem', 'The Netherlands', '7241 PR' ),
-	 ( 'iepek.gieles53@pontes.nl', 'Ipek Gielens', CONVERT(datetime, '2000/10/06'), 'm', 'Hoge Valkseweg 90', 'Barneveld', 'The Netherlands', '3771 SL' ),
-	 ( 'jarondevree@jourrapide.com', 'Jaron De Vree', CONVERT(datetime, '1998/06/07'), 'm', 'Franseweg 103', 'Steenbergen', 'The Netherlands', '4651 PV' ),
-	 ( 'tiddo.vd.kaanden9@jourrapide.com', 'Tiddo Van Der Kaanden', CONVERT(datetime, '2004/09/01'), 'm', 'Edisonstraat 33', 'Leeuwarden', 'The Netherlands', '8912 AW' ),
-	 ( 'youknowmeluca@gmail.com', 'Luca Wiskerke', CONVERT(datetime, '1991/04/14'), 'm', 'Van Coothstraat 196', 'Boxtel', 'The Netherlands', '5281 CV' ),
-	 ( 'guineverebult9@pokemon.nl', 'Guinevere Bult', CONVERT(datetime, '1969/02/11'), 'f', 'Kooweide 108', 'Eibergen', 'The Netherlands', '7152 KH' ),
-	 ( 'horselover21@hives.com', 'Sydney Van Der Ben', CONVERT(datetime, '2003/05/17'), 'o', 'Amstelkade 9', 'Amstelhoek', 'The Netherlands', '1427 AM' ),
-	 ( 'k.schevers@hotmail.nl', 'Kicky Schevers', CONVERT(datetime, '1976/11/10'), 'f', 'De Terrassen 13', 'Apeldoorn', 'The Netherlands', '7325 JD' ),
-	 ( 'peter.kok@dekra.com', 'Peter Kok', CONVERT(datetime, '1950/06/10'), 'm', 'Perenmeet 48', 'Burgh-Haamstede', 'The Netherlands', '4328CM' ),
-	 ( 'aimane.g@email.net', 'Aïmane Gierveld', CONVERT(datetime, '2004/03/04'), 'm', 'Kempkensweg 144', 'Heerlen', 'The Netherlands', '6412 AV' ),
-	 ( 'homeemail.liese@jourrapide.com', 'Liese Hoegen', CONVERT(datetime, '1983/06/22'), 'f', 'Dirk Fockstraat 56', 'Duurstede', 'The Netherlands', '3961 DN' ),
-	 ( 'malika.verhorst@armyspy.com', 'Malika Verhorst', CONVERT(datetime, '1997/04/01'), 'f', 'Okkistraat 118', 'Almere', 'The Netherlands', '1136 KT' ),
-	 ( 'm.rauwerda@pokemon.nl', 'Michel Rauwerda', CONVERT(datetime, '1985/05/22'), 'm', 'Brasiliastraat 102', 'Den Haag', 'The Netherlands', '2548 GX' ),
-	 ( 'daan.vd.meulen@student.avans.nl', 'Daan Van Der Meulen', CONVERT(datetime, '2002/12/31'), 'o', 'Boslaan 185', 'Emmeloord', 'The Netherlands', '8302 AB' ),
-	 ( 'renzo.remmers@student.avans.nl', 'Renzo Remmers', CONVERT(datetime, '2000/01/01'), 'f', 'Ybenhaer 16', 'Oosterwolde', 'The Netherlands', '8431 HD' ),
-	 ( 'anne.vandenbosch57@student.avans.nl', 'Anne Van Den Bosch', CONVERT(datetime, '1990/02/25'), 'f', 'Jouwsmastraat 192', 'Leeuwarden', 'The Netherlands', '9834 AX' ),
-	 ( 'arno.broeders@docent.avans.nl', 'Arno Broeders', CONVERT(datetime, '1976/05/10'), 'm', 'Stortstraat 150', 'Schoonoord', 'The Netherlands', '7848 CB' ),
-	 ( 'bradleyuitendaal@dayrep.com', 'Bradley Uitendaal', CONVERT(datetime, ''), 'o', 'Van Der Waalslaan 124', 'Almelo', 'The Netherlands', '7603 MP' ),
-	 ( 'alexander.vd.bulck@docent.avans.nl', 'Alexander Van Den Bulck', CONVERT(datetime, '1992/11/23'), 'm', 'Pelikaanstraat 115', 'Veenendaal', 'The Netherlands', '3903 AG' );
+	 ,( 'lucas.kok@hotmail.nl', 'Lucas Kok', CONVERT(datetime, '2005/01/09'), 'm', 'Perenmeet 48', 'Burgh-Haamstede', 'The Netherlands', '4328 CM' )
+	 ,( 'ditabultman@teleworm.us', 'Dita Bultman', CONVERT(datetime, '1984/10/08'), 'f', 'Waterleliestraat 152', 'Almere', 'The Netherlands', '1338 TK' )
+	 ,( 'kovanderbiezen@dayrep.com', 'Ko Van Der Biezen', CONVERT(datetime, '1962/09/30'), 'm', 'Sint LiduinaStraat 160', 'Schiedam', 'The Netherlands', '3117CV' )
+	 ,( 'drieswiersma@dayrep.org', 'Dries Wiersma', CONVERT(datetime, '1995/02/14'), 'm', 'Du Meelaan 124', 'Zoetermeer', 'The Netherlands', '2722 ZC' )
+	 ,( 'randolphelders@gmail.com', 'Randolph Elders', CONVERT(datetime, '1983/11/27'), 'm', 'Sweelinckstraat 56', 'Nijverdal', 'The Netherlands', '7442 JS' )
+	 ,( 'warrengoede@hotmail.com', 'Warren Goede', CONVERT(datetime, '1998/04/10'), 'm', 'Prins Bernhardlaan 196', 'Voorburg', 'The Netherlands', '2274 JC' )
+	 ,( 'jelcorodermond@outlook.com', 'Jelco Rodermond', CONVERT(datetime, '1939/09/10'), 'm', 'Oranjelaan 129', 'Groenekan', 'The Netherlands', '3737 AS' )
+	 ,( 'martikastuit@student.avans.nl', 'Martika Stuit', CONVERT(datetime, '1999/02/01'), 'f', 'Amperestraat 56', 'Alblasserdam', 'The Netherlands', '2952 AA' )
+	 ,( 'pascallewildschut@rhyta.com', 'Pascalle Wildschut', CONVERT(datetime, '1996/04/17'), 'x', 'Herenstraat 73', 'Amersfoort', 'The Netherlands', '3811 HG' )
+	 ,( 'mouradhuberts@gmail.com', 'Mourad Huberts', CONVERT(datetime, '1985/02/08'), 'm', 'Magnolialaan 65', 'Doesburg', 'The Netherlands', '6982 DR' )
+	 ,( 'charellevanderholst@armyspy.com', 'Charelle Van Der Horst', CONVERT(datetime, '1984/06/20'), 'f', 'Schuilenburg 178', 'Hoofddorp', 'The Netherlands', '2135 GN' )
+	 ,( 'diyar.van.dartel@hotmail.nl', 'Diyar Van Dartel', CONVERT(datetime, '2002/04/11'), 'x', 'Lindeboomsweg 129', 'Lochem', 'The Netherlands', '7241 PR' )
+	 ,( 'iepek.gieles53@pontes.nl', 'Ipek Gielens', CONVERT(datetime, '2000/10/06'), 'm', 'Hoge Valkseweg 90', 'Barneveld', 'The Netherlands', '3771 SL' )
+	 ,( 'jarondevree@jourrapide.com', 'Jaron De Vree', CONVERT(datetime, '1998/06/07'), 'm', 'Franseweg 103', 'Steenbergen', 'The Netherlands', '4651 PV' )
+	 ,( 'tiddo.vd.kaanden9@jourrapide.com', 'Tiddo Van Der Kaanden', CONVERT(datetime, '2004/09/01'), 'm', 'Edisonstraat 33', 'Leeuwarden', 'The Netherlands', '8912 AW' )
+	 ,( 'youknowmeluca@gmail.com', 'Luca Wiskerke', CONVERT(datetime, '1991/04/14'), 'm', 'Van Coothstraat 196', 'Boxtel', 'The Netherlands', '5281 CV' )
+	 ,( 'guineverebult9@pokemon.nl', 'Guinevere Bult', CONVERT(datetime, '1969/02/11'), 'f', 'Kooweide 108', 'Eibergen', 'The Netherlands', '7152 KH' )
+	 ,( 'horselover21@hives.com', 'Sydney Van Der Ben', CONVERT(datetime, '2003/05/17'), 'o', 'Amstelkade 9', 'Amstelhoek', 'The Netherlands', '1427 AM' )
+	 ,( 'k.schevers@hotmail.nl', 'Kicky Schevers', CONVERT(datetime, '1976/11/10'), 'f', 'De Terrassen 13', 'Apeldoorn', 'The Netherlands', '7325 JD' )
+	 ,( 'peter.kok@dekra.com', 'Peter Kok', CONVERT(datetime, '1950/06/10'), 'm', 'Perenmeet 48', 'Burgh-Haamstede', 'The Netherlands', '4328CM' )
+	 ,( 'aimane.g@email.net', 'Aïmane Gierveld', CONVERT(datetime, '2004/03/04'), 'm', 'Kempkensweg 144', 'Heerlen', 'The Netherlands', '6412 AV' )
+	 ,( 'homeemail.liese@jourrapide.com', 'Liese Hoegen', CONVERT(datetime, '1983/06/22'), 'f', 'Dirk Fockstraat 56', 'Duurstede', 'The Netherlands', '3961 DN' )
+	 ,( 'malika.verhorst@armyspy.com', 'Malika Verhorst', CONVERT(datetime, '1997/04/01'), 'f', 'Okkistraat 118', 'Almere', 'The Netherlands', '1136 KT' )
+	 ,( 'm.rauwerda@pokemon.nl', 'Michel Rauwerda', CONVERT(datetime, '1985/05/22'), 'm', 'Brasiliastraat 102', 'Den Haag', 'The Netherlands', '2548 GX' )
+	 ,( 'daan.vd.meulen@student.avans.nl', 'Daan Van Der Meulen', CONVERT(datetime, '2002/12/31'), 'o', 'Boslaan 185', 'Emmeloord', 'The Netherlands', '8302 AB' )
+	 ,( 'renzo.remmers@student.avans.nl', 'Renzo Remmers', CONVERT(datetime, '2000/01/01'), 'f', 'Ybenhaer 16', 'Oosterwolde', 'The Netherlands', '8431 HD' )
+	 ,( 'anne.vandenbosch57@student.avans.nl', 'Anne Van Den Bosch', CONVERT(datetime, '1990/02/25'), 'f', 'Jouwsmastraat 192', 'Leeuwarden', 'The Netherlands', '9834 AX' )
+	 ,( 'arno.broeders@docent.avans.nl', 'Arno Broeders', CONVERT(datetime, '1976/05/10'), 'm', 'Stortstraat 150', 'Schoonoord', 'The Netherlands', '7848 CB' )
+	 ,( 'bradleyuitendaal@dayrep.com', 'Bradley Uitendaal', CONVERT(datetime, ''), 'o', 'Van Der Waalslaan 124', 'Almelo', 'The Netherlands', '7603 MP' )
+	 ,( 'alexander.vd.bulck@docent.avans.nl', 'Alexander Van Den Bulck', CONVERT(datetime, '1992/11/23'), 'm', 'Pelikaanstraat 115', 'Veenendaal', 'The Netherlands', '3903 AG' );
 
 INSERT INTO Course VALUES
 	('Programmeren 1', 'Programmeren', 'Welkom bij programmeren.', 'Beginner')
@@ -373,7 +373,7 @@ INSERT INTO Viewing VALUES
 	,('mouradhuberts@gmail.com', 3, 0)
 	,('mouradhuberts@gmail.com', 4, 0)
 
-	,('lucas.kok@hotmail.nl', 5, 100)-----
+	,('lucas.kok@hotmail.nl', 5, 100)
 	,('lucas.kok@hotmail.nl', 6, 100)
 	,('lucas.kok@hotmail.nl', 7, 100)
 	,('ditabultman@teleworm.us', 5, 100)
@@ -394,7 +394,7 @@ INSERT INTO Viewing VALUES
 	,('martikastuit@student.avans.nl', 5, 89)
 	,('martikastuit@student.avans.nl', 6, 0)
 	,('martikastuit@student.avans.nl', 7, 0)
-	,('mouradhuberts@gmail.com', 5, 100) --------
+	,('mouradhuberts@gmail.com', 5, 100)
 	,('mouradhuberts@gmail.com', 6, 100)
 	,('mouradhuberts@gmail.com', 7, 100)
 
@@ -407,7 +407,7 @@ INSERT INTO Viewing VALUES
 	,('drieswiersma@dayrep.org', 8, 98)
 	,('drieswiersma@dayrep.org', 9, 0)
 	,('drieswiersma@dayrep.org', 10, 0)
-	,('jelcorodermond@outlook.com', 8, 100) ------
+	,('jelcorodermond@outlook.com', 8, 100)
 	,('jelcorodermond@outlook.com', 9, 100)
 	,('jelcorodermond@outlook.com', 10, 100)
 	,('martikastuit@student.avans.nl', 8, 100)
@@ -417,7 +417,7 @@ INSERT INTO Viewing VALUES
 	,('pascallewildschut@rhyta.com', 9, 0)
 	,('pascallewildschut@rhyta.com', 10, 0)
 
-	,('randolphelders@gmail.com', 11, 100) -------
+	,('randolphelders@gmail.com', 11, 100)
 	,('randolphelders@gmail.com', 12, 100)
 	,('warrengoede@hotmail.com', 11, 100)
 	,('warrengoede@hotmail.com', 12, 87)
@@ -436,10 +436,10 @@ INSERT INTO Viewing VALUES
 	,('randolphelders@gmail.com', 14, 28)
 	,('warrengoede@hotmail.com', 13, 100)
 	,('warrengoede@hotmail.com', 14, 78)
-	,('jelcorodermond@outlook.com', 13, 100) -------
+	,('jelcorodermond@outlook.com', 13, 100)
 	,('jelcorodermond@outlook.com', 14, 100)
 
-	,('drieswiersma@dayrep.org', 15, 100) -------
+	,('drieswiersma@dayrep.org', 15, 100)
 	,('drieswiersma@dayrep.org', 16, 100)
 	,('drieswiersma@dayrep.org', 17, 100)
 	,('randolphelders@gmail.com', 15, 100)
