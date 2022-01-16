@@ -66,9 +66,9 @@ public class RegistrationInformationValidator {
     public boolean isValidRegistrationDate(String[] registrationDatePieces) {
         if (!isValidNumber(registrationDatePieces[0]) || !isValidNumber(registrationDatePieces[1]) || !isValidNumber(registrationDatePieces[2])) return false;
 
-        int day = Integer.parseInt(registrationDatePieces[0]);
+        int day = Integer.parseInt(registrationDatePieces[2]);
         int month = Integer.parseInt(registrationDatePieces[1]);
-        int year = Integer.parseInt(registrationDatePieces[2]);
+        int year = Integer.parseInt(registrationDatePieces[0]);
 
         if (year < 1000) return false;
 

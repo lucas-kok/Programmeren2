@@ -51,8 +51,19 @@ public class Student {
     }
 
     public String getGender() {
+        switch (gender) {
+            case "m":
+                return "Male";
+            case "f":
+                return "Female";
+            case "x":
+                return "Other";
+
+        }
+
         return gender;
     }
+
 
     public void setGender(String gender) {
         switch (gender) {
