@@ -62,17 +62,17 @@ public class RegistrationInformationValidator {
         return message.toString();
     }
 
-    // Registration Date
+    // Function that returns if the given Registration Date is an existing day
     public boolean isValidRegistrationDate(String[] registrationDatePieces) {
         if (!isValidNumber(registrationDatePieces[0]) || !isValidNumber(registrationDatePieces[1]) || !isValidNumber(registrationDatePieces[2])) return false;
 
-        int day = Integer.parseInt(registrationDatePieces[2]);
+        int day = Integer.parseInt(registrationDatePieces[0]);
         int month = Integer.parseInt(registrationDatePieces[1]);
-        int year = Integer.parseInt(registrationDatePieces[0]);
+        int year = Integer.parseInt(registrationDatePieces[2]);
 
         if (year < 1000) return false;
 
-        if ((day < 1 || day > 31) || (month < 1 || month > 12)) return false;
+        if (day < 1 || day > 31 || month < 1 || month > 12) return false;
 
         if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
             return true;
@@ -88,25 +88,26 @@ public class RegistrationInformationValidator {
         }
     }
 
-    // Student Email
+    // Function that returns if the given email exists
     private boolean emailExists(String studentEmail) throws SQLException {
         Map<String, Student> students = studentRepository.getAllStudents();
         return students.containsKey(studentEmail.toLowerCase());
     }
 
-    // Course Name
+    // Function that returns if the given Course name exists
     private boolean isValidCourseName(String courseName) throws SQLException {
         Map<String, Course> courses = courseRepository.getAllCourses();
         return courses.containsKey(informationFormatter.capitalizeString(courseName));
     }
 
+    // Function that returns if a Registration exists for the combination of the Student and Course
     private boolean registrationExists(String studentEmail, String courseName) throws SQLException {
         Map<String, Registration> registrations = registrationRepository.getAllRegistrations();
         return registrations.containsKey(studentEmail + "-" + courseName);
     }
 
-    // Progression
-    private boolean isValidProgression(ArrayList<Integer> progression) {
+    // Function that returns if all progress are between 0 and 100
+    public boolean isValidProgression(ArrayList<Integer> progression) {
         for (int progress : progression) {
             if (progress < 0 || progress > 100) {
                 return false;
@@ -116,6 +117,7 @@ public class RegistrationInformationValidator {
         return true;
     }
 
+    // Function that returns if the given String are numbers
     public boolean isValidNumber(String scoreString) {
         try {
             Integer.parseInt(scoreString);

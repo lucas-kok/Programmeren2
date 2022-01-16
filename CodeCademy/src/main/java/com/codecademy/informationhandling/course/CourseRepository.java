@@ -19,6 +19,7 @@ public class CourseRepository {
         informationFormatter = new InformationFormatter();
     }
 
+    // Function that creates a new Course
     public void createCourse(Course course) {
         informationFormatter.formatCourse(course);
 
@@ -37,6 +38,7 @@ public class CourseRepository {
         }
     }
 
+    // Function that returns all Courses in the Database
     public Map<String, Course> getAllCourses() throws SQLException {
         HashMap<String, Course> relatedCourses = new HashMap<>();
 
@@ -74,6 +76,7 @@ public class CourseRepository {
         return relatedCourses;
     }
 
+    // Function that deletes a given Course
     public void deleteCourse(Course course) {
         String query = "DELETE FROM RelatedCourses " +
                 "                   WHERE CourseOneName = '" + course.getName() + "' OR CourseTwoName = '" + course.getName() + "'" +
@@ -82,6 +85,7 @@ public class CourseRepository {
         dbCon.setQuery(query);
     }
 
+    // Function that updates a given Course
     public void updateCourse(Course selectedCourse, String name, String subject, String introductionText, String level, String relatedCourses) {
         String oldCourseName = selectedCourse.getName();
 
@@ -112,6 +116,7 @@ public class CourseRepository {
         }
     }
 
+    // Function that returns a Map of Content Items and their average progression
     public HashMap<ContentItem, Integer> getAverageProgressPerContentItem(Course course) throws SQLException {
         HashMap<ContentItem, Integer> averageProgressPerContentItem = new HashMap<>();
         ArrayList<ContentItem> contentItems = new ArrayList<>();
@@ -148,6 +153,7 @@ public class CourseRepository {
         return averageProgressPerContentItem;
     }
 
+    // Function that returns the number of Certificates for a given Course
     public int getAmountOfCertificatesOfCourse (Course course) throws SQLException {
         int certificatesCount = 0;
 

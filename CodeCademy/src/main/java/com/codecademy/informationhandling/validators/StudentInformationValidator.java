@@ -82,12 +82,12 @@ public class StudentInformationValidator {
         return message.toString();
     }
 
-    // Name
+    // Function that returns if the given name contains a first- and last name
     public boolean isValidName(String studentName) {
         return studentName.split(" ").length >= 2;
     }
 
-    // Email
+    // Function that returns if the given email is a valid email
     public boolean isValidEmail(String mailAddress) {
         String emailFormat = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
@@ -98,31 +98,35 @@ public class StudentInformationValidator {
         return pat.matcher(mailAddress).matches();
     }
 
+    // Function that returns if the given email is already linked to a Student
     public boolean emailExists(String mailAddress) throws SQLException {
         Map<String, Student> students = studentRepository.getAllStudents();
         return students.containsKey(mailAddress);
     }
 
-    // Address
-    private boolean isValidAddress(String address) {
+    // Function that returns if the given address contains at least one char and one number
+    public boolean isValidAddress(String address) {
         char[] chars = address.toCharArray();
+        boolean hasChar = false;
 
         for(char c : chars){
-            if(Character.isDigit(c)){
+            if(Character.isDigit(c) && hasChar){
                 return true;
+            } else if (String.valueOf(c).matches("[a-zA-Z]")) {
+                hasChar = true;
             }
         }
 
         return false;
     }
 
-    // PostalCode
+    // Function that returns if the given postal-code is a valid postal-code
     public boolean isValidPostalCode(String postalCode) {
         postalCode = postalCode.replaceAll(" ", "");
         return postalCode.matches("[1-9][0-9]{3}[a-zA-Z]{2}");
     }
 
-    // Age
+    // Function that returns if the given birthday is an existing day
     public boolean isValidBirthday(String[] birthday) {
         if (!isValidNumber(birthday[0]) || !isValidNumber(birthday[1]) || !isValidNumber(birthday[2])) return false;
 
@@ -148,6 +152,7 @@ public class StudentInformationValidator {
         }
     }
 
+    // Function that returns if the time between today and the given birthday is at least the minimum-age
     public boolean isValidAge(String[] birthdayPieces) {
         String day = birthdayPieces[0];
         String month = birthdayPieces[1];
@@ -166,6 +171,7 @@ public class StudentInformationValidator {
         return period.getYears() >= minimumAge;
     }
 
+    // Function that returns if the given String are numbers
     private boolean isValidNumber(String scoreString) {
         try {
             Integer.parseInt(scoreString);

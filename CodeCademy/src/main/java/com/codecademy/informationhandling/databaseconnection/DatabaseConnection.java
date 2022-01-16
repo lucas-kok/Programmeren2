@@ -15,6 +15,7 @@ public class DatabaseConnection {
     public DatabaseConnection() {
     }
 
+    // Function that closes the ResultSet
     public void CloseResultSet() {
         if (rs != null) try {
             rs.close();
@@ -30,6 +31,7 @@ public class DatabaseConnection {
         }
     }
 
+    // Function that will execute a given query and returns the ResultSet
     public ResultSet getQuery(String query) {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -42,6 +44,7 @@ public class DatabaseConnection {
         return rs;
     }
 
+    // Function that will execute a given query
     public void setQuery(String query) {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -69,5 +72,4 @@ public class DatabaseConnection {
             }
         }
     }
-
 }

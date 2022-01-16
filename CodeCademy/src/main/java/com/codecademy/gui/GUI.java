@@ -50,6 +50,7 @@ public class GUI extends Application {
         certificateRepository = new CertificateRepository();
     }
 
+    // Function that starts the GUI
     @Override
     public void start(Stage mainStage) throws SQLException{
         this.mainStage = mainStage;
@@ -115,6 +116,7 @@ public class GUI extends Application {
         mainStage.setScene(scenes.get(sceneName).getScene());
     }
 
+    // Function that returns an Object linked to the given name, will be used to reset the Scene
     public GUIScene getSceneObject(String sceneName) {
         return scenes.getOrDefault(sceneName, null);
     }

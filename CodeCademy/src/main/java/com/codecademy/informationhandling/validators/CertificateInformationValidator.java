@@ -78,6 +78,7 @@ public class CertificateInformationValidator {
         return message.toString();
     }
 
+    // Function that returns if the given String are numbers
     private boolean isValidNumber(String scoreString) {
         try {
             Integer.parseInt(scoreString);
@@ -87,25 +88,30 @@ public class CertificateInformationValidator {
         }
     }
 
-    private boolean isValidScore(int score) {
+    // Function that returns if the given Certificate score is valid
+    public boolean isValidScore(int score) {
         return score >= 1 && score <= 10;
     }
 
+    // Function that returns if the given Student exists
     private boolean studentExists(String studentEmail) throws SQLException {
         HashMap<String, Student> studentList = studentRepository.getAllStudents();
         return studentList.containsKey(studentEmail);
     }
 
+    // Function that returns if the given Course exists
     private boolean courseExists(String courseName) throws SQLException {
         Map<String, Course> courseList = courseRepository.getAllCourses();
         return courseList.containsKey(courseName);
     }
 
+    // Function that returns if a Registration for the given Student email and Course name already exists
     private boolean registrationExists(String studentEmail, String courseName) throws SQLException {
         Map<String, Registration> registrations = registrationRepository.getAllRegistrations();
         return registrations.containsKey(studentEmail + "-" + courseName);
     }
 
+    // Function that returns if the given Student has completed all Content Items for the given Student and Course
     private boolean studentHasCompletedCourse(String studentEmail, String courseName) throws SQLException {
         Map<String, Registration> registrations = registrationRepository.getAllRegistrations();
         Map<ContentItem, Integer> contentItems = registrationRepository.getProgressForRegistration(registrations.get(studentEmail + "-" + courseName));
@@ -117,6 +123,7 @@ public class CertificateInformationValidator {
         return true;
     }
 
+    // Function that returns if a Certificate for the given Student email and Course name already exists
     private boolean certificateExists(String studentEmail, String courseName) throws SQLException {
         ArrayList<Certificate> certificates = certificateRepository.getALlCertificates();
 

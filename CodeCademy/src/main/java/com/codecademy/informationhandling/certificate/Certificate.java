@@ -2,15 +2,13 @@ package com.codecademy.informationhandling.certificate;
 
 public class Certificate {
     private final int certificateID;
-    private final int registrationID;
     private final String studentEmail;
     private String courseName;
     private int score;
     private String staffName;
 
-    public Certificate(int certificateID, int registerID, String studentEmail, String courseName, int score, String staffName) {
+    public Certificate(int certificateID, String studentEmail, String courseName, int score, String staffName) {
         this.certificateID = certificateID;
-        this.registrationID = registerID;
         this.score = score;
         this.staffName = staffName;
         this.studentEmail = studentEmail;

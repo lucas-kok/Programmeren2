@@ -26,4 +26,5 @@ module com.example.codecademy {
     opens com.codecademy.gui.home to javafx.fxml;
     exports com.codecademy.informationhandling.certificate;
     exports com.codecademy.informationhandling.registration;
+    exports com.codecademy.informationhandling.contentitem;
 }

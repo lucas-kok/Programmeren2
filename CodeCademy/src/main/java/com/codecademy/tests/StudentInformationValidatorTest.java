@@ -5,9 +5,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class StudentInformationValidationTest {
+public class StudentInformationValidatorTest {
 
-    public StudentInformationValidationTest() {
+    public StudentInformationValidatorTest() {
     }
 
     // Email
@@ -89,11 +89,90 @@ public class StudentInformationValidationTest {
         assertTrue(result);
     }
 
+    @Test
+    public void testIsValidEmailRequiresEmailWithTwoDotsAfterAtSignEnsuresTrue() {
+        // Arrange
+        StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
+
+        // Act
+        String email = "lucas.broeders@student.avans.nl";
+        boolean result = studentInformationValidator.isValidEmail(email);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    // Address
+    @Test
+    public void testIsValidAddressRequiresEmptyStringEnsuresFalse() {
+        // Arrange
+        StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
+
+        // Act
+        String address = "";
+        boolean result = studentInformationValidator.isValidAddress(address);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void testIsValidAddressRequiresOnlyHouseNumberEnsuresFalse() {
+        // Arrange
+        StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
+
+        // Act
+        String address = "582";
+        boolean result = studentInformationValidator.isValidAddress(address);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void testIsValidAddressRequiresOnlyStreetNameEnsuresFalse() {
+        // Arrange
+        StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
+
+        // Act
+        String address = "Jonker Fransstraat";
+        boolean result = studentInformationValidator.isValidAddress(address);
+
+        // Assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void testIsValidAddressRequiresStreetNameAndHouseNumberEnsuresTrue() {
+        // Arrange
+        StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
+
+        // Act
+        String address = "Ogenweg 54";
+        boolean result = studentInformationValidator.isValidAddress(address);
+
+        // Assert
+        assertTrue(result);
+    }
+
+    @Test
+    public void testIsValidAddressRequiresStreetNameAndHouseNumberWithLetterEnsuresTrue() {
+        // Arrange
+        StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
+
+        // Act
+        String address = "Regenboogweg 45b";
+        boolean result = studentInformationValidator.isValidAddress(address);
+
+        // Assert
+        assertTrue(result);
+    }
+
 
     // Postal Code
     @Test
     public void testIsValidPostalCodeRequiresValidPostalCodeWithSpacesEnsuresTrue() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -106,7 +185,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidPostalCodeRequiresPostalCodeWithNoSpacesEnsuresTrue() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -119,7 +198,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidPostalCodeRequiresValidPostalCodeEnsuresTrue() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -132,7 +211,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidPostalCodeRequiresInvalidPostalCodeEnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -145,7 +224,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidPostalCodeRequiresOutOfRangePostalCodeEnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -159,7 +238,7 @@ public class StudentInformationValidationTest {
     // Birthday
     @Test
     public void testIsValidBirthdayRequiresDay30Month2EnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -172,7 +251,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidBirthdayRequiresDay0EnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -198,7 +277,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidBirthdayRequiresNegativeYearEnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -211,7 +290,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidBirthdayRequiresDay18Month5Year2021EnsuresTrue() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -224,7 +303,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidBirthdayRequiresDay29Month2NoLeapYearEnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -237,7 +316,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidBirthdayRequiresDay29Month2LeapYearEnsureTrue() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -250,7 +329,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidBirthdayRequiresDay32EnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act
@@ -263,7 +342,7 @@ public class StudentInformationValidationTest {
 
     @Test
     public void testIsValidBirthdayRequiresDay15Month13EnsuresFalse() {
-        // Assert
+        // Arrange
         StudentInformationValidator studentInformationValidator = new StudentInformationValidator();
 
         // Act

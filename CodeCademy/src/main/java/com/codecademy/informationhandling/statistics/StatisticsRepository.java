@@ -13,6 +13,7 @@ public class StatisticsRepository {
         dbCon = new DatabaseConnection();
     }
 
+    // Function that returns an array containing the number of Certificates and Registrations for a specific gender
     public String[] getCertificatePercentage(String gender) throws SQLException {
         String[] successRate = new String[3];
         int amountOfCertificates = 0;
@@ -47,6 +48,7 @@ public class StatisticsRepository {
         return successRate;
     }
 
+    // Function that returns an array of the 3 Courses with the most Registrations
     public String[] getTopThreeCourses() throws SQLException {
         String[] topThreeCourses = new String[3];
 
@@ -70,6 +72,7 @@ public class StatisticsRepository {
         return topThreeCourses;
     }
 
+    // Function that returns an array of the 3 most viewed Webcasts
     public String[] getTopThreeWebcasts() throws SQLException {
         String[] topThreeWebcasts = {"No other webcasts with views", "No other webcasts with views", "No other webcasts with views"};
 

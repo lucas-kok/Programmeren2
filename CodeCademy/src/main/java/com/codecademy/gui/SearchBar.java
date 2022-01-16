@@ -13,7 +13,7 @@ public class SearchBar {
     public SearchBar() {
     }
 
-    // Function that will return a List of Students matching the given search input
+    // Function that returns a List of Students matching the given search input
     public ArrayList<Student> searchStudents(String searchInput, Map<String, Student> students) {
         if (searchInput.isBlank())
             return new ArrayList<>(students.values()); // Empty search will result in all Students
@@ -29,7 +29,7 @@ public class SearchBar {
         return studentsWithinInput;
     }
 
-    // Function that will return a List of Courses matching the given search input
+    // Function that returns a List of Courses matching the given search input
     public ArrayList<Course> searchCourses(String searchInput, Map<String, Course> courses) {
         if (searchInput.isBlank()) return new ArrayList<>(courses.values()); // Empty search will result in all Courses
 
@@ -44,7 +44,7 @@ public class SearchBar {
         return coursesWithinInput;
     }
 
-    // Function that will return a List of Certificates matching the given search input
+    // Function that returns a List of Certificates matching the given search input
     public ArrayList<Certificate> searchCertificates(String searchInput, ArrayList<Certificate> certificates) {
         if (searchInput.isBlank()) return certificates; // Empty search will result in all Registrations
 
@@ -59,7 +59,7 @@ public class SearchBar {
         return certificatesWithInput;
     }
 
-    // Function that will return a List of Registrations matching the given search input
+    // Function that returns a List of Registrations matching the given search input
     public ArrayList<Registration> searchRegistrations(String searchInput, Map<String, Registration> registrations) {
         if (searchInput.isBlank())
             return new ArrayList<>(registrations.values()); // Empty search will result in all Registrations

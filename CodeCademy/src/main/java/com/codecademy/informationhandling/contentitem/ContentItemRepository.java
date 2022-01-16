@@ -15,6 +15,7 @@ public class ContentItemRepository {
         dbCon = new DatabaseConnection();
     }
 
+    // Function that will add an unused Content Item to a Course
     public void addContentItemsToCourse(Course course, ArrayList<ContentItem> contentItems) {
         for (ContentItem contentItem : contentItems) {
             String query = "UPDATE ContentItem " +
@@ -24,6 +25,7 @@ public class ContentItemRepository {
         }
     }
 
+    // Function that returns all Content Items not linked to a Course
     public ArrayList<ContentItem> getUnusedContentItems() throws SQLException {
         ArrayList<ContentItem> contentItems = new ArrayList<>();
 
@@ -38,6 +40,7 @@ public class ContentItemRepository {
         return contentItems;
     }
 
+    // Function that returns a single Content Item based on a given ID
     public ContentItem getContentItem(String id) throws SQLException {
         String query = "SELECT * FROM ContentItem WHERE ContentiD = '" + id + "'";
         ResultSet rs = dbCon.getQuery(query);

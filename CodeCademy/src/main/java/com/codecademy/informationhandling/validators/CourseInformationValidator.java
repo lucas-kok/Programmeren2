@@ -52,7 +52,7 @@ public class CourseInformationValidator {
         return message.toString();
     }
 
-    // Name
+    // Function that returns if the given Course exists
     public boolean courseNameExists(String courseName) throws SQLException {
         Map<String, Course> courses = courseRepository.getAllCourses();
         courseName = informationFormatter.capitalizeString(courseName);
@@ -60,7 +60,7 @@ public class CourseInformationValidator {
         return courses.containsKey(courseName);
     }
 
-    // Related Courses
+    // Function that returns if the given Related Courses are existing Courses
     public boolean areValidRelatedCourses(String relatedCoursesString) throws SQLException {
         if (relatedCoursesString.isBlank()) return true; // Course doesn't need to contain related courses
 
@@ -73,6 +73,7 @@ public class CourseInformationValidator {
         return true;
     }
 
+    // Function that returns if the given Course has Registrations linked to it
     public boolean courseHasRegistrations(String courseName) throws SQLException {
         Map<String, Registration> registrations = registrationRepository.getAllRegistrations();
 

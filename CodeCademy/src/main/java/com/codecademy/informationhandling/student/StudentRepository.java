@@ -19,6 +19,7 @@ public class StudentRepository {
         informationFormatter = new InformationFormatter();
     }
 
+    // Function that creates a Student
     public void createStudent(Student student) {
         informationFormatter.formatStudent(student);
 
@@ -40,6 +41,7 @@ public class StudentRepository {
         dbCon.setQuery(query);
     }
 
+    // Function that returns all Students in the Database
     public HashMap<String, Student> getAllStudents() throws SQLException {
         HashMap<String, Student> studentsList = new HashMap<>();
 
@@ -74,6 +76,7 @@ public class StudentRepository {
         return studentsList;
     }
 
+    // Function that updates a given Student
     public void updateStudent(Student student, String name, String email, String address, String postalCode, String city, String country, String gender, String birthday) {
         switch (gender) {
             case "Male":
@@ -114,12 +117,14 @@ public class StudentRepository {
         dbCon.setQuery(query);
     }
 
+    // Function that deletes a given Student
     public void deleteStudent(Student selectedStudent) {
         String query = "DELETE FROM Student" +
                 "       WHERE Email = '" + selectedStudent.getEmail() + "'";
         dbCon.setQuery(query);
     }
 
+    // Function that returns all Registrations linked to a given Student
     public ArrayList<Registration> getAllRegistrationsForStudent(Student student) throws SQLException {
         ArrayList<Registration> registrations = new ArrayList<>();
 
@@ -134,6 +139,7 @@ public class StudentRepository {
         return registrations;
     }
 
+    // Function that returns all Certificates linked to a given Student
     public ArrayList<Certificate> getAllCertificatesForStudent(Student student) throws SQLException {
         ArrayList<Certificate> certificates = new ArrayList<>();
 
@@ -141,7 +147,7 @@ public class StudentRepository {
         ResultSet rs = dbCon.getQuery(query);
 
         while (rs.next()) {
-            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getString("StudentEmail"),rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
+            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getString("StudentEmail"),rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
         }
         dbCon.CloseResultSet();
 

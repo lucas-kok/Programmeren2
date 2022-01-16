@@ -20,6 +20,7 @@ public class RegistrationRepository {
         informationFormatter = new InformationFormatter();
     }
 
+    // Function that returns all Registrations in the Database
     public Map<String, Registration> getAllRegistrations() throws SQLException {
         Map<String, Registration> registrations = new HashMap<>();
 
@@ -36,6 +37,7 @@ public class RegistrationRepository {
         return registrations;
     }
 
+    // Function that creates a new Registration
     public void createRegistration(String studentEmail, String courseName, String[] datePieces) throws SQLException {
         studentEmail = studentEmail.toLowerCase();
         courseName = informationFormatter.capitalizeString(courseName);
@@ -60,6 +62,7 @@ public class RegistrationRepository {
         }
     }
 
+    // Function that updates a given Registration
     public void updateRegistration(Registration registration, String[] datePieces) {
         String registrationDate = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
         String reversedRegistrationDate = datePieces[0] + "-" + datePieces[1] + "-" + datePieces[2];
@@ -69,6 +72,7 @@ public class RegistrationRepository {
         dbCon.setQuery(query);
     }
 
+    // Function that deletes a given Registration
     public void deleteRegistration(Registration registration) {
         String query = "DELETE FROM Register WHERE RegisterID = " + registration.getRegisterID() + " " +
                 "                         DELETE FROM Viewing WHERE StudentEmail = '" + registration.getStudentEmail() + "' " +
@@ -76,6 +80,7 @@ public class RegistrationRepository {
         dbCon.setQuery(query);
     }
 
+    // Function that returns a Map of Content Items and the progression linked to a Registration
     public HashMap<ContentItem, Integer> getProgressForRegistration(Registration registration) throws SQLException {
         HashMap<ContentItem, Integer> progressPerContentItem = new HashMap<>();
         ArrayList<ContentItem> contentItems = new ArrayList<>();
@@ -101,6 +106,7 @@ public class RegistrationRepository {
         return progressPerContentItem;
     }
 
+    // Function that updates all progression for all Content Items linked to a Registration
     public void updateProgress(Registration registration, Map<ContentItem, Integer> newProgression) {
         for (ContentItem contentItem : newProgression.keySet()) {
             int progress = newProgression.get(contentItem);

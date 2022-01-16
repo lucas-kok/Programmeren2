@@ -6,7 +6,6 @@ import com.codecademy.informationhandling.databaseconnection.DatabaseConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class CertificateRepository {
 
@@ -18,6 +17,7 @@ public class CertificateRepository {
         informationFormatter = new InformationFormatter();
     }
 
+    // Function that creates a new Certificate
     public void createCertificate(String studentEmail, String courseName, int score, String staffName) throws SQLException {
         studentEmail = studentEmail.toLowerCase();
         courseName = informationFormatter.capitalizeString(courseName);
@@ -38,6 +38,7 @@ public class CertificateRepository {
         dbCon.setQuery(queryCreateCertificate);
     }
 
+    // Function that returns all Certificates in the Database
     public ArrayList<Certificate> getALlCertificates() throws SQLException {
         ArrayList<Certificate> certificates = new ArrayList<>();
 
@@ -45,13 +46,14 @@ public class CertificateRepository {
         ResultSet rs = dbCon.getQuery(query);
 
         while (rs.next()) {
-            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getInt("RegisterID"), rs.getString("StudentEmail"), rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
+            certificates.add(new Certificate(rs.getInt("CertificateID"), rs.getString("StudentEmail"), rs.getString("CourseName"), rs.getInt("Score"), rs.getString("StaffName")));
         }
         dbCon.CloseResultSet();
 
         return certificates;
     }
 
+    // Function that updates a given Certificate
     public void updateCertificate(Certificate certificate, String staffName, int score) {
         staffName = informationFormatter.capitalizeString(staffName);
 
@@ -65,6 +67,7 @@ public class CertificateRepository {
         dbCon.setQuery(query);
     }
 
+    // Function that deletes a given Certificate
     public void deleteCertificate(Certificate certificate) {
         String query = "DELETE From Certificate" +
                 "                       WHERE CertificateID = " + certificate.getCertificateID() + "";
