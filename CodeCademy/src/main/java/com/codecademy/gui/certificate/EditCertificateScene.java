@@ -86,13 +86,14 @@ public class EditCertificateScene extends GUIScene {
         updateSelectedCertificateButton.setOnAction((event) -> {
             // Only proceed if all fields are filled in
             if (!editScoreTextInput.getText().isEmpty() && !editStaffNameInput.getText().isEmpty()) {
-                int score = Integer.parseInt(editScoreTextInput.getText());
+                String scoreString = editScoreTextInput.getText();
                 String staffName = editStaffNameInput.getText();
 
-                String response = certificateInformationValidator.validateEditedCertificate(score);
+                String response = certificateInformationValidator.validateEditedCertificate(scoreString);
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
+                    int score = Integer.parseInt(scoreString);
                     certificateRepository.updateCertificate(selectedCertificate, staffName, score);
                     messageLabel.setText("The Certificate has successfully been updated!");
                 }

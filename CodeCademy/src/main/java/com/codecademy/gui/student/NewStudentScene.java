@@ -113,7 +113,7 @@ public class NewStudentScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = studentInformationValidator.validateNewStudent(name, email, postalCode, birthdayPieces);
+                    response = studentInformationValidator.validateNewStudent(name, email, address, postalCode, birthdayPieces);
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();

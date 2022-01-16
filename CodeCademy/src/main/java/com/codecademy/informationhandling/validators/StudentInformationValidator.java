@@ -17,15 +17,29 @@ public class StudentInformationValidator {
     }
 
     // Function to validate all inputs for a new Student and returns an error/empty message
-    public String validateNewStudent(String studentName, String email, String postalCode, String[] birthday) throws SQLException{
+    public String validateNewStudent(String studentName, String email, String address, String postalCode, String[] birthday) throws SQLException {
         StringBuilder message = new StringBuilder();
 
-        if (!isValidName(studentName)) message.append("\nPlease fill in the First and Last name!");
-        if (!isValidEmail(email)) message.append("\nThe email: '").append(email).append("' is not valid!");
-        if (emailExists(email))
-            message.append("\nThe email: ").append(email).append(" already exists!");
-        if (!isValidPostalCode(postalCode))
+        if (!isValidName(studentName)) {
+            message.append("\nPlease fill in the First and Last name!");
+        }
+
+        if (!isValidEmail(email)) {
+            message.append("\nThe email: '").append(email).append("' is not valid!");
+        }
+
+        if (emailExists(email)) {
+            message.append("\nThe email: '").append(email).append("' already exists!");
+        }
+
+        if (!isValidAddress(address)) {
+            message.append("\nThe address: '" + address + "' is not valid!");
+        }
+
+        if (!isValidPostalCode(postalCode)) {
             message.append("\nThe postal-code: '").append(postalCode).append("' is not valid!");
+        }
+
         if (isValidBirthday(birthday)) {
             if (!isValidAge(birthday)) message.append("\nThe person is not old enough!");
         } else {
@@ -36,17 +50,29 @@ public class StudentInformationValidator {
     }
 
     // Function to validate all inputs for an existing Student and returns an error/empty message
-    public String validateEditedStudent(String studentName, String email, String postalCode, String[] birthday, Student selectedStudent) throws SQLException{
+    public String validateEditedStudent(String studentName, String email, String address, String postalCode, String[] birthday, Student selectedStudent) throws SQLException {
         StringBuilder message = new StringBuilder();
 
-        if (!isValidName(studentName)) message.append("\nPlease fill in both First- and Last name!");
-        if (!isValidEmail(email)) message.append("\nThe email: '").append(email).append("' is not valid!");
-        if (!email.equals(selectedStudent.getEmail())) { // Student has his own email (Already exists, but still valid)
-            if (emailExists(email))
-                message.append("\nThe email: ").append(email).append(" already exists!");
+        if (!isValidName(studentName)) {
+            message.append("\nPlease fill in both First- and Last name!");
         }
-        if (!isValidPostalCode(postalCode))
+
+        if (!isValidEmail(email)) {
+            message.append("\nThe email: '").append(email).append("' is not valid!");
+        }
+
+        if (!email.equals(selectedStudent.getEmail())) { // Student has his own email (Already exists, but still valid)
+            if (emailExists(email)) message.append("\nThe email: ").append(email).append(" already exists!");
+        }
+
+        if (!isValidAddress(address)) {
+            message.append("\nThe address: '" + address + "' is not valid!");
+        }
+
+        if (!isValidPostalCode(postalCode)) {
             message.append("\nThe postal-code: '").append(postalCode).append("' is not valid!");
+        }
+
         if (isValidBirthday(birthday)) {
             if (!isValidAge(birthday)) message.append("\nThe person is not old enough!");
         } else {
@@ -63,7 +89,7 @@ public class StudentInformationValidator {
 
     // Email
     public boolean isValidEmail(String mailAddress) {
-        String emailFormat = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+        String emailFormat = "^[a-zA-Z0-9_+&*-]+(?:\\." +
                 "[a-zA-Z0-9_+&*-]+)*@" +
                 "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
                 "A-Z]{2,7}$";
@@ -75,6 +101,19 @@ public class StudentInformationValidator {
     public boolean emailExists(String mailAddress) throws SQLException {
         Map<String, Student> students = studentRepository.getAllStudents();
         return students.containsKey(mailAddress);
+    }
+
+    // Address
+    private boolean isValidAddress(String address) {
+        char[] chars = address.toCharArray();
+
+        for(char c : chars){
+            if(Character.isDigit(c)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // PostalCode
@@ -112,8 +151,10 @@ public class StudentInformationValidator {
         String month = birthdayPieces[1];
         String year = birthdayPieces[2];
 
-        if (day.length() < 2) day = Integer.parseInt(birthdayPieces[0]) < 10 ? "0" + birthdayPieces[0] : birthdayPieces[0]; // "0" -> "01"
-        if (month.length() < 2) month = Integer.parseInt(birthdayPieces[1]) < 10 ? "0" + birthdayPieces[1] : birthdayPieces[1];
+        if (day.length() < 2)
+            day = Integer.parseInt(birthdayPieces[0]) < 10 ? "0" + birthdayPieces[0] : birthdayPieces[0]; // "0" -> "01"
+        if (month.length() < 2)
+            month = Integer.parseInt(birthdayPieces[1]) < 10 ? "0" + birthdayPieces[1] : birthdayPieces[1];
 
         LocalDate studentBirthday = LocalDate.parse(year + "-" + month + "-" + day);
         LocalDate today = LocalDate.now();

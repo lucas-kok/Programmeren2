@@ -82,11 +82,11 @@ public class NewCertificateScene extends GUIScene {
                 String studentEmail = studentEmailInput.getText().toLowerCase().strip();
                 String courseName = informationFormatter.capitalizeString(courseNameInput.getText().toLowerCase());
                 String staffName = informationFormatter.capitalizeString(staffNameInput.getText().toLowerCase());
-                int score = Integer.parseInt(scoreInput.getText());
+                String scoreString = scoreInput.getText();
 
                 String response = null;
                 try {
-                    response = certificateInformationValidator.validateNewCertificate(studentEmail, courseName, score);
+                    response = certificateInformationValidator.validateNewCertificate(studentEmail, courseName, scoreString);
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -95,6 +95,7 @@ public class NewCertificateScene extends GUIScene {
                 assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     try {
+                        int score = Integer.parseInt(scoreString);
                         certificateRepository.createCertificate(studentEmail, courseName, score, staffName);
                     } catch (SQLException e) {
                         e.printStackTrace();

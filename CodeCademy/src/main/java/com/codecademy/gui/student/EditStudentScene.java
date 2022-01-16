@@ -142,7 +142,7 @@ public class EditStudentScene extends GUIScene {
 
                 String response = null;
                 try {
-                    response = informationValidationTools.validateEditedStudent(name, email, postalCode, birthdayPieces, selectedStudent);
+                    response = informationValidationTools.validateEditedStudent(name, email, address, postalCode, birthdayPieces, selectedStudent);
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();

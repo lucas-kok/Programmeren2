@@ -29,10 +29,14 @@ public class CertificateInformationValidator {
     }
 
     // Function to validate all inputs for a new Certificate and returns an error/empty message
-    public String validateNewCertificate(String studentEmail, String courseName, int score) throws SQLException {
+    public String validateNewCertificate(String studentEmail, String courseName, String score) throws SQLException {
         StringBuilder message = new StringBuilder();
 
-        if (isValidScore(score)) message.append("\nThe grade must be between 1 and 10!");
+        if (isValidNumber(score)) {
+            if (!isValidScore(Integer.parseInt(score))) message.append("\nThe grade must be between 1 and 10!");
+        } else {
+            message.append("The score: '" + score + "' is not valid!");
+        }
         if (!studentExists(studentEmail)) message.append("\nStudent does not exist!");
         if (!courseExists(courseName)) message.append("\nCourse does not exist!");
         if (registrationExists(studentEmail, courseName)) {
@@ -46,10 +50,25 @@ public class CertificateInformationValidator {
     }
 
     // Function to validate all inputs for an existing Certificate and returns an error/empty message
-    public String validateEditedCertificate(int score) {
-        if(!isValidScore(score)) return "The grade must be between 1 and 10!";
+    public String validateEditedCertificate(String scoreString) {
+        StringBuilder message = new StringBuilder();
 
-        return "";
+        if (isValidNumber(scoreString)) {
+            if (!isValidScore(Integer.parseInt(scoreString))) message.append("\nThe grade must be between 1 and 10!");
+        } else {
+            message.append("\nThe score: '" + scoreString + "' is not valid!");
+        }
+
+        return message.toString();
+    }
+
+    private boolean isValidNumber(String scoreString) {
+        try {
+            Integer.parseInt(scoreString);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     private boolean isValidScore(int score) {
