@@ -459,7 +459,7 @@ INSERT INTO Viewing VALUES
 INSERT INTO Certificate VALUES
 	(4, 8, 'Fred Van Gardingen')
 	,(11, 9, 'Yascino Hubbers')
-	,(18, 16, 'Fred van Gardigen')
+	,(18, 6, 'Fred van Gardigen')
 	,(16, 6, 'Yascino Hubbers')
 	,(25, 10, 'Ayrianna Schot')
 	,(34, 6, 'Ronald Pols')

@@ -52,7 +52,7 @@ public class GUI extends Application {
     @Override
     public void start(Stage mainStage) throws SQLException{
         this.mainStage = mainStage;
-        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(217...), Daan van der Meulen(...) & Anne van den Bosch(2191799)");
+        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(2173909), Daan van der Meulen(...) & Anne van den Bosch(2191799)");
 
         int sceneWidth = 500;
         int sceneHeight = 750;
