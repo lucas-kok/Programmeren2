@@ -51,8 +51,6 @@ public class OverviewCertificatesScene extends GUIScene {
         HBox searchBarPane = new HBox(5);
         ScrollPane certificatesListScroll = new ScrollPane();
 
-        headerPane.setAlignment(Pos.CENTER);
-
         overviewCertificatesScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
@@ -62,6 +60,13 @@ public class OverviewCertificatesScene extends GUIScene {
 
         TextField searchBarInput = new TextField();
         Button searchButton = new Button("Search");
+
+        // Styling
+        overviewCertificatesScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        searchButton.setId("actionButton");
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
@@ -115,6 +120,9 @@ public class OverviewCertificatesScene extends GUIScene {
             Label courseNameLabel = new Label(certificate.getCourseName());
             Label secondInformationDividerLabel = new Label("-");
             Label certificateScoreLabel = new Label(certificate.getScore() + "/10");
+
+            // Styling
+            certificateInfoRow.setId("clickable");
 
             // Event Handlers
             certificateInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {

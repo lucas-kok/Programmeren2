@@ -78,6 +78,14 @@ public class EditCourseScene extends GUIScene {
         courseLevelInput.setValue(selectedCourse.getLevel());
         courseRelatedCoursesInput.setText(selectedCourse.getRelatedCourses());
 
+        // Styling
+        editCourseScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        updateSelectedCourseButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -95,7 +103,8 @@ public class EditCourseScene extends GUIScene {
                     ((OverviewCoursesScene) getSceneObject("overviewCoursesScene")).resetScene();
                     showScene("overviewCoursesScene");
                 } else {
-                    messageLabel.setText("The Course can't be deleted because it has Registrations!");
+                    messageLabel.setId("errorMessage");
+                    messageLabel.setText("\nThe Course can't be deleted because it has Registrations!");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -115,6 +124,8 @@ public class EditCourseScene extends GUIScene {
                 String response = null;
                 try {
                     response = courseInformationValidationTools.validateEditedCourse(name, relatedCourses, selectedCourse);
+
+                    messageLabel.setId("errorMessage");
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -123,11 +134,14 @@ public class EditCourseScene extends GUIScene {
                 assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
                     courseRepository.updateCourse(selectedCourse, name, subject, introductionText, level, relatedCourses);
-                    messageLabel.setText("The Course '" + name + "' has successfully been updated!");
+
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Course '" + name + "' has successfully been updated!");
                 }
 
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 

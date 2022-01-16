@@ -85,6 +85,15 @@ public class NewStudentScene extends GUIScene {
         Button createStudentButton = new Button("Create new Student");
         Label messageLabel = new Label();
 
+        // Styling
+        newStudentScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        studentGenderInput.setId("clickable");
+        createStudentButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -114,6 +123,8 @@ public class NewStudentScene extends GUIScene {
                 String response = null;
                 try {
                     response = studentInformationValidator.validateNewStudent(name, email, address, postalCode, birthdayPieces);
+
+                    messageLabel.setId("errorMessage");
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -137,11 +148,13 @@ public class NewStudentScene extends GUIScene {
                     studentBirthdayMonthInput.clear();
                     studentBirthdayYearInput.clear();
 
-                    messageLabel.setText("The Student '" + name + "' has successfully been created!");
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Student '" + name + "' has successfully been created!");
                 }
 
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 

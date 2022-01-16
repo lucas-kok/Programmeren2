@@ -85,6 +85,13 @@ public class EditRegistrationScene extends GUIScene {
         registrationDateMonthInput.setText(registrationDatePieces[1]);
         registrationDateYearInput.setText(registrationDatePieces[0]);
 
+        // Styling
+        editRegistrationScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        updateSelectedRegistrationButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
@@ -111,18 +118,21 @@ public class EditRegistrationScene extends GUIScene {
                 String[] newRegistrationDatePieces = new String[] { year, month, day };
                 ArrayList<Integer> newProgression = new ArrayList<>(getNewProgressionInput(selectedRegistrationProgressScroll).values());
 
-                String response;
-                response = registrationInformationValidationTools.validateEditedRegistration(newRegistrationDatePieces, newProgression);
+                String response = registrationInformationValidationTools.validateEditedRegistration(newRegistrationDatePieces, newProgression);
+
+                messageLabel.setId("errorMessage");
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
                     registrationRepository.updateRegistration(selectedRegistration, newRegistrationDatePieces);
                     registrationRepository.updateProgress(selectedRegistration, getNewProgressionInput(selectedRegistrationProgressScroll));
-                    messageLabel.setText("The Registration has successfully been updated!");
-                }
 
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Registration has successfully been updated!");
+                }
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 

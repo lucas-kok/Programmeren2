@@ -67,6 +67,14 @@ public class NewCertificateScene extends GUIScene {
         Button createCertificateButton = new Button("Create new Certificate");
         Label messageLabel = new Label();
 
+        // Styling
+        newCertificateScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        createCertificateButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -87,6 +95,8 @@ public class NewCertificateScene extends GUIScene {
                 String response = null;
                 try {
                     response = certificateInformationValidator.validateNewCertificate(studentEmail, courseName, scoreString);
+
+                    messageLabel.setId("errorMessage");
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -107,11 +117,13 @@ public class NewCertificateScene extends GUIScene {
                     scoreInput.clear();
                     staffNameInput.clear();
 
-                    messageLabel.setText("The Certificate has successfully been created!");
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Certificate has successfully been created!");
                 }
 
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 

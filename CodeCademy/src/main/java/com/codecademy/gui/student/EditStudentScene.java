@@ -23,7 +23,7 @@ public class EditStudentScene extends GUIScene {
     private final StudentRepository studentRepository;
     private Student selectedStudent;
 
-    public EditStudentScene(GUI gui, int sceneWidth, int sceneHeight, Student selectedStudent) {
+    public EditStudentScene(GUI gui, int sceneWidth, int sceneHeight) {
         super(gui);
 
         this.sceneWidth = sceneWidth;
@@ -31,25 +31,21 @@ public class EditStudentScene extends GUIScene {
 
         informationValidationTools = new StudentInformationValidator();
         studentRepository = new StudentRepository();
-        this.selectedStudent = selectedStudent;
 
-        if (selectedStudent != null) {
-            createScene();
-            setScene(editStudentScene);
-        }
+        // Not creating a scene, because when initializing the GUI no Student has been selected
     }
 
     private void createScene() {
         // Panes & Scene
         BorderPane mainPane = new BorderPane();
-        VBox header = new VBox(15);
-        HBox navigation = new HBox(15);
+        VBox headerPane = new VBox(15);
+        HBox navigationPane = new HBox(15);
         VBox editStudentPane = new VBox(15);
         HBox editStudentBirthdayPane = new HBox(5);
 
         editStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        header.setAlignment(Pos.CENTER);
+        headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
         Label titleLabel = new Label("Edit Student: " + selectedStudent.getEmail());
@@ -107,6 +103,14 @@ public class EditStudentScene extends GUIScene {
         studentBirthdayMonthInput.setPromptText("Month");
         studentBirthdayYearInput.setPromptText("Year");
 
+        // Styling
+        editStudentScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        updateSelectedStudentButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -143,6 +147,8 @@ public class EditStudentScene extends GUIScene {
                 String response = null;
                 try {
                     response = informationValidationTools.validateEditedStudent(name, email, address, postalCode, birthdayPieces, selectedStudent);
+
+                    messageLabel.setId("errorMessage");
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -154,20 +160,22 @@ public class EditStudentScene extends GUIScene {
                     String birthday = birthdayPieces[2] + "-" + birthdayPieces[1] + "-" + birthdayPieces[0];
                     studentRepository.updateStudent(selectedStudent, name, email, address, postalCode, city, country, gender, birthday);
 
-                    messageLabel.setText("The Student '" + name + "' has successfully been updated!");
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Student '" + name + "' has successfully been updated!");
                 }
 
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 
         // Appending
-        mainPane.setTop(header);
+        mainPane.setTop(headerPane);
         mainPane.setCenter(editStudentPane);
 
-        header.getChildren().addAll(titleLabel, navigation);
-        navigation.getChildren().addAll(homeButton, backButton, deleteStudentButton);
+        headerPane.getChildren().addAll(titleLabel, navigationPane);
+        navigationPane.getChildren().addAll(homeButton, backButton, deleteStudentButton);
 
         editStudentPane.getChildren().addAll(studentNameLabel, studentNameInput, studentEmailLabel, studentEmailInput,
                 studentAddressLabel, studentAddressInput, studentPostalCodeLabel, studentPostalCodeInput, studentCityLabel,

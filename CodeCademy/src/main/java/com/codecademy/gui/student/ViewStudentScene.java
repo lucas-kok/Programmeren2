@@ -73,6 +73,13 @@ public class ViewStudentScene extends GUIScene {
         Label selectedStudentFollowingCoursesLabel = new Label("Following Courses:");
         Label selectedStudentCertificatesLabel = new Label("Certificates:");
 
+        // Styling
+        viewStudentScene.setUserAgentStylesheet("/style.css");
+        mainPane.setId("viewPage");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -108,6 +115,7 @@ public class ViewStudentScene extends GUIScene {
     // Function that will convert a list of Registrations linked to a selected Student into a VBox
     private VBox createSelectedStudentRegistrationsPane(ArrayList<Registration> registrationsOfStudent) {
         VBox registrationsListPane = new VBox(5);
+        registrationsListPane.setId("listPane");
 
         int index = 0;
         for (Registration registration : registrationsOfStudent) {
@@ -117,6 +125,9 @@ public class ViewStudentScene extends GUIScene {
             // Nodes
             Label indexLabel = new Label(index + 1 + ". ");
             Label registrationCourseNameLabel = new Label(registration.getCourseName());
+
+            // Styling
+            registrationInfoRow.setId("clickable");
 
             // Event Handlers
             registrationInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
@@ -137,6 +148,7 @@ public class ViewStudentScene extends GUIScene {
     // Function that will convert a list of Certificates liked to a selected Student into a VBox
     private VBox createSelectedStudentCertificationsPane(ArrayList<Certificate> certificatesOfStudent) {
         VBox certificatesListPane = new VBox(5);
+        certificatesListPane.setId("listPane");
 
         int index = 0;
         for (Certificate certificate : certificatesOfStudent) {
@@ -148,6 +160,9 @@ public class ViewStudentScene extends GUIScene {
             Label certificateCourseNameLabel = new Label(certificate.getCourseName());
             Label informationDividerLabel = new Label("-");
             Label certificateScoreLabel = new Label(certificate.getScore() + "/10");
+
+            // Styling
+            certificateInfoRow.setId("clickable");
 
             // Event Handlers
             certificateInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
@@ -173,5 +188,4 @@ public class ViewStudentScene extends GUIScene {
         createScene();
         setScene(viewStudentScene);
     }
-
 }

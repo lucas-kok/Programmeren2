@@ -59,6 +59,14 @@ public class NewRegistrationScene extends GUIScene {
         Button createRegistrationButton = new Button("Create");
         Label messageLabel = new Label("");
 
+        // Styling
+        newRegistrationScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        createRegistrationButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -77,10 +85,12 @@ public class NewRegistrationScene extends GUIScene {
                 String response = null;
                 try {
                     response = registrationInformationValidator.validateNewRegistration(studentEmail, courseName);
+
+                    messageLabel.setId("errorMessage");
+                    messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                messageLabel.setText(response);
 
                 assert response != null;
                 if (response.isBlank()) { // No errors, all inputs are valid
@@ -98,11 +108,13 @@ public class NewRegistrationScene extends GUIScene {
                     registrationStudentEmailInput.clear();
                     registrationCourseNameInput.clear();
 
-                    messageLabel.setText("The Registration for '" + studentEmail.toLowerCase() + "' has successfully been created!");
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Registration for '" + studentEmail.toLowerCase() + "' has successfully been created!");
                 }
 
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 

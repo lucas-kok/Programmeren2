@@ -50,8 +50,6 @@ public class OverviewStudentsScene extends GUIScene {
         HBox searchBarPane = new HBox(5);
         ScrollPane studentsListScroll = new ScrollPane();
 
-        headerPane.setAlignment(Pos.CENTER);
-
         overviewStudentScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
         // Nodes
@@ -61,6 +59,13 @@ public class OverviewStudentsScene extends GUIScene {
 
         TextField searchBarInput = new TextField();
         Button searchButton = new Button("Search");
+
+        // Styling
+        overviewStudentScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        searchButton.setId("actionButton");
 
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
@@ -112,6 +117,9 @@ public class OverviewStudentsScene extends GUIScene {
             Label studentNameLabel = new Label(student.getName());
             Label informationDividerLabel = new Label("-");
             Label studentEmailLabel = new Label(student.getEmail());
+
+            // Styling
+            studentInfoRow.setId("clickable");
 
             // Event Handlers
             studentInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {

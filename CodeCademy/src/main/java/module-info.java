@@ -21,4 +21,9 @@ module com.example.codecademy {
     exports com.codecademy.tests;
     opens com.codecademy.tests to junit;
     exports com.codecademy.informationhandling.course;
+    exports com.codecademy.informationhandling.student;
+    exports com.codecademy.gui.home;
+    opens com.codecademy.gui.home to javafx.fxml;
+    exports com.codecademy.informationhandling.certificate;
+    exports com.codecademy.informationhandling.registration;
 }

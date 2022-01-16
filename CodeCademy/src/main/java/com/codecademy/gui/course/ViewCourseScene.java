@@ -70,6 +70,13 @@ public class ViewCourseScene extends GUIScene {
             e.printStackTrace();
         }
 
+        // Styling
+        viewCourseScene.setUserAgentStylesheet("/style.css");
+        mainPane.setId("viewPage");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 

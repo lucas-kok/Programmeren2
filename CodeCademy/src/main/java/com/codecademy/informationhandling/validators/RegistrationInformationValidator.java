@@ -29,9 +29,20 @@ public class RegistrationInformationValidator {
     public String validateNewRegistration(String studentEmail, String courseName) throws SQLException {
         StringBuilder message = new StringBuilder();
 
-        if (!emailExists(studentEmail)) message.append("\nThe email: '").append(studentEmail).append("' does not exists!");
-        if (!isValidCourseName(courseName)) message.append("\nThe Course: '").append(courseName).append("' does not exists!");
-        if (registrationExists(studentEmail, courseName)) message.append("\nThe registration already exists!");
+        studentEmail = studentEmail.toLowerCase();
+        courseName = informationFormatter.capitalizeString(courseName);
+
+        if (!emailExists(studentEmail)) {
+            message.append("\nThe email: '").append(studentEmail).append("' does not exists!");
+        }
+
+        if (!isValidCourseName(courseName)) {
+            message.append("\nThe Course: '").append(courseName).append("' does not exists!");
+        }
+
+        if (registrationExists(studentEmail, courseName)) {
+            message.append("\nThe registration already exists!");
+        }
 
         return message.toString();
     }
@@ -40,14 +51,21 @@ public class RegistrationInformationValidator {
     public String validateEditedRegistration(String[] registrationDatePieces, ArrayList<Integer> progression) {
         StringBuilder message = new StringBuilder();
 
-        if (!isValidRegistrationDate(registrationDatePieces)) message.append("The Registration Date is not valid!");
-        if (!isValidProgression(progression)) message.append("Some progression values are not between 0 and 100!");
+        if (!isValidRegistrationDate(registrationDatePieces)) {
+            message.append("\nThe Registration Date is not valid!");
+        }
+
+        if (!isValidProgression(progression)) {
+            message.append("\nSome progression values are not between 0 and 100!");
+        }
 
         return message.toString();
     }
 
     // Registration Date
     public boolean isValidRegistrationDate(String[] registrationDatePieces) {
+        if (!isValidNumber(registrationDatePieces[0]) || !isValidNumber(registrationDatePieces[1]) || !isValidNumber(registrationDatePieces[2])) return false;
+
         int day = Integer.parseInt(registrationDatePieces[2]);
         int month = Integer.parseInt(registrationDatePieces[1]);
         int year = Integer.parseInt(registrationDatePieces[0]);
@@ -96,5 +114,14 @@ public class RegistrationInformationValidator {
         }
 
         return true;
+    }
+
+    private boolean isValidNumber(String scoreString) {
+        try {
+            Integer.parseInt(scoreString);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

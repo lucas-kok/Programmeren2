@@ -60,6 +60,13 @@ public class ViewRegistrationScene extends GUIScene {
         Label selectedRegistrationCourseNameLabel = new Label("Course: " + selectedRegistration.getCourseName());
         Label selectedRegistrationModulesLabel = new Label("Modules Progression:");
 
+        // Styling
+        viewRegistrationScene.setUserAgentStylesheet("/style.css");
+        mainPane.setId("viewPage");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 

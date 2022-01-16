@@ -68,6 +68,14 @@ public class EditCertificateScene extends GUIScene {
         editScoreTextInput.setText(String.valueOf(selectedCertificate.getScore()));
         editStaffNameInput.setText(selectedCertificate.getStaffName());
 
+        // Styling
+        editCertificateScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        updateSelectedCertificateButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -90,16 +98,21 @@ public class EditCertificateScene extends GUIScene {
                 String staffName = editStaffNameInput.getText();
 
                 String response = certificateInformationValidator.validateEditedCertificate(scoreString);
+
+                messageLabel.setId("errorMessage");
                 messageLabel.setText(response);
 
                 if (response.isBlank()) { // No errors, all inputs are valid
                     int score = Integer.parseInt(scoreString);
                     certificateRepository.updateCertificate(selectedCertificate, staffName, score);
-                    messageLabel.setText("The Certificate has successfully been updated!");
+
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Certificate has successfully been updated!");
                 }
 
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 

@@ -51,6 +51,13 @@ public class ViewCertificateScene extends GUIScene {
         Label selectedCertificateStaffName = new Label("Staff: " + selectedCertificate.getStaffName());
         Label selectedCertificateScoreLabel = new Label("Grade: " + selectedCertificate.getScore() + "/10");
 
+        // Styling
+        viewCertificateScene.setUserAgentStylesheet("/style.css");
+        mainPane.setId("viewPage");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 

@@ -97,6 +97,15 @@ public class NewCourseScene extends GUIScene {
         Button createCourseButton = new Button("Create new Course");
         Label messageLabel = new Label();
 
+        // Styling
+        newCourseScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        courseLevelInput.setId("clickable");
+        createCourseButton.setId("actionButton");
+        messageLabel.setId("errorMessage");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -118,6 +127,8 @@ public class NewCourseScene extends GUIScene {
                 String response = null;
                 try {
                     response = courseInformationValidator.validateNewCourse(name, relatedCoursesString);
+
+                    messageLabel.setId("errorMessage");
                     messageLabel.setText(response);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -146,11 +157,13 @@ public class NewCourseScene extends GUIScene {
                     selectedContentItemsScroll.setContent(createSelectedContentItemsPane(selectedContentItems));
                     availableContentItemsScroll.setContent(createAvailableContentItemsPane(availableContentItems));
 
-                    messageLabel.setText("The Course '" + name + "' has successfully been created!");
+                    messageLabel.setId("goodMessage");
+                    messageLabel.setText("\nThe Course '" + name + "' has successfully been created!");
                 }
 
             } else {
-                messageLabel.setText("Please fill in all the fields!");
+                messageLabel.setId("errorMessage");
+                messageLabel.setText("\nPlease fill in all the fields!");
             }
         });
 
@@ -169,7 +182,7 @@ public class NewCourseScene extends GUIScene {
         newCourseSelectedContentItemsWrapper.getChildren().addAll(selectedModulesLabel, selectedContentItemsScroll);
         availableModulesWrapper.getChildren().addAll(availableModulesLabel, availableContentItemsScroll);
 
-        selectedContentItemsScroll.setContent(new VBox(5));
+        selectedContentItemsScroll.setContent(createSelectedContentItemsPane(new ArrayList<>()));
 
         try {
             availableContentItems = contentItemRepository.getUnusedContentItems();
@@ -182,6 +195,7 @@ public class NewCourseScene extends GUIScene {
     // Function that will convert a list of the selected Content Items into a VBox
     private VBox createSelectedContentItemsPane(ArrayList<ContentItem> selectedContentItems) {
         VBox contentItemsListPane = new VBox(5);
+        contentItemsListPane.setId("listPane");
 
         int index = 0;
         for (ContentItem contentItem : selectedContentItems) {
@@ -193,6 +207,9 @@ public class NewCourseScene extends GUIScene {
             Label contentItemPublicationDateLabel = new Label(contentItem.getPublicationDate());
             Label informationDividerLabel = new Label("-");
             Label contentItemTitleLabel = new Label(contentItem.getTitle());
+
+            // Styling
+            contentItemInformationRow.setId("clickable");
 
             // Event Handlers
             contentItemInformationRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
@@ -215,6 +232,7 @@ public class NewCourseScene extends GUIScene {
     // Function that will convert a list of the available Content Items into a VBox
     private VBox createAvailableContentItemsPane(ArrayList<ContentItem> availableContentItems) {
         VBox contentItemsListPane = new VBox(5);
+        contentItemsListPane.setId("listPane");
 
         int index = 0;
         for (ContentItem contentItem : availableContentItems) {
@@ -227,6 +245,9 @@ public class NewCourseScene extends GUIScene {
                 Label contentItemPublicationDateLabel = new Label(contentItem.getPublicationDate());
                 Label informationDividerLabel = new Label("-");
                 Label contentItemTitleLabel = new Label(contentItem.getTitle());
+
+                // Styling
+                contentItemInformationRow.setId("clickable");
 
                 // Event Handlers
                 contentItemInformationRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {

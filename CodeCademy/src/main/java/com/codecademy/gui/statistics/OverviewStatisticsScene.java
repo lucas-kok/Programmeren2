@@ -83,6 +83,17 @@ public class OverviewStatisticsScene extends GUIScene {
             e.printStackTrace();
         }
 
+        // Styling
+        statisticsScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        maleButton.setId("actionButton");
+        femaleButton.setId("actionButton");
+        otherButton.setId("actionButton");
+        topThreeCoursesLabel.setId("spacingAbove");
+        topThreeWebcastsLabel.setId("spacingAbove");
+
         // Event Handlers
         maleButton.setOnAction((event) -> {
             selectedGenderLabel.setText("Selected Gender: Male");

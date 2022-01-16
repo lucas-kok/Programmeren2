@@ -24,9 +24,13 @@ public class CourseInformationValidator {
     public String validateNewCourse(String courseName, String relatedCoursesString) throws SQLException{
         StringBuilder message = new StringBuilder();
 
-        if (courseNameExists(courseName)) message.append("\nThe name: ").append(courseName).append(" already exists!");
-        if (!areValidRelatedCourses(relatedCoursesString))
+        if (courseNameExists(courseName)) {
+            message.append("\nThe name: ").append(courseName).append(" already exists!");
+        }
+
+        if (!areValidRelatedCourses(relatedCoursesString)) {
             message.append("\nThe related Course(s) could not be found!");
+        }
 
         return message.toString();
     }
@@ -36,10 +40,14 @@ public class CourseInformationValidator {
         StringBuilder message = new StringBuilder();
 
         if (!courseName.equals(selectedCourse.getName())) { // Course has his own name (Already exists, but still valid)
-            if (courseNameExists(courseName)) message.append("\nThe name: ").append(courseName).append(" already exists!");
+            if (courseNameExists(courseName)) {
+                message.append("\nThe name: ").append(courseName).append(" already exists!");
+            }
         }
-        if (!areValidRelatedCourses(relatedCoursesString))
+
+        if (!areValidRelatedCourses(relatedCoursesString)) {
             message.append("\nThe related Course(s) could not be found!");
+        }
 
         return message.toString();
     }

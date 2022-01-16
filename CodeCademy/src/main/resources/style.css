@@ -1,0 +1,170 @@
+.root {
+    -fx-padding: 15 30 15 30;
+}
+
+#header {
+    -fx-alignment: center;
+}
+
+#title {
+    -fx-font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-cursor: hand;
+}
+
+#homePage .button {
+    -fx-background-color:
+                #090a0c,
+                linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+                linear-gradient(#20262b, #191d22),
+                radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 1.4em;
+    -fx-font-weight: bold;
+    -fx-pref-width: 175px;
+    -fx-alignment: center;
+    -fx-padding: 10 20 10 20;
+}
+
+#navigation {
+    -fx-padding: 5 15 45 15;
+    -fx-alignment: center;
+}
+
+#navigation .button {
+    -fx-background-color:
+            #090a0c,
+            linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+            linear-gradient(#20262b, #191d22),
+            radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 1.1em;
+    -fx-font-weight: bold;
+    -fx-pref-width: 150px;
+    -fx-alignment: center;
+    -fx-padding: 10 20 10 20;
+}
+
+#actionButton {
+    -fx-padding: 5 8 8 8;
+    -fx-background-color:
+                #090a0c,
+                linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),
+                linear-gradient(#20262b, #191d22),
+                radial-gradient(center 50% 0%, radius 100%, rgba(114,131,148,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: linear-gradient(white, #d0d0d0);
+    -fx-font-size: 1em;
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+#clickable:hover {
+    -fx-cursor: hand;
+}
+
+.text-field {
+    -fx-background-color: #a9a9a9 , white , white;
+    -fx-border-color: #a9a9a9;
+    -fx-border-radius: 5px;
+    -fx-padding: 5 5 5 5;
+}
+
+.text-field:hover {
+    -fx-cursor: text;
+}
+
+.text-area {
+    -fx-display-caret:true;
+    -fx-background-color: #a9a9a9 , white , white;
+    -fx-border-color: #a9a9a9;
+    -fx-border-radius: 5px;
+    -fx-pref-height: 150px;
+}
+
+.text-area:hover {
+    -fx-cursor: text;
+}
+
+.scroll-bar:vertical .track{
+    -fx-background-color :transparent;
+    -fx-border-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-border-radius :2.0em;
+}
+
+.scroll-bar:vertical .increment-button ,
+.scroll-bar:vertical .decrement-button {
+    -fx-background-color :transparent;
+    -fx-background-radius : 0.0em;
+    -fx-padding :0.0 10.0 0.0 0.0;
+}
+
+ .scroll-bar .increment-arrow,
+ .scroll-bar .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.15em 0.0;
+}
+
+ .scroll-bar:vertical .increment-arrow,
+ .scroll-bar:vertical .decrement-arrow{
+    -fx-shape : " ";
+    -fx-padding :0.0 0.15em;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color :derive(black,90.0%);
+    -fx-background-insets : 2.0, 0.0, 0.0;
+    -fx-background-radius : 2.0em;
+}
+
+#listPane {
+    -fx-padding: 0 0 10 0;
+    -fx-pref-width: 300px;
+}
+
+.combo-box {
+    -fx-border-color: #a9a9a9;
+    -fx-border-style: solid;
+    -fx-border-width: 1;
+    -fx-border-radius: 5px;
+    -fx-padding: 5 15 5 15;
+    -fx-alignment: center;
+}
+
+.combo-box .list-cell {
+    -fx-alignment: center;
+    -fx-background-color:white;
+    -fx-padding: 5 3 5 3;
+}
+
+.combo-box .list-cell:hover {
+    -fx-cursor: hand;
+}
+
+#errorMessage {
+    -fx-text-fill: #cc0000;
+}
+
+#goodMessage {
+    -fx-text-fill: #5EBA7D;
+}
+
+#spacingAbove {
+    -fx-padding: 75 10 0 0;
+}

@@ -8,6 +8,7 @@ import com.codecademy.gui.course.EditCourseScene;
 import com.codecademy.gui.course.NewCourseScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.course.ViewCourseScene;
+import com.codecademy.gui.home.MainScene;
 import com.codecademy.gui.registration.EditRegistrationScene;
 import com.codecademy.gui.registration.NewRegistrationScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
@@ -52,18 +53,18 @@ public class GUI extends Application {
     @Override
     public void start(Stage mainStage) throws SQLException{
         this.mainStage = mainStage;
-        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(2173909), Daan van der Meulen(...) & Anne van den Bosch(2191799)");
+        mainStage.setTitle("Lucas Kok(2193968), Renzo Remmers(2173909), Daan van der Meulen(2189862) & Anne van den Bosch(2191799)");
 
-        int sceneWidth = 500;
-        int sceneHeight = 750;
+        int sceneWidth = 600;
+        int sceneHeight = 950;
 
         // Creating all the scenes
-        MainScene mainScene = new MainScene(this, 500, 750);
+        MainScene mainScene = new MainScene(this, sceneWidth, sceneHeight);
 
         OverviewStudentsScene overviewStudentScene = new OverviewStudentsScene(this, sceneWidth, sceneHeight);
         NewStudentScene newStudentScene = new NewStudentScene(this, sceneWidth, sceneHeight);
         ViewStudentScene viewStudentScene = new ViewStudentScene(this, sceneWidth, sceneHeight);
-        EditStudentScene editStudentScene = new EditStudentScene(this, sceneWidth, sceneHeight, null);
+        EditStudentScene editStudentScene = new EditStudentScene(this, sceneWidth, sceneHeight);
 
         OverviewCoursesScene overviewCoursesScene = new OverviewCoursesScene(this, sceneWidth, sceneHeight);
         ViewCourseScene viewCourseScene = new ViewCourseScene(this, sceneWidth, sceneHeight);

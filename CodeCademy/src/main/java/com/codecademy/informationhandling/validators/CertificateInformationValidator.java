@@ -33,18 +33,32 @@ public class CertificateInformationValidator {
         StringBuilder message = new StringBuilder();
 
         if (isValidNumber(score)) {
-            if (!isValidScore(Integer.parseInt(score))) message.append("\nThe grade must be between 1 and 10!");
+            if (!isValidScore(Integer.parseInt(score))) {
+                message.append("\nThe grade must be between 1 and 10!");
+            }
         } else {
-            message.append("The score: '").append(score).append("' is not valid!");
+            message.append("\nThe score: '").append(score).append("' is not valid!");
         }
-        if (!studentExists(studentEmail)) message.append("\nStudent does not exist!");
-        if (!courseExists(courseName)) message.append("\nCourse does not exist!");
+
+        if (!studentExists(studentEmail)) {
+            message.append("\nStudent does not exist!");
+        }
+
+        if (!courseExists(courseName)) {
+            message.append("\nCourse does not exist!");
+        }
+
         if (registrationExists(studentEmail, courseName)) {
-            if (!studentHasCompletedCourse(studentEmail, courseName)) message.append("\nThe Student has not completed all Modules for this Course!");
+            if (!studentHasCompletedCourse(studentEmail, courseName)) {
+                message.append("\nThe Student has not completed all Modules for this Course!");
+            }
         } else {
             message.append("\nThere is no Registration for this combination!");
         }
-        if (certificateExists(studentEmail, courseName)) message.append("\nThere is already a Certificate for this Registration!");
+
+        if (certificateExists(studentEmail, courseName)) {
+            message.append("\nThere is already a Certificate for this Registration!");
+        }
 
         return message.toString();
     }
@@ -54,7 +68,9 @@ public class CertificateInformationValidator {
         StringBuilder message = new StringBuilder();
 
         if (isValidNumber(scoreString)) {
-            if (!isValidScore(Integer.parseInt(scoreString))) message.append("\nThe grade must be between 1 and 10!");
+            if (!isValidScore(Integer.parseInt(scoreString))) {
+                message.append("\nThe grade must be between 1 and 10!");
+            }
         } else {
             message.append("\nThe score: '").append(scoreString).append("' is not valid!");
         }

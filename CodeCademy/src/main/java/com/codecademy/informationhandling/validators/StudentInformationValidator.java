@@ -33,7 +33,7 @@ public class StudentInformationValidator {
         }
 
         if (!isValidAddress(address)) {
-            message.append("\nThe address: '" + address + "' is not valid!");
+            message.append("\nThe address: '").append(address).append("' is not valid!");
         }
 
         if (!isValidPostalCode(postalCode)) {
@@ -43,7 +43,7 @@ public class StudentInformationValidator {
         if (isValidBirthday(birthday)) {
             if (!isValidAge(birthday)) message.append("\nThe person is not old enough!");
         } else {
-            message.append("The given date is not valid!");
+            message.append("\nThe given date is not valid!");
         }
 
         return message.toString();
@@ -66,7 +66,7 @@ public class StudentInformationValidator {
         }
 
         if (!isValidAddress(address)) {
-            message.append("\nThe address: '" + address + "' is not valid!");
+            message.append("\nThe address: '").append(address).append("' is not valid!");
         }
 
         if (!isValidPostalCode(postalCode)) {
@@ -76,7 +76,7 @@ public class StudentInformationValidator {
         if (isValidBirthday(birthday)) {
             if (!isValidAge(birthday)) message.append("\nThe person is not old enough!");
         } else {
-            message.append("The given date is not valid!");
+            message.append("\nThe given date is not valid!");
         }
 
         return message.toString();
@@ -124,6 +124,8 @@ public class StudentInformationValidator {
 
     // Age
     public boolean isValidBirthday(String[] birthday) {
+        if (!isValidNumber(birthday[0]) || !isValidNumber(birthday[1]) || !isValidNumber(birthday[2])) return false;
+
         int day = Integer.parseInt(birthday[0]);
         int month = Integer.parseInt(birthday[1]);
         int year = Integer.parseInt(birthday[2]);
@@ -162,5 +164,14 @@ public class StudentInformationValidator {
         int minimumAge = 10; // Minimum age of codecademy is 10 years
 
         return period.getYears() >= minimumAge;
+    }
+
+    private boolean isValidNumber(String scoreString) {
+        try {
+            Integer.parseInt(scoreString);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }

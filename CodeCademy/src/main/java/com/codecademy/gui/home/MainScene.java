@@ -1,5 +1,7 @@
-package com.codecademy.gui;
+package com.codecademy.gui.home;
 
+import com.codecademy.gui.GUI;
+import com.codecademy.gui.GUIScene;
 import com.codecademy.gui.certificate.OverviewCertificatesScene;
 import com.codecademy.gui.course.OverviewCoursesScene;
 import com.codecademy.gui.registration.OverviewRegistrationsScene;
@@ -12,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
-public class MainScene extends GUIScene{
+public class MainScene extends GUIScene {
     private Scene mainScene;
     private final int sceneWidth;
     private final int sceneHeight;
@@ -34,17 +36,22 @@ public class MainScene extends GUIScene{
 
         mainScene = new Scene(mainPane, sceneWidth, sceneHeight);
 
-        headerPane.setAlignment(Pos.CENTER);
-        homePageButtonsPane.setAlignment(Pos.CENTER);
-
         // Nodes
-        Label title = new Label("CodeCademy Overview");
+        Label titleLabel = new Label("CodeCademy Overview");
 
         Button studentsButton = new Button("Students");
         Button coursesButton = new Button("Courses");
         Button certificatesButton = new Button("Certificates");
         Button registrationsButton = new Button("Registrations");
         Button statisticsButton = new Button("Statistics");
+
+        // Styling
+        mainScene.setUserAgentStylesheet("/style.css");
+        mainPane.setId("homePage");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+
+        homePageButtonsPane.setAlignment(Pos.CENTER);
 
         // Event Handlers
         studentsButton.setOnAction((event) -> {
@@ -76,7 +83,7 @@ public class MainScene extends GUIScene{
         mainPane.setTop(headerPane);
         mainPane.setCenter(homePageButtonsPane);
 
-        headerPane.getChildren().add(title);
+        headerPane.getChildren().add(titleLabel);
         homePageButtonsPane.getChildren().addAll(studentsButton, coursesButton, certificatesButton, registrationsButton, statisticsButton);
     }
 

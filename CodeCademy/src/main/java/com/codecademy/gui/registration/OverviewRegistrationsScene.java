@@ -62,6 +62,13 @@ public class OverviewRegistrationsScene extends GUIScene {
         TextField searchBarInput = new TextField();
         Button searchButton = new Button("Search");
 
+        // Styling
+        overviewRegistrationsScene.setUserAgentStylesheet("/style.css");
+        headerPane.setId("header");
+        titleLabel.setId("title");
+        navigationPane.setId("navigation");
+        searchButton.setId("actionButton");
+
         // Event Handlers
         homeButton.setOnAction((event) -> showScene("mainScene"));
 
@@ -113,6 +120,9 @@ public class OverviewRegistrationsScene extends GUIScene {
             Label registrationStudentEmailLabel = new Label(registration.getStudentEmail());
             Label informationDividerLabel = new Label("-");
             Label registrationCourseNameLabel = new Label(registration.getCourseName());
+
+            // Styling
+            registrationInfoRow.setId("clickable");
 
             // Event Handlers
             registrationInfoRow.addEventHandler(MouseEvent.MOUSE_CLICKED, (EventHandler<Event>) event -> {
