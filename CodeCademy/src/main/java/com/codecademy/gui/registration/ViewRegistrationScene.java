@@ -56,9 +56,9 @@ public class ViewRegistrationScene extends GUIScene {
         Button editSelectedRegistrationButton = new Button("Edit Registration");
 
         Label selectedRegistrationDateLabel = new Label("Registration Date: " + selectedRegistration.getRegistrationDateAsString());
-        Label selectedRegistrationStudentEmailLabel = new Label("Student email: " + selectedRegistration.getStudentEmail());
+        Label selectedRegistrationStudentEmailLabel = new Label("Student: " + selectedRegistration.getStudentEmail());
         Label selectedRegistrationCourseNameLabel = new Label("Course: " + selectedRegistration.getCourseName());
-        Label selectedRegistrationModulesLabel = new Label("Modules Progression:");
+        Label selectedRegistrationModulesLabel = new Label("Progression:");
 
         // Styling
         viewRegistrationScene.setUserAgentStylesheet("/style.css");

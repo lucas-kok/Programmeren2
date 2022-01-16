@@ -48,12 +48,13 @@ public class EditCertificateScene extends GUIScene {
         headerPane.setAlignment(Pos.CENTER);
 
         // Nodes
-        Label titleLabel = new Label("Edit Certificate: " + selectedCertificate.getCertificateID());
+        Label titleLabel = new Label("Edit Certificate: #" + selectedCertificate.getCertificateID());
         Button homeButton = new Button("Home");
         Button backButton = new Button("Back");
         Button deleteCertificateButton = new Button("Delete");
 
-        Label studentEmail = new Label("Student: " + selectedCertificate.getStudentEmail());
+        Label courseNameLabel = new Label("Course: " + selectedCertificate.getCourseName());
+        Label studentEmailLabel = new Label("Student: " + selectedCertificate.getStudentEmail());
 
         Label editStaffNameLabel = new Label("Staff Name:");
         TextField editStaffNameInput = new TextField();
@@ -123,7 +124,7 @@ public class EditCertificateScene extends GUIScene {
         headerPane.getChildren().addAll(titleLabel, navigationPane);
         navigationPane.getChildren().addAll(homeButton, backButton, deleteCertificateButton);
 
-        editStudentPane.getChildren().addAll(studentEmail, editStaffNameLabel, editStaffNameInput, editScoreLabel, editScoreTextInput, updateSelectedCertificateButton, messageLabel);
+        editStudentPane.getChildren().addAll(courseNameLabel, studentEmailLabel, editStaffNameLabel, editStaffNameInput, editScoreLabel, editScoreTextInput, updateSelectedCertificateButton, messageLabel);
     }
 
     public void resetScene(Certificate selectedCertificate) {

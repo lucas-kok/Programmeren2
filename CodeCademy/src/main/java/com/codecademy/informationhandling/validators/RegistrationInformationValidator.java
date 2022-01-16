@@ -116,7 +116,7 @@ public class RegistrationInformationValidator {
         return true;
     }
 
-    private boolean isValidNumber(String scoreString) {
+    public boolean isValidNumber(String scoreString) {
         try {
             Integer.parseInt(scoreString);
             return true;

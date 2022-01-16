@@ -72,8 +72,8 @@ public class EditRegistrationScene extends GUIScene {
         registrationDateMonthInput.setPromptText("Month");
         registrationDateYearInput.setPromptText("Year");
 
-        Label registrationStudentEmailLabel = new Label("Student email: " + selectedRegistration.getStudentEmail());
-        Label registrationCourseNameLabel = new Label("Course name: " + selectedRegistration.getCourseName());
+        Label registrationStudentEmailLabel = new Label("Student: " + selectedRegistration.getStudentEmail());
+        Label registrationCourseNameLabel = new Label("Course: " + selectedRegistration.getCourseName());
         Label registrationProgressionLabel = new Label("Progression:");
 
         Button updateSelectedRegistrationButton = new Button("Update Course");
@@ -208,12 +208,23 @@ public class EditRegistrationScene extends GUIScene {
 
             String contentItemID = contentItemIDInput.getText();
             contentItemID = contentItemID.replaceAll("#", "");
-            int newProgress = Integer.parseInt(progressInput.getText());
+            String newProgressString = progressInput.getText();
 
-            try {
-                newProgression.put(contentItemRepository.getContentItem(contentItemID), newProgress);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            // When the new Progress input is not a number, -1 will be put in the map, that will result in a false validation
+            if (registrationInformationValidationTools.isValidNumber(newProgressString)) {
+                int newProgress = Integer.parseInt(newProgressString);
+
+                try {
+                    newProgression.put(contentItemRepository.getContentItem(contentItemID), newProgress);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    newProgression.put(contentItemRepository.getContentItem(contentItemID), -1);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

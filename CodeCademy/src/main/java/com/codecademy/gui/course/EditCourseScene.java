@@ -83,6 +83,7 @@ public class EditCourseScene extends GUIScene {
         headerPane.setId("header");
         titleLabel.setId("title");
         navigationPane.setId("navigation");
+        courseLevelInput.setId("clickable");
         updateSelectedCourseButton.setId("actionButton");
         messageLabel.setId("errorMessage");
 

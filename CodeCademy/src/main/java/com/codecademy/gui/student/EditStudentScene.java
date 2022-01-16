@@ -108,6 +108,7 @@ public class EditStudentScene extends GUIScene {
         headerPane.setId("header");
         titleLabel.setId("title");
         navigationPane.setId("navigation");
+        studentGenderInput.setId("clickable");
         updateSelectedStudentButton.setId("actionButton");
         messageLabel.setId("errorMessage");
 

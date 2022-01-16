@@ -199,7 +199,7 @@ GO
 --BEGIN TRAN
 
 INSERT INTO dbo.Student VALUES
-	 ,( 'lucas.kok@hotmail.nl', 'Lucas Kok', CONVERT(datetime, '2005/01/09'), 'm', 'Perenmeet 48', 'Burgh-Haamstede', 'The Netherlands', '4328 CM' )
+	 ( 'lucas.kok@hotmail.nl', 'Lucas Kok', CONVERT(datetime, '2005/01/09'), 'm', 'Perenmeet 48', 'Burgh-Haamstede', 'The Netherlands', '4328 CM' )
 	 ,( 'ditabultman@teleworm.us', 'Dita Bultman', CONVERT(datetime, '1984/10/08'), 'f', 'Waterleliestraat 152', 'Almere', 'The Netherlands', '1338 TK' )
 	 ,( 'kovanderbiezen@dayrep.com', 'Ko Van Der Biezen', CONVERT(datetime, '1962/09/30'), 'm', 'Sint LiduinaStraat 160', 'Schiedam', 'The Netherlands', '3117CV' )
 	 ,( 'drieswiersma@dayrep.org', 'Dries Wiersma', CONVERT(datetime, '1995/02/14'), 'm', 'Du Meelaan 124', 'Zoetermeer', 'The Netherlands', '2722 ZC' )
@@ -259,6 +259,10 @@ INSERT INTO ContentItem VALUES
 	,('Artificial Intelligence','Artificial Intelligence Expert', GETDATE(), 'Active', NULL)
 	,('Cyber Security','Cyber Security deel 1', GETDATE(), 'Active', NULL)
 	,('Cyber Security','Cyber Security deel 2', GETDATE(), 'Active', NULL)
+	,(NULL,'Python deel 1', GETDATE(), 'Active', NULL)
+	,(NULL,'Python deel 2', GETDATE(), 'Active', NULL)
+	,(NULL,'C# deel 1', GETDATE(), 'Active', NULL)
+	,(NULL,'C# deel 2', GETDATE(), 'Active', NULL)
 
 INSERT INTO Webcast VALUES
 	((SELECT ContentId FROM ContentItem WHERE Title = 'Les 1 Programmeren'),30,'https://www.youtube.com/Les1Programmeren', 'Arno Broeders', 'Avans Hogeschool Breda')
@@ -282,6 +286,10 @@ INSERT INTO Module VALUES
 	,((SELECT ContentId FROM ContentItem WHERE Title = 'Artificial Intelligence Expert'),'3.5','Artificial Intelligence Expert','Henri Kluit','henri.kluit@tudelft.nl')
 	,((SELECT ContentId FROM ContentItem WHERE Title = 'Cyber Security deel 1'),'3.5','Cyber Security deel 1','Dirk-Jan Lommers','djl@tudelft.nl')
 	,((SELECT ContentId FROM ContentItem WHERE Title = 'Cyber Security deel 2'),'3.5','Cyber Security deel 2','Dirk-Jan Lommers','djl@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'Python deel 1'),'3.5','Python deel 1','Dirk-Jan Lommers','djl@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'Python deel 2'),'3.5','Python deel 1','Dirk-Jan Lommers','djl@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'C# deel 1'),'3.5','C# deel 1','Henri Kluit','henri.kluit@tudelft.nl')
+	,((SELECT ContentId FROM ContentItem WHERE Title = 'C# deel 2'),'3.5','C# deel 2','Henri Kluit','henri.kluit@tudelft.nl')
 
 INSERT INTO Register VALUES
 	(getdate(),'lucas.kok@hotmail.nl','Programmeren 1')
@@ -344,7 +352,7 @@ INSERT INTO Viewing VALUES
 	,('kovanderbiezen@dayrep.com', 2, 52)
 	,('kovanderbiezen@dayrep.com', 3, 0)
 	,('kovanderbiezen@dayrep.com', 4, 0)
-	,('drieswiersma@dayrep.org', 1, 100) ----
+	,('drieswiersma@dayrep.org', 1, 100)
 	,('drieswiersma@dayrep.org', 2, 100)
 	,('drieswiersma@dayrep.org', 3, 100)
 	,('drieswiersma@dayrep.org', 4, 100)
@@ -459,7 +467,7 @@ INSERT INTO Viewing VALUES
 INSERT INTO Certificate VALUES
 	(4, 8, 'Fred Van Gardingen')
 	,(11, 9, 'Yascino Hubbers')
-	,(18, 6, 'Fred van Gardigen')
+	,(18, 10, 'Fred van Gardigen')
 	,(16, 6, 'Yascino Hubbers')
 	,(25, 10, 'Ayrianna Schot')
 	,(34, 6, 'Ronald Pols')
