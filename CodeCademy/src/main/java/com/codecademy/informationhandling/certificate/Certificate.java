@@ -21,10 +21,6 @@ public class Certificate {
         return certificateID;
     }
 
-    public int getRegisterID() {
-        return registrationID;
-    }
-
     public int getScore() {
         return score;
     }

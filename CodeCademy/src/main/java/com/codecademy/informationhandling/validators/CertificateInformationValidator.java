@@ -35,7 +35,7 @@ public class CertificateInformationValidator {
         if (isValidNumber(score)) {
             if (!isValidScore(Integer.parseInt(score))) message.append("\nThe grade must be between 1 and 10!");
         } else {
-            message.append("The score: '" + score + "' is not valid!");
+            message.append("The score: '").append(score).append("' is not valid!");
         }
         if (!studentExists(studentEmail)) message.append("\nStudent does not exist!");
         if (!courseExists(courseName)) message.append("\nCourse does not exist!");
@@ -56,7 +56,7 @@ public class CertificateInformationValidator {
         if (isValidNumber(scoreString)) {
             if (!isValidScore(Integer.parseInt(scoreString))) message.append("\nThe grade must be between 1 and 10!");
         } else {
-            message.append("\nThe score: '" + scoreString + "' is not valid!");
+            message.append("\nThe score: '").append(scoreString).append("' is not valid!");
         }
 
         return message.toString();
