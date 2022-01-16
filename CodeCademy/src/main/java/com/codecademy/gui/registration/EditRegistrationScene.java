@@ -115,7 +115,7 @@ public class EditRegistrationScene extends GUIScene {
                 String day = registrationDateDayInput.getText();
                 String month = registrationDateMonthInput.getText();
                 String year = registrationDateYearInput.getText();
-                String[] newRegistrationDatePieces = new String[] { year, month, day };
+                String[] newRegistrationDatePieces = new String[] { day, month, year };
                 ArrayList<Integer> newProgression = new ArrayList<>(getNewProgressionInput(selectedRegistrationProgressScroll).values());
 
                 String response = registrationInformationValidationTools.validateEditedRegistration(newRegistrationDatePieces, newProgression);
